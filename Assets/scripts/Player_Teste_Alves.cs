@@ -14,9 +14,39 @@ public class Player_Teste_Alves : MonoBehaviour
     #endregion
 
     private float verticalRotation = 0f;
+    //dan inventario
+    public bool cameraTravada = false;
+//dan inventario start
+void Start() 
+
+{ 
+
+    // Bloqueia o rato no centro do ecrã 
+
+    Cursor.lockState = CursorLockMode.Locked; 
+
+     
+
+    // Torna o ponteiro do rato invisível para não estorvar a mira 
+
+    Cursor.visible = false; 
+
+} 
+//dan inventario end
 
     void Update ()
     {
+        //Dan inventario
+        // Se a câmara estiver travada, não deixa o resto do código do rato rodar
+if (cameraTravada) 
+{
+    // Opcional: força o rato a ficar livre para o inventário
+    Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
+    return; 
+}
+//Dan inventario fim
+
         // Camera-Horizontal
         Rigid.MoveRotation(Rigid.rotation * Quaternion.Euler(new Vector3(0, Input.GetAxis("Mouse X") * MouseSensitivity_Horizontal, 0)));
 

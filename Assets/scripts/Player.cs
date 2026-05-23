@@ -14,6 +14,10 @@ public class Player : MonoBehaviour
 
     private float verticalRotation = 0f;
 
+//novo de teste Dan 
+
+
+// 
     void Update ()
     {
         // Camera-Horizontal
