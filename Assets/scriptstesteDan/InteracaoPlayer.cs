@@ -10,13 +10,11 @@ public class PlayerInteracao : MonoBehaviour
 
     void Start()
     {
-        // Garante que começa totalmente desligada
         if (miraUI != null) miraUI.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        // Se o inventário estiver aberto, não faz sentido procurar itens
         if (Cursor.visible) return;
 
         Ray raio = new Ray(transform.position, transform.forward);
@@ -24,7 +22,8 @@ public class PlayerInteracao : MonoBehaviour
 
         if (Physics.Raycast(raio, out hit, distanciaInteracao))
         {
-            CliqueItem itemDetectado = hit.collider.GetComponent<CliqueItem>();
+            // SOLUÇÃO AQUI: Procura o script no objeto onde o raio bateu OU em qualquer PAI acima dele!
+            CliqueItem itemDetectado = hit.collider.GetComponentInParent<CliqueItem>();
 
             if (itemDetectado != null)
             {
@@ -33,9 +32,8 @@ public class PlayerInteracao : MonoBehaviour
                     if (itemSendoFocado != null) itemSendoFocado.AoOlharSair();
                     
                     itemSendoFocado = itemDetectado;
-                    itemSendoFocado.AoOlharEntrar(); // Ativa o brilho no objeto
+                    itemSendoFocado.AoOlharEntrar(); 
                     
-                    // LIGA A MIRA APENAS AQUI
                     if (miraUI != null)
                     {
                         miraUI.gameObject.SetActive(true);
@@ -59,11 +57,10 @@ public class PlayerInteracao : MonoBehaviour
     {
         if (itemSendoFocado != null)
         {
-            itemSendoFocado.AoOlharSair(); // Desliga o brilho no objeto
+            itemSendoFocado.AoOlharSair(); 
             itemSendoFocado = null;
         }
         
-        // DESLIGA A MIRA COMPLEMENTAMENTE
         if (miraUI != null)
         {
             miraUI.gameObject.SetActive(false);

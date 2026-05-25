@@ -6,12 +6,12 @@ public class GeradorInventario : MonoBehaviour
 {
     public GameObject painelInventario; 
     public GameObject slotItemPrefab;   
-    
-    // NOVO: Aqui vais arrastar o teu objeto Player que tem o novo script!
-    public GameObject jogadorPlayer; 
+    public GameObject jogadorPlayer; // O objeto que tem o script Player_Teste_Alves
 
     private bool inventarioAberto = false;
-    private List<string> itensNaMochila = new List<string>();
+    
+    // Lista atualizada para guardar os Sprites recolhidos
+    private List<Sprite> itensNaMochila = new List<Sprite>(); 
 
     void Start()
     {
@@ -28,23 +28,24 @@ public class GeradorInventario : MonoBehaviour
 
             if (jogadorPlayer != null)
             {
-                // Procura pelo teu novo script no jogador
                 Player_Teste_Alves scriptNovo = jogadorPlayer.GetComponent<Player_Teste_Alves>();
                 
                 if (scriptNovo != null)
                 {
                     if (inventarioAberto)
                     {
-                        scriptNovo.cameraTravada = true; // TRAVA O TEU NOVO SCRIPT
-                        Cursor.lockState = CursorLockMode.None;
-                        Cursor.visible = true;
-                        Time.timeScale = 0f; // Congela o mundo
+                        // Limpa os eixos do rato mesmo antes de travar para evitar o "salto" da visão
+                        Input.ResetInputAxes(); 
+                        scriptNovo.cameraTravada = true; 
+                        
+                        Time.timeScale = 0f; // Congela o tempo do mundo
                     }
                     else
                     {
-                        scriptNovo.cameraTravada = false; // LIBERTA O TEU NOVO SCRIPT
+                        scriptNovo.cameraTravada = false; 
                         Cursor.lockState = CursorLockMode.Locked;
                         Cursor.visible = false;
+                        
                         Time.timeScale = 1f; // Descongela o mundo
                     }
                 }
@@ -52,19 +53,25 @@ public class GeradorInventario : MonoBehaviour
         }
     }
 
-    public void AdicionarAoInventario(string nomeDoObjeto)
+    // Função modificada: agora recebe diretamente o Sprite do objeto apanhado
+    public void AdicionarAoInventario(Sprite fotoDoObjeto)
     {
-        itensNaMochila.Add(nomeDoObjeto);
+        if (fotoDoObjeto == null)
+        {
+            Debug.LogWarning("Aviso: O objeto que apanhaste não tem nenhuma imagem atribuída no Inspector!");
+            return;
+        }
+
+        itensNaMochila.Add(fotoDoObjeto);
         
         GameObject novoSlot = Instantiate(slotItemPrefab, painelInventario.transform);
         novoSlot.SetActive(true);
 
         Image imagemDoSlot = novoSlot.GetComponent<Image>();
-        Sprite fotoDoItem = Resources.Load<Sprite>(nomeDoObjeto + "UI");
-
-        if (imagemDoSlot != null && fotoDoItem != null)
+        if (imagemDoSlot != null)
         {
-            imagemDoSlot.sprite = fotoDoItem;
+            // Aplica a foto que veio diretamente do objeto
+            imagemDoSlot.sprite = fotoDoObjeto; 
         }
     }
 }

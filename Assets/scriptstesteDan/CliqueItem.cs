@@ -2,37 +2,61 @@ using UnityEngine;
 
 public class CliqueItem : MonoBehaviour
 {
+    public Sprite imagemNoInventario; 
+
     private GeradorInventario inventario;
-    private Renderer meuRenderer;
-    private Color corOriginal;
+    private Renderer[] meusRenderers; 
+    private Color[] coresOriginais;    
     private bool jogadorOlhando = false;
 
     void Start()
     {
         inventario = FindObjectOfType<GeradorInventario>();
-        meuRenderer = GetComponent<Renderer>();
         
-        if (meuRenderer != null)
+        // Pega todos os renderers dos filhos para fazer o brilho
+        meusRenderers = GetComponentsInChildren<Renderer>();
+        
+        if (meusRenderers != null && meusRenderers.Length > 0)
         {
-            corOriginal = meuRenderer.material.color;
+            coresOriginais = new Color[meusRenderers.Length];
+            for (int i = 0; i < meusRenderers.Length; i++)
+            {
+                // Evita erros se houver materiais vazios
+                if (meusRenderers[i] != null && meusRenderers[i].material != null)
+                {
+                    coresOriginais[i] = meusRenderers[i].material.color;
+                }
+            }
         }
     }
 
     public void AoOlharEntrar()
     {
         jogadorOlhando = true;
-        if (meuRenderer != null)
+        if (meusRenderers != null)
         {
-            meuRenderer.material.color = corOriginal * 1.6f; 
+            for (int i = 0; i < meusRenderers.Length; i++)
+            {
+                if (meusRenderers[i] != null && meusRenderers[i].material != null)
+                {
+                    meusRenderers[i].material.color = coresOriginais[i] * 1.6f;
+                }
+            }
         }
     }
 
     public void AoOlharSair()
     {
         jogadorOlhando = false;
-        if (meuRenderer != null)
+        if (meusRenderers != null)
         {
-            meuRenderer.material.color = corOriginal;
+            for (int i = 0; i < meusRenderers.Length; i++)
+            {
+                if (meusRenderers[i] != null && meusRenderers[i].material != null)
+                {
+                    meusRenderers[i].material.color = coresOriginais[i];
+                }
+            }
         }
     }
 
@@ -42,7 +66,7 @@ public class CliqueItem : MonoBehaviour
         {
             if (inventario != null)
             {
-                inventario.AdicionarAoInventario(gameObject.name);
+                inventario.AdicionarAoInventario(imagemNoInventario);
             }
             
             PlayerInteracao player = FindObjectOfType<PlayerInteracao>();

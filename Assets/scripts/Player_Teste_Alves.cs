@@ -38,13 +38,15 @@ void Start()
     {
         //Dan inventario
         // Se a câmara estiver travada, não deixa o resto do código do rato rodar
-if (cameraTravada) 
-{
-    // Opcional: força o rato a ficar livre para o inventário
-    Cursor.lockState = CursorLockMode.None;
-    Cursor.visible = true;
-    return; 
-}
+         if (cameraTravada)
+           {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        // Zera os inputs do rato neste frame para a câmara não dar saltos para baixo ou para os lados
+        Input.ResetInputAxes();
+        return; // Sai do Update e não move a câmara
+          }
 //Dan inventario fim
 
         // Camera-Horizontal
