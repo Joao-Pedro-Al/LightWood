@@ -243,7 +243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 13779300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 340c631c5275aa94bb61bac34b8ae573, type: 3}
+  m_Script: {fileID: 11500000, guid: ec1cdfa907f26f54495371724739ccdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterAI
   currentState: 0
@@ -256,16 +256,20 @@ MonoBehaviour:
   monsterSilhouette: {fileID: 1659177109}
   silhouetteScale: {x: 1, y: 2, z: 1}
   silhouetteYOffset: 1
-  teleportRadius: 8
-  teleportInterval: 4
-  phase1Duration: 20
-  treeSearchRadius: 3
-  runSpeed: 5
-  attackDistance: 0
+  teleportRadius: 30
+  treeSearchRadius: 20
+  attackDistance: 1.2
   flashlightAngle: 35
   flashlightRange: 12
-  reappearDelayMin: 5
-  reappearDelayMax: 10
+  reappearDelayMin: 3
+  reappearDelayMax: 6
+  autoSpawnOnStart: 1
+  firstSpawnDelay: 10
+  hiddenCycleDelayMin: 8
+  hiddenCycleDelayMax: 15
+  phase1Speed: 0
+  phase2Speed: 5
+  phase1Duration: 20
 --- !u!195 &13779308
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -981,7 +985,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: e08071aee9ca15e44b3d801b1ca65d3c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 94c9e8c2900285a4bbd78bc1a56fb54c, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &309057180
 GameObject:
@@ -1126,7 +1130,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: a755d1496d13b7d4085c01785c627c9e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 641efae919702e84a9bf20bf2b5edeef, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &330585543
 GameObject:
@@ -1278,7 +1282,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9492de831de27184c8ce43bff3dd8e0a, type: 3}
+  m_Script: {fileID: 11500000, guid: d032b5c6b7cb60e46a90c0c0ac46a758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Flashlight
   FlashlightLight: {fileID: 1188988448}
@@ -2183,7 +2187,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: f35666acd2b043c43ad904e5cc9e32aa, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: fa38b674dc6b9b649887ad06abd677cc, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1062613643
 GameObject:
@@ -2598,7 +2602,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 72a9281206733f946b28ff1687e7b02b, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 71dc12abad78b0e4b811679c92b06f65, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1216370206
 GameObject:
@@ -2743,7 +2747,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 05883b8c1f58be44a962cefb4ced7c3d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f0d36b937c8e18f4f92b2b626d51763a, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1255364223
 GameObject:
@@ -2888,7 +2892,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 7d8055c5cc70b5547aaf4bfa02930af7, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 5801ce1d4d27aa94eaebe037533b3624, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1326616739
 GameObject:
@@ -3108,7 +3112,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 5e95679d1c7526f4da4d7772bb86a597, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ec4ac3b9d4e16ce4bbf92f73577d1ef6, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1484399383
 GameObject:
@@ -3332,7 +3336,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 9c1ed185dd15a994cb7f465092027ea4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0600c1b687b493f44afe6b763914fa83, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1555803323
 GameObject:
@@ -3880,7 +3884,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 71c6089a84301f9418e1a1e4f9cf7228, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 8b93fbe34afa3bd42bd90922db91d079, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1911709637
 GameObject:
