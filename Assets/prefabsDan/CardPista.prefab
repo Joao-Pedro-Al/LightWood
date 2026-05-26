@@ -95,9 +95,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PistaCard
   displayFoto: {fileID: 1354607648161192809}
   displayNome: {fileID: 8414327046051673042}
-  displayDescricao: {fileID: 8360969351150094703}
+  displayDesc: {fileID: 8360969351150094703}
   displayNumero: {fileID: 2939820720631897917}
-  numeroDaPista: 0
+  meuNumero: 0
 --- !u!114 &3432202313735303999
 MonoBehaviour:
   m_ObjectHideFlags: 0

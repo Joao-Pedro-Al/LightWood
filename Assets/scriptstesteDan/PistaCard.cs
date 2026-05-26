@@ -4,32 +4,29 @@ using TMPro;
 
 public class PistaCard : MonoBehaviour
 {
-    [Header("Componentes Visuais do Card")]
     public Image displayFoto;
     public TextMeshProUGUI displayNome;
-    public TextMeshProUGUI displayDescricao;
-    public TextMeshProUGUI displayNumero; 
+    public TextMeshProUGUI displayDesc;
+    public TextMeshProUGUI displayNumero;
 
-    [HideInInspector] public int numeroDaPista;
+    [HideInInspector] public int meuNumero;
     private BillboardManager manager;
 
-    public void ConfigurarCard(Sprite foto, string nome, string descricao, int numero, BillboardManager gerenciador)
+    public void Setup(Sprite foto, string nome, string desc, int num, BillboardManager m)
     {
-        numeroDaPista = numero;
-        manager = gerenciador;
-
-        if (displayFoto != null) displayFoto.sprite = foto;
-        if (displayNome != null) displayNome.text = nome;
-        if (displayDescricao != null) displayDescricao.text = descricao;
-        if (displayNumero != null) displayNumero.text = "#" + numero.ToString();
+        meuNumero = num;
+        manager = m;
+        if(displayFoto) displayFoto.sprite = foto;
+        if(displayNome) displayNome.text = nome;
+        if(displayDesc) displayDesc.text = desc;
+        if(displayNumero) displayNumero.text = "#" + num;
     }
 
-    // Deve ser chamado pelo componente Button do CardPista
-    public void AoClicarNoCard()
-    {
+    public void ClicarNoCard() 
+    { 
         if (manager != null)
         {
-            manager.SelecionarPista(this);
+            manager.SelecionarPista(this); 
         }
     }
 }

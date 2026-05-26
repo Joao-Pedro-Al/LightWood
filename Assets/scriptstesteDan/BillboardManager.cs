@@ -5,87 +5,95 @@ using TMPro;
 public class BillboardManager : MonoBehaviour
 {
     [Header("Configurações do Quadro")]
-    public GameObject cardPistaPrefab;    
-    public Transform gridDoQuadro;        
-    public LineRenderer fioVermelhoPrefab; 
+    public GameObject prefabCard;
+    public Transform gridDoQuadro;
+    public LineRenderer fioPrefab;
+    public TextMeshProUGUI textoConclusao;
 
-    [Header("UI de Conclusões")]
-    public TextMeshProUGUI textoConclusaoUI; 
+    [Header("UI Sistema de Fundo")]
+    public GameObject painelFundoPreto; // O fundo escuro que vamos ativar/desativar
 
-    private List<PistaCard> pistasNoQuadro = new List<PistaCard>();
-    private List<PistaCard> pistasSelecionadas = new List<PistaCard>();
-    private bool primeiraCombinacaoFeita = false; 
+    private List<PistaCard> selecionados = new List<PistaCard>();
+    private bool segredoRevelado = false;
 
     void Start()
     {
-        if (textoConclusaoUI != null) textoConclusaoUI.text = "";
+        if (textoConclusao != null) textoConclusao.text = "";
+        FecharQuadro(); // Garante que começa fechado
     }
 
-    public void AdicionarPistaAoQuadro(Sprite foto, string nome, string descricao, int numeroFixo)
+    // Funções para abrir e fechar o quadro com o fundo preto
+    public void AbrirQuadro()
     {
-        if (cardPistaPrefab == null || gridDoQuadro == null) return;
+        if (painelFundoPreto != null) painelFundoPreto.SetActive(true);
+        // Ativa o rato e congela o tempo se necessário no teu script de input
+    }
 
-        GameObject novoCard = Instantiate(cardPistaPrefab, gridDoQuadro);
-        PistaCard scriptCard = novoCard.GetComponent<PistaCard>();
+    public void FecharQuadro()
+    {
+        if (painelFundoPreto != null) painelFundoPreto.SetActive(false);
+    }
 
+    public void AdicionarPistaAoQuadro(Sprite f, string n, string d, int num)
+    {
+        if (prefabCard == null || gridDoQuadro == null) return;
+
+        GameObject go = Instantiate(prefabCard, gridDoQuadro);
+        PistaCard scriptCard = go.GetComponent<PistaCard>();
         if (scriptCard != null)
         {
-            scriptCard.ConfigurarCard(foto, nome, descricao, numeroFixo, this);
-            pistasNoQuadro.Add(scriptCard);
+            scriptCard.Setup(f, n, d, num, this);
         }
     }
 
-    public void SelecionarPista(PistaCard cardClicado)
+    public void SelecionarPista(PistaCard card)
     {
-        if (pistasSelecionadas.Contains(cardClicado))
-        {
-            pistasSelecionadas.Remove(cardClicado);
-            return;
-        }
+        if (selecionados.Contains(card)) return;
+        selecionados.Add(card);
 
-        pistasSelecionadas.Add(cardClicado);
-
-        if (pistasSelecionadas.Count == 2)
+        if (selecionados.Count == 2)
         {
-            VerificarCombinacaoDupla();
+            Verificar();
         }
     }
 
-    void VerificarCombinacaoDupla()
+    void Verificar()
     {
-        int n1 = pistasSelecionadas[0].numeroDaPista;
-        int n2 = pistasSelecionadas[1].numeroDaPista;
+        int n1 = selecionados[0].meuNumero;
+        int n2 = selecionados[1].meuNumero;
 
-        // Combinação das pistas 7 (Telemóvel) e 8 (Pulseiras)
         if ((n1 == 7 && n2 == 8) || (n1 == 8 && n2 == 7))
         {
-            if (!primeiraCombinacaoFeita)
-            {
-                SucessoCombinacao("Estes estavam próximos, possivelmente pertenciam à mesma pessoa.");
-                primeiraCombinacaoFeita = true;
-            }
-            else
-            {
-                SucessoCombinacao("Ela deve ter ido buscar estas pulseiras, mas aonde...?");
+            if (!segredoRevelado) {
+                Concluir("Estes estavam próximos, pertenciam à mesma pessoa.", selecionados[0], selecionados[1]);
+                segredoRevelado = true;
+            } else {
+                Concluir("Ela deve ter ido buscar estas pulseiras, mas aonde...?", selecionados[0], selecionados[1]);
             }
         }
         else
         {
-            // Se errar a combinação, pisca ou limpa a seleção
-            Invoke("LimparSelecao", 0.3f);
+            // Se errar, limpa a seleção após meio segundo
+            Invoke("LimparSelecao", 0.5f);
         }
     }
 
-    void SucessoCombinacao(string textoResultado)
+    void Concluir(string txt, PistaCard c1, PistaCard c2)
     {
-        if (fioVermelhoPrefab != null && pistasSelecionadas.Count == 2)
-        {
-            CriarFioVermelho(pistasSelecionadas[0].transform.position, pistasSelecionadas[1].transform.position);
-        }
+        if (textoConclusao != null) textoConclusao.text = txt;
 
-        if (textoConclusaoUI != null)
+        if (fioPrefab != null)
         {
-            textoConclusaoUI.text = textoResultado;
+            // Cria o fio diretamente dentro do Grid ou do Canvas para herdar a escala correta da UI
+            LineRenderer fio = Instantiate(fioPrefab, gridDoQuadro);
+            
+            // Posições locais baseadas no RectTransform dos cartões
+            Vector3 pos1 = c1.transform.position;
+            Vector3 pos2 = c2.transform.position;
+
+            // Puxa ligeiramente para a frente no eixo Z do mundo do Canvas
+            fio.SetPosition(0, new Vector3(pos1.x, pos1.y, pos1.z - 0.1f));
+            fio.SetPosition(1, new Vector3(pos2.x, pos2.y, pos2.z - 0.1f));
         }
 
         LimparSelecao();
@@ -93,14 +101,6 @@ public class BillboardManager : MonoBehaviour
 
     void LimparSelecao()
     {
-        pistasSelecionadas.Clear();
-    }
-
-    void CriarFioVermelho(Vector3 pos1, Vector3 pos2)
-    {
-        LineRenderer novoFio = Instantiate(fioVermelhoPrefab, transform);
-        // O eixo Z recua -0.02f para o fio ficar colado à frente dos papéis sem os atravessar
-        novoFio.SetPosition(0, new Vector3(pos1.x, pos1.y, pos1.z - 0.02f)); 
-        novoFio.SetPosition(1, new Vector3(pos2.x, pos2.y, pos2.z - 0.02f));
+        selecionados.Clear();
     }
 }
