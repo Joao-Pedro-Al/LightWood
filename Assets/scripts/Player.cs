@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Dialogo DM;
+
     // Créditos: https://discussions.unity.com/t/first-person-movement/677313
     #region "Variables"
     public Rigidbody Rigid;
@@ -17,20 +19,15 @@ public class Player : MonoBehaviour
     //dan inventario
     public bool cameraTravada = false;
 //dan inventario start
-void Start() 
-
+void Start()
 { 
+    DM = Dialogo.Instance;
 
     // Bloqueia o rato no centro do ecrã 
-
     Cursor.lockState = CursorLockMode.Locked; 
 
-     
-
     // Torna o ponteiro do rato invisível para não estorvar a mira 
-
     Cursor.visible = false; 
-
 } 
 //dan inventario end
 
@@ -68,5 +65,14 @@ void Start()
         // Debug.Log(VelocidadeAtual);
 
         Rigid.MovePosition(transform.position + (transform.forward * Input.GetAxis("Vertical") * VelocidadeAtual) + (transform.right * Input.GetAxis("Horizontal") * VelocidadeAtual));
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Dialogo")
+        {
+            int id = int.Parse(collision.gameObject.name);
+            DM.AtivarDialogo(id);
+        }
     }
 }
