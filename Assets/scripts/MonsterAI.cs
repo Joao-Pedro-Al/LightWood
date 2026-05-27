@@ -459,4 +459,4 @@ public class MonsterAI : MonoBehaviour
         currentState = MonsterState.Hidden;
         Debug.Log("[Monstro] Escondido!");
     }
-}
+}   
