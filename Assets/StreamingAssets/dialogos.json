@@ -24,6 +24,126 @@
             "id": 4,
             "text": "Because bees don't care what humans think is impossible.",
             "file": "dial-4.mp3"
+        },
+        {
+            "id": 5,
+            "text": "Parece que estavam a fazer S'Mores antes do ataque."
+        },
+        {
+            "id": 6,
+            "text": "Isto não foi ventania normal..."
+        },
+        {
+            "id": 7,
+            "text": "Devia ser um grupo grande."
+        },
+        {
+            "id": 8,
+            "text": "Porra... como é que foi empalado assim?!"
+        },
+        {
+            "id": 9,
+            "text": "Muito sangue, isto foi uma arma."
+        },
+        {
+            "id": 10,
+            "text": "Yuck... o assassino estava com raiva."
+        },
+        {
+            "id": 11,
+            "text": "Para ter tanto sangue, devia estar nas mãos da vítima."
+        },
+        {
+            "id": 12,
+            "text": "Quatro. Era esse o tamanho do grupo?"
+        },
+        {
+            "id": 13,
+            "text": "Pertencia a UMA vítima, mas onde estará o corpo?"
+        },
+        {
+            "id": 14,
+            "text": "Eles estavam a fazer S'Mores antes do ataque. Alguém deve ter ido para a tenda buscar mais um saco e foi aí que foi atacado."
+        },
+        {
+            "id": 15,
+            "text": "Uma pedra não causaria os cortes neste corpo. Deve ter sido a última tentativa da vítima se defender."
+        },
+        {
+            "id": 16,
+            "text": "Estes estavam próximos, possivelmente pertenciam à mesma pessoa."
+        },
+        {
+            "id": 17,
+            "text": "Ela deve ter ido buscar estas pulseiras, mas aonde...?"
+        },
+        {
+            "id": 18,
+            "text": "Eram três.",
+            "cont": true,
+            "prox": 19
+        },
+        {
+            "id": 19,
+            "text": "Estavam a preparar-se para fazer S'Mores, quando a jovem foi comprar as pulseiras.",
+            "cont": true,
+            "prox": 20
+        },
+        {
+            "id": 20,
+            "text": "Foi nesse tempo que o assassino atacou,",
+            "cont": true,
+            "prox": 21
+        },
+        {
+            "id": 21,
+            "text": "apanhando um dos jovens de surpresa enquanto buscava mais marshmallows.",
+            "cont": true,
+            "prox": 22
+        },
+        {
+            "id": 22,
+            "text": "Só não entendo como conseguiu o empalar assim...",
+            "cont": true,
+            "prox": 23
+        },
+        {
+            "id": 23,
+            "text": "O segundo jovem tentou lutar, e conseguiu atingir o assassino com a pedra.",
+            "cont": true,
+            "prox": 24
+        },
+        {
+            "id": 24,
+            "text": "Mas não conseguiu se salvar.",
+            "cont": true,
+            "prox": 25
+        },
+        {
+            "id": 25,
+            "text": "A jovem deve ter chegado e reparou nos amigos dela.",
+            "cont": true,
+            "prox": 26
+        },
+        {
+            "id": 26,
+            "text": "Ela provavelmente foi uma das pessoas a ligar à polícia, antes de ser apanhada despercebida.",
+            "cont": true,
+            "prox": 27
+        },
+        {
+            "id": 27,
+            "text": "Não à sinal do corpo...",
+            "cont": true,
+            "prox": 28
+        },
+        {
+            "id": 28,
+            "text": "Agora a questão é: onde ela foi buscar estas pulseiras?"
+        },
+        {
+            "id": 29,
+            "text": "A cabana de check-in. Possivelmente haverá lá alguém com uma ideia de quem poderá ter feito isto."
         }
     ]
 }

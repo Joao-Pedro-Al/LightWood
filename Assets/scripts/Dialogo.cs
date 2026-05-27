@@ -50,11 +50,6 @@ public class Dialogo : MonoBehaviour
 
     IEnumerator DizerDialogo(dialogo d)
     {
-        while(Audio.isPlaying)
-        {
-            yield return null;
-        }
-
         if(!Obj_Legends.activeInHierarchy)
             Legendas_OnOff(true);
 
@@ -62,27 +57,33 @@ public class Dialogo : MonoBehaviour
         legendas.text = d.text;
 
         // Áudio
-        string path = System.IO.Path.Combine(Application.streamingAssetsPath, "dialogos", d.file);
-
-        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.MPEG))
+        if(d.file != null) // Se haver ficheiro de Áudio
         {
-            yield return request.SendWebRequest();
+            string path = System.IO.Path.Combine(Application.streamingAssetsPath, "dialogos", d.file);
 
-            if (request.result == UnityWebRequest.Result.Success)
+            using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.MPEG))
             {
-                Audio.clip = DownloadHandlerAudioClip.GetContent(request);
-                Audio.Play();
-                while(Audio.isPlaying)
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.Success)
                 {
-                    yield return null;
+                    Audio.clip = DownloadHandlerAudioClip.GetContent(request);
+                    Audio.Play();
+                    while(Audio.isPlaying)
+                    {
+                        yield return null;
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Erro ao carregar Áudio: " + request.error);
                 }
             }
-            else
-            {
-                Debug.LogError("Erro ao carregar Áudio: " + request.error);
-            }
         }
-
+        else
+        {
+            yield return new WaitForSeconds(5); // Dar tempo para ler
+        }
 
         // Próximo diálogo
         if(d.cont)
