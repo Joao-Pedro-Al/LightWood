@@ -2,26 +2,27 @@ using UnityEngine;
 
 public class CliqueItem : MonoBehaviour
 {
-    public Sprite imagemNoInventario; 
+    [Header("Configurações Únicas da Pista")]
+    public Sprite imagemDoItem; 
+    public string nomeDaPista = "Nome do Item";
+    [TextArea(2, 4)] public string descricaoDaPista = "Descrição que aparece no card.";
+    public int numeroFixoDaPista = 1; // 3, 5, 7 ou 8
 
-    private GeradorInventario inventario;
+    private BillboardManager billboard;
     private Renderer[] meusRenderers; 
     private Color[] coresOriginais;    
     private bool jogadorOlhando = false;
 
     void Start()
     {
-        inventario = FindObjectOfType<GeradorInventario>();
+        billboard = FindObjectOfType<BillboardManager>();
         
-        // Pega todos os renderers dos filhos para fazer o brilho
         meusRenderers = GetComponentsInChildren<Renderer>();
-        
         if (meusRenderers != null && meusRenderers.Length > 0)
         {
             coresOriginais = new Color[meusRenderers.Length];
             for (int i = 0; i < meusRenderers.Length; i++)
             {
-                // Evita erros se houver materiais vazios
                 if (meusRenderers[i] != null && meusRenderers[i].material != null)
                 {
                     coresOriginais[i] = meusRenderers[i].material.color;
@@ -64,9 +65,9 @@ public class CliqueItem : MonoBehaviour
     {
         if (jogadorOlhando && Input.GetMouseButtonDown(0))
         {
-            if (inventario != null)
+            if (billboard != null)
             {
-                inventario.AdicionarAoInventario(imagemNoInventario);
+                billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
             }
             
             PlayerInteracao player = FindObjectOfType<PlayerInteracao>();

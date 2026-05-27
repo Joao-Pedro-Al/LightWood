@@ -1,0 +1,29 @@
+{
+    "dialogo":
+    [
+        {
+            "id": 1,
+            "text": "According to all known laws of aviation, there is no way that a bee should be able to fly.",
+            "file": "dial-1.mp3",
+            "cont": true,
+            "prox": 2
+        },
+        {
+            "id": 2,
+            "text": "Its wings are too small to get its fat little body off the ground.",
+            "file": "dial-2.mp3"
+        },
+        {
+            "id": 3,
+            "text": "The bee, of course, flies anyways.",
+            "file": "dial-3.mp3",
+            "cont": true,
+            "prox": 4
+        },
+        {
+            "id": 4,
+            "text": "Because bees don't care what humans think is impossible.",
+            "file": "dial-4.mp3"
+        }
+    ]
+}
