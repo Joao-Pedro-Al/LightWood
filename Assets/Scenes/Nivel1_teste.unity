@@ -3601,7 +3601,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.918441
+      value: -12.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3609,7 +3609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 105.0733
+      value: 106.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3698,6 +3698,8 @@ MonoBehaviour:
   prefabCard: {fileID: 720990792755376067, guid: 353cd7de458775647af89aa0c3e95938, type: 3}
   fioPrefab: {fileID: 448276688473028779, guid: 7dbae9d399fcd8d4ba6d107ecda1bf44, type: 3}
   painelFundoPreto: {fileID: 469505150}
+  limitesX: 450
+  limitesY: 250
 --- !u!1001 &1870346308
 PrefabInstance:
   m_ObjectHideFlags: 0

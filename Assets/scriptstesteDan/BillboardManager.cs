@@ -13,6 +13,12 @@ public class BillboardManager : MonoBehaviour
     [Tooltip("Arrasta o teu objeto fundoinventario para aqui.")]
     public GameObject painelFundoPreto; 
 
+    [Header("Configurações do Caos Máximo (Mural Livre)")]
+    [Tooltip("Distância máxima para a esquerda e para a direita a partir do centro (Aumenta para espalhar mais nos lados).")]
+    public float limitesX = 500f;
+    [Tooltip("Distância máxima para cima e para baixo a partir do centro (Aumenta para espalhar mais na vertical).")]
+    public float limitesY = 300f;
+
     private Transform gridDoQuadro;   
     private List<PistaCard> selecionados = new List<PistaCard>();
 
@@ -34,8 +40,6 @@ public class BillboardManager : MonoBehaviour
     public void AbrirQuadro()
     {
         if (painelFundoPreto) painelFundoPreto.SetActive(true);
-        
-        // Ativa o rato para poderes clicar e selecionar os cartões à vontade
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -43,8 +47,6 @@ public class BillboardManager : MonoBehaviour
     public void FecharQuadro()
     {
         if (painelFundoPreto) painelFundoPreto.SetActive(false);
-        
-        // Prende o rato novamente para o jogador voltar ao modo de exploração 3D
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -53,19 +55,53 @@ public class BillboardManager : MonoBehaviour
     {
         if (prefabCard == null || gridDoQuadro == null) return;
 
+        // Instancia o cartão no quadro
         GameObject novoCard = Instantiate(prefabCard, gridDoQuadro);
         
         RectTransform rt = novoCard.GetComponent<RectTransform>();
         if (rt != null)
         {
             rt.localScale = Vector3.one;
-            rt.localPosition = new Vector3(rt.localPosition.x, rt.localPosition.y, 0f);
+
+            // CAOS TOTAL: Cada cartão ganha uma posição absolutamente única e livre no quadro inteiro
+            // Retirámos as amarras do ID na posição para que eles possam nascer em QUALQUER lugar da cortiça!
+            float aleatorioX = Random.Range(-limitesX, limitesX);
+            float aleatorioY = Random.Range(-limitesY, limitesY);
+
+            rt.localPosition = new Vector3(aleatorioX, aleatorioY, 0f);
+
+            // ROTAÇÃO REALISTA: Inclinação do cartão torto (efeito espetado com pionés)
+            float inclinacaoAleatoria = Random.Range(-15f, 15f); // Aumentado para até 15 graus de inclinação
+            rt.localRotation = Quaternion.Euler(0f, 0f, inclinacaoAleatoria);
         }
         
         PistaCard scriptCard = novoCard.GetComponent<PistaCard>();
         if (scriptCard != null)
         {
             scriptCard.Setup(foto, nome, descricao, numero, this);
+        }
+
+        // Mantém a organização interna para o sistema de ligações funcionar perfeitamente
+        OrganizarHierarquiaInterna();
+    }
+
+    void OrganizarHierarquiaInterna()
+    {
+        if (gridDoQuadro == null) return;
+
+        List<PistaCard> cartoesNoQuadro = new List<PistaCard>();
+        foreach (Transform filho in gridDoQuadro)
+        {
+            PistaCard card = filho.GetComponent<PistaCard>();
+            if (card != null) cartoesNoQuadro.Add(card);
+        }
+
+        // Ordenação lógica interna por ID
+        cartoesNoQuadro.Sort((a, b) => a.meuNumero.CompareTo(b.meuNumero));
+
+        for (int i = 0; i < cartoesNoQuadro.Count; i++)
+        {
+            cartoesNoQuadro[i].transform.SetSiblingIndex(i);
         }
     }
 
@@ -85,7 +121,7 @@ public class BillboardManager : MonoBehaviour
         int n1 = selecionados[0].meuNumero;
         int n2 = selecionados[1].meuNumero;
 
-        // Se forem as pulseiras (8) e o telemóvel (7) por exemplo
+        // Mantém a tua mecânica de ligar o telemóvel (7) às pulseiras (8)
         if ((n1 == 7 && n2 == 8) || (n1 == 8 && n2 == 7))
         {
             DesenharFio(selecionados[0], selecionados[1]);
