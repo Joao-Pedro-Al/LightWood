@@ -12,6 +12,12 @@ public class CliqueItem : MonoBehaviour
     [Tooltip("Se ativares isto, o objeto NÃO desaparece do chão ao clicar, mas vai para o quadro na mesma!")]
     public bool naoColetavel = false; 
 
+    [Header("Mecânica de Bateria")]
+    [Tooltip("Ativa esta caixinha se este objeto for uma Bateria para recarregar a Lanterna!")]
+    public bool eBateria = false;
+    [Tooltip("Quantidade de carga que esta bateria vai dar à lanterna (ex: 50, 100).")]
+    public float quantidadeCarga = 50f;
+
     private BillboardManager billboard;
     private Renderer[] meusRenderers; 
     private Color[] coresOriginais;    
@@ -30,14 +36,13 @@ public class CliqueItem : MonoBehaviour
             {
                 if (meusRenderers[i] != null && meusRenderers[i].material != null)
                 {
-                    // PROTEÇÃO: Guarda a cor apenas se o material suportar a propriedade padrão
                     if (meusRenderers[i].material.HasProperty("_Color"))
                     {
                         coresOriginais[i] = meusRenderers[i].material.color;
                     }
                     else
                     {
-                        coresOriginais[i] = Color.white; // Valor de segurança
+                        coresOriginais[i] = Color.white; 
                     }
                 }
             }
@@ -53,7 +58,6 @@ public class CliqueItem : MonoBehaviour
         {
             foreach (Renderer r in meusRenderers)
             {
-                // PROTEÇÃO: Só tenta dar brilho se o material contiver a propriedade '_Color'
                 if (r != null && r.material != null && r.material.HasProperty("_Color"))
                 {
                     r.material.color = Color.white * 1.5f;
@@ -71,7 +75,6 @@ public class CliqueItem : MonoBehaviour
         {
             for (int i = 0; i < meusRenderers.Length; i++)
             {
-                // PROTEÇÃO: Só devolve a cor original se o material aceitar a propriedade
                 if (meusRenderers[i] != null && meusRenderers[i].material != null && meusRenderers[i].material.HasProperty("_Color"))
                 {
                     meusRenderers[i].material.color = coresOriginais[i];
@@ -84,6 +87,23 @@ public class CliqueItem : MonoBehaviour
     {
         if (jaFoiRegistado) return;
 
+        // SE FOR UMA BATERIA:
+        if (eBateria)
+        {
+            // Encontra a lanterna no teu Player e dá-lhe a carga
+            Flashlight lanterna = FindObjectOfType<Flashlight>();
+            if (lanterna != null)
+            {
+                lanterna.Recharge(quantidadeCarga);
+            }
+            
+            // Remove o brilho da mira, pula a parte de enviar para o quadro, e some com ela do chão
+            AoOlharSair();
+            Destroy(gameObject);
+            return; // Interrompe o código aqui para não fazer mais nada
+        }
+
+        // SE FOR UMA PISTA NORMAL (Vai para o quadro):
         if (billboard != null)
         {
             billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);

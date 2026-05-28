@@ -312,6 +312,8 @@ MonoBehaviour:
   descricaoDaPista: "\"Para ter tanto sangue, devia estar nas m\xE3os da v\xEDtima.\""
   numeroFixoDaPista: 7
   naoColetavel: 0
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!1001 &147917389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1167,6 +1169,8 @@ MonoBehaviour:
   descricaoDaPista: '"Yuck... o assassino estava com raiva."'
   numeroFixoDaPista: 6
   naoColetavel: 1
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!65 &655178703
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1364,6 +1368,8 @@ MonoBehaviour:
   descricaoDaPista: "\"Porra... como \xE9 que foi empalado assim?!\""
   numeroFixoDaPista: 4
   naoColetavel: 1
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!65 &687193195
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1627,6 +1633,8 @@ MonoBehaviour:
 '
   numeroFixoDaPista: 8
   naoColetavel: 0
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!23 &771208732
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2660,6 +2668,8 @@ MonoBehaviour:
   descricaoDaPista: "\"Isto n\xE3o foi ventania normal...\""
   numeroFixoDaPista: 2
   naoColetavel: 1
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!65 &1298236978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3214,7 +3224,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8606eacb172d8f6479f369f4e55ab27b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2035599252}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8606eacb172d8f6479f369f4e55ab27b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2035599251}
   m_SourcePrefab: {fileID: 100100000, guid: 8606eacb172d8f6479f369f4e55ab27b, type: 3}
 --- !u!4 &1661449934 stripped
 Transform:
@@ -3360,6 +3376,8 @@ MonoBehaviour:
   descricaoDaPista: '"Devia ser um grupo grande."'
   numeroFixoDaPista: 3
   naoColetavel: 0
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!65 &1740889025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3460,6 +3478,8 @@ MonoBehaviour:
   descricaoDaPista: '"Parece que estavam a fazer S''Mores antes do ataque."'
   numeroFixoDaPista: 1
   naoColetavel: 1
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!65 &1748542373
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3769,6 +3789,8 @@ MonoBehaviour:
   descricaoDaPista: ' "Muito sangue, isto foi uma arma."'
   numeroFixoDaPista: 5
   naoColetavel: 0
+  eBateria: 0
+  quantidadeCarga: 50
 --- !u!65 &1870346312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3982,6 +4004,51 @@ Transform:
   - {fileID: 1740889021}
   m_Father: {fileID: 1124160676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2035599248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8606eacb172d8f6479f369f4e55ab27b, type: 3}
+  m_PrefabInstance: {fileID: 1661449933}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2035599251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035599248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  imagemDoItem: {fileID: 0}
+  nomeDaPista: Nome do Item
+  descricaoDaPista: "Descri\xE7\xE3o no card."
+  numeroFixoDaPista: 1
+  naoColetavel: 0
+  eBateria: 1
+  quantidadeCarga: 100
+--- !u!65 &2035599252
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035599248}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.020000005, y: 0.020000003, z: 0.035935555}
+  m_Center: {x: 2.3745822e-10, y: -0.0000004765334, z: 0.007967777}
 --- !u!1 &2068205808
 GameObject:
   m_ObjectHideFlags: 0
