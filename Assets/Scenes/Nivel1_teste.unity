@@ -311,6 +311,7 @@ MonoBehaviour:
   nomeDaPista: "Telem\xF3vel Sangrado"
   descricaoDaPista: "\"Para ter tanto sangue, devia estar nas m\xE3os da v\xEDtima.\""
   numeroFixoDaPista: 7
+  Id_Dialogo: 11
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
@@ -947,6 +948,150 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a17cd0bc0a2f71a49a8069ef15af0f77, type: 3}
   m_PrefabInstance: {fileID: 655178698}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &512549612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 512549615}
+  - component: {fileID: 512549614}
+  - component: {fileID: 512549613}
+  m_Layer: 0
+  m_Name: DialogoManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &512549613
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512549612}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &512549614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512549612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3658d9dedf8c96e479729f11e415a44d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogo
+  legendas: {fileID: 650116156}
+  Audio: {fileID: 512549613}
+--- !u!4 &512549615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512549612}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.85129, y: 0.4, z: -1.1234}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &650116153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1328,7 @@ MonoBehaviour:
   nomeDaPista: Corpo Rasgado
   descricaoDaPista: '"Yuck... o assassino estava com raiva."'
   numeroFixoDaPista: 6
+  Id_Dialogo: 10
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
@@ -1382,6 +1528,7 @@ MonoBehaviour:
   nomeDaPista: Corpo no tronco
   descricaoDaPista: "\"Porra... como \xE9 que foi empalado assim?!\""
   numeroFixoDaPista: 4
+  Id_Dialogo: 8
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
@@ -1647,6 +1794,7 @@ MonoBehaviour:
 
 '
   numeroFixoDaPista: 8
+  Id_Dialogo: 12
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
@@ -2682,6 +2830,7 @@ MonoBehaviour:
   nomeDaPista: Tenda Rasgada;
   descricaoDaPista: "\"Isto n\xE3o foi ventania normal...\""
   numeroFixoDaPista: 2
+  Id_Dialogo: 6
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
@@ -3390,6 +3539,7 @@ MonoBehaviour:
   nomeDaPista: Mashmello
   descricaoDaPista: '"Devia ser um grupo grande."'
   numeroFixoDaPista: 3
+  Id_Dialogo: 7
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
@@ -3492,6 +3642,7 @@ MonoBehaviour:
   nomeDaPista: 'Fogueira com S''Mores; '
   descricaoDaPista: '"Parece que estavam a fazer S''Mores antes do ataque."'
   numeroFixoDaPista: 1
+  Id_Dialogo: 5
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
@@ -3806,6 +3957,7 @@ MonoBehaviour:
   nomeDaPista: Pedra sangrada
   descricaoDaPista: ' "Muito sangue, isto foi uma arma."'
   numeroFixoDaPista: 5
+  Id_Dialogo: 9
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
@@ -4043,6 +4195,7 @@ MonoBehaviour:
   nomeDaPista: Nome do Item
   descricaoDaPista: "Descri\xE7\xE3o no card."
   numeroFixoDaPista: 1
+  Id_Dialogo: 0
   naoColetavel: 0
   eBateria: 1
   quantidadeCarga: 100
@@ -4204,3 +4357,4 @@ SceneRoots:
   - {fileID: 1872907562}
   - {fileID: 658003838}
   - {fileID: 1573703083}
+  - {fileID: 512549615}

@@ -18,6 +18,8 @@ public class Dialogo : MonoBehaviour
 
     private GameObject Obj_Legends;
 
+    private bool DialogoAtivo = false;
+
     void Awake()
     {
         string path = Application.streamingAssetsPath + "/dialogos.json";
@@ -43,9 +45,18 @@ public class Dialogo : MonoBehaviour
         {
             if(d.id == id)
             {
-                StartCoroutine(DizerDialogo(d));
+                // StartCoroutine(DizerDialogo(d));
+                StartCoroutine(LinhaEspera(d));
             }
         }
+    }
+
+    IEnumerator LinhaEspera(dialogo d)
+    {
+        while(DialogoAtivo){yield return null;}
+
+        DialogoAtivo = true;
+        StartCoroutine(DizerDialogo(d));
     }
 
     IEnumerator DizerDialogo(dialogo d)
@@ -90,6 +101,9 @@ public class Dialogo : MonoBehaviour
             AtivarDialogo(d.prox);
         else
             Legendas_OnOff(false);
+
+        // Confirmar que o Queu está livre
+        DialogoAtivo = false;
     }
 
     private void Legendas_OnOff(bool atv)

@@ -6,7 +6,11 @@ public class CliqueItem : MonoBehaviour
     public Sprite imagemDoItem; 
     public string nomeDaPista = "Nome do Item";
     [TextArea(2, 4)] public string descricaoDaPista = "Descrição no card.";
-    public int numeroFixoDaPista = 1; 
+    public int numeroFixoDaPista = 1;
+
+    [Header("Diálogo")]
+    private Dialogo DM; // Para aceder ao Script de Diálogo
+    public int Id_Dialogo; // O Id do diálogo a ser chamado
 
     [Header("Tipo de Pista")]
     [Tooltip("Se ativares isto, o objeto NÃO desaparece do chão ao clicar, mas vai para o quadro na mesma!")]
@@ -26,6 +30,8 @@ public class CliqueItem : MonoBehaviour
 
     void Start()
     {
+        DM = Dialogo.Instance; // Aceder ao Diálogo
+
         billboard = FindObjectOfType<BillboardManager>();
         meusRenderers = GetComponentsInChildren<Renderer>();
         
@@ -102,6 +108,10 @@ public class CliqueItem : MonoBehaviour
             Destroy(gameObject);
             return; // Interrompe o código aqui para não fazer mais nada
         }
+
+        // Diálogo
+        if(Id_Dialogo != null)
+            DM.AtivarDialogo(Id_Dialogo);
 
         // SE FOR UMA PISTA NORMAL (Vai para o quadro):
         if (billboard != null)

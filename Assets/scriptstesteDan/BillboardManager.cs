@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class BillboardManager : MonoBehaviour
 {
+    [Header("Diálogo")]
+    private Dialogo DM; // Para aceder ao Script de Diálogo
+
     [Header("Configurações do Quadro")]
     public GameObject prefabCard;     
     public GameObject painelFundoPreto; 
@@ -30,6 +33,12 @@ public class BillboardManager : MonoBehaviour
         if (painelFundoPreto) painelFundoPreto.SetActive(false);
 
         GerarMaterialDoFio();
+    }
+
+    // Start para o Instance, pois se colocar no Wake poderá não associar no caso que Dialogo.cs ainda não iniciou
+    void Start()
+    {
+        DM = Dialogo.Instance;
     }
 
     void GerarMaterialDoFio()
@@ -89,6 +98,7 @@ public class BillboardManager : MonoBehaviour
             ligou123 = true;
             CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[2].gameObject);
             CriarLinhaFio3D(mapaPistas[2].gameObject, mapaPistas[3].gameObject);
+            DM.AtivarDialogo(14);
         }
 
         // Interligar 5 + 6
@@ -96,6 +106,7 @@ public class BillboardManager : MonoBehaviour
         {
             ligou56 = true;
             CriarLinhaFio3D(mapaPistas[5].gameObject, mapaPistas[6].gameObject);
+            DM.AtivarDialogo(15);
         }
 
         // Interligar 7 + 8
@@ -103,6 +114,7 @@ public class BillboardManager : MonoBehaviour
         {
             ligou78 = true;
             CriarLinhaFio3D(mapaPistas[7].gameObject, mapaPistas[8].gameObject);
+            DM.AtivarDialogo(16);
         }
     }
 
