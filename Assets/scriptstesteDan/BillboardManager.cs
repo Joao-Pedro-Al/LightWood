@@ -5,13 +5,13 @@ using TMPro;
 public class BillboardManager : MonoBehaviour
 {
     [Header("Configurações do Quadro")]
-    public GameObject prefabCard;
-    public Transform gridDoQuadro;
-    public LineRenderer fioPrefab;
-    public TextMeshProUGUI textoConclusao;
+    public GameObject prefabCard;     
+    public Transform gridDoQuadro;    
+    public LineRenderer fioPrefab;    
 
-    [Header("UI Sistema de Fundo")]
-    public GameObject painelFundoPreto; // O fundo escuro que vamos ativar/desativar
+    [Header("Textos e UI")]
+    public TextMeshProUGUI textoConclusao;
+    public GameObject painelFundoPreto; 
 
     private List<PistaCard> selecionados = new List<PistaCard>();
     private bool segredoRevelado = false;
@@ -19,14 +19,12 @@ public class BillboardManager : MonoBehaviour
     void Start()
     {
         if (textoConclusao != null) textoConclusao.text = "";
-        FecharQuadro(); // Garante que começa fechado
+        FecharQuadro();
     }
 
-    // Funções para abrir e fechar o quadro com o fundo preto
     public void AbrirQuadro()
     {
         if (painelFundoPreto != null) painelFundoPreto.SetActive(true);
-        // Ativa o rato e congela o tempo se necessário no teu script de input
     }
 
     public void FecharQuadro()
@@ -73,7 +71,6 @@ public class BillboardManager : MonoBehaviour
         }
         else
         {
-            // Se errar, limpa a seleção após meio segundo
             Invoke("LimparSelecao", 0.5f);
         }
     }
@@ -84,16 +81,18 @@ public class BillboardManager : MonoBehaviour
 
         if (fioPrefab != null)
         {
-            // Cria o fio diretamente dentro do Grid ou do Canvas para herdar a escala correta da UI
-            LineRenderer fio = Instantiate(fioPrefab, gridDoQuadro);
-            
-            // Posições locais baseadas no RectTransform dos cartões
+            // Cria o fio como filho do quadro para herdar a rotação de 239 graus
+            LineRenderer fio = Instantiate(fioPrefab, transform);
+            fio.useWorldSpace = true;
+
             Vector3 pos1 = c1.transform.position;
             Vector3 pos2 = c2.transform.position;
 
-            // Puxa ligeiramente para a frente no eixo Z do mundo do Canvas
-            fio.SetPosition(0, new Vector3(pos1.x, pos1.y, pos1.z - 0.1f));
-            fio.SetPosition(1, new Vector3(pos2.x, pos2.y, pos2.z - 0.1f));
+            // Afasta ligeiramente o fio para a frente do quadro usando a direção frontal do modelo
+            Vector3 offsetFrente = transform.forward * -0.02f;
+
+            fio.SetPosition(0, pos1 + offsetFrente);
+            fio.SetPosition(1, pos2 + offsetFrente);
         }
 
         LimparSelecao();

@@ -1295,7 +1295,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 487189bbcb842494096277665132d0bc, type: 2}
     - target: {fileID: 919132149155446097, guid: 9153a41cf0efa114cbf7e8f458f9ec4f, type: 3}
       propertyPath: m_Name
-      value: pulseira
+      value: pulseiraFinal
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9153a41cf0efa114cbf7e8f458f9ec4f, type: 3}
       propertyPath: m_TagString
@@ -1647,7 +1647,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: aa420ebb30f4e8243883307749389c9f, type: 2}
     - target: {fileID: 919132149155446097, guid: ecd89e3cad99faa42b66308b8bd008ce, type: 3}
       propertyPath: m_Name
-      value: marshmellosD
+      value: marshmellosFinal
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ecd89e3cad99faa42b66308b8bd008ce, type: 3}
       propertyPath: m_TagString
@@ -1953,10 +1953,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ee5ab06f8bdbe4bb5acfefbf0b7951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BillboardManager
-  cardPistaPrefab: {fileID: 720990792755376067, guid: 353cd7de458775647af89aa0c3e95938, type: 3}
+  prefabCard: {fileID: 0}
   gridDoQuadro: {fileID: 1056721462}
-  fioVermelhoPrefab: {fileID: 448276688473028779, guid: 7dbae9d399fcd8d4ba6d107ecda1bf44, type: 3}
-  textoConclusaoUI: {fileID: 246914034}
+  fioPrefab: {fileID: 0}
+  textoConclusao: {fileID: 0}
+  painelFundoPreto: {fileID: 0}
 --- !u!1 &1440429919 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5824510187379060028, guid: 9153a41cf0efa114cbf7e8f458f9ec4f, type: 3}
@@ -2140,7 +2141,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 69699aef6e275724e802bf5f549b5522, type: 2}
     - target: {fileID: 919132149155446097, guid: b8329b4104cc533428c7372ecad605b7, type: 3}
       propertyPath: m_Name
-      value: telemovelD
+      value: telemoveFinal
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b8329b4104cc533428c7372ecad605b7, type: 3}
       propertyPath: m_IsActive
@@ -2261,7 +2262,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2c73304a0ff27d94cb86376ac9beca40, type: 2}
     - target: {fileID: 919132149155446097, guid: e7eedc08d3260ba40952d7ecc64ad6e0, type: 3}
       propertyPath: m_Name
-      value: pedratesteD
+      value: pedratesteFinal
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e7eedc08d3260ba40952d7ecc64ad6e0, type: 3}
       propertyPath: m_TagString
