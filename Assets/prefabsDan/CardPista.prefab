@@ -93,10 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d373ed62021606d458302a7a43ae1a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PistaCard
-  textoNumero: {fileID: 2939820720631897917}
-  textoNome: {fileID: 8414327046051673042}
-  textoDescricao: {fileID: 8360969351150094703}
-  imagemFotoItem: {fileID: 1354607648161192809}
+  txtNumero: {fileID: 2939820720631897917}
+  txtNome: {fileID: 8414327046051673042}
+  txtDescricao: {fileID: 8360969351150094703}
+  imgFoto: {fileID: 1354607648161192809}
   meuNumero: 0
 --- !u!114 &3432202313735303999
 MonoBehaviour:

@@ -4,74 +4,61 @@ using System.Collections.Generic;
 public class BillboardManager : MonoBehaviour
 {
     [Header("Configurações do Quadro")]
-    [Tooltip("Arrasta o teu Prefab do CardPista para aqui.")]
     public GameObject prefabCard;     
-    [Tooltip("Arrasta o teu Prefab do FioVermelho (LineRenderer) para aqui.")]
-    public LineRenderer fioPrefab;    
-
-    [Header("UI do Inventário")]
-    [Tooltip("Arrasta o teu objeto fundoinventario para aqui.")]
     public GameObject painelFundoPreto; 
 
-    [Header("Configurações do Caos Máximo (Mural Livre)")]
-    [Tooltip("Distância máxima para a esquerda e para a direita a partir do centro (Aumenta para espalhar mais nos lados).")]
-    public float limitesX = 500f;
-    [Tooltip("Distância máxima para cima e para baixo a partir do centro (Aumenta para espalhar mais na vertical).")]
-    public float limitesY = 300f;
+    [Header("Configurações do Caos")]
+    public float limitesX = 400f;
+    public float limitesY = 200f;
+
+    [Header("Customização do Fio Vermelho (3D Real)")]
+    [Range(0.005f, 0.1f)] public float espessuraDoFio = 0.015f; // Grossura perfeita de um cordel fino
+    public Color corDoFio = new Color(0.75f, 0.05f, 0.05f);     // Vermelho vivo de investigação
 
     private Transform gridDoQuadro;   
-    private List<PistaCard> selecionados = new List<PistaCard>();
+    private List<PistaCard> cartoesInstanciados = new List<PistaCard>();
+    private Material materialFioNativo;
+
+    private bool ligou123 = false;
+    private bool ligou56 = false;
+    private bool ligou78 = false;
 
     void Awake()
     {
         Canvas canvasInterno = GetComponentInChildren<Canvas>();
-        if (canvasInterno != null)
-        {
-            gridDoQuadro = canvasInterno.transform;
-        }
-        else
-        {
-            Debug.LogError("Aviso: O Canvas_Quadro precisa de ser filho do objeto buildboard2D!");
-        }
-
+        if (canvasInterno != null) gridDoQuadro = canvasInterno.transform;
         if (painelFundoPreto) painelFundoPreto.SetActive(false);
+
+        GerarMaterialDoFio();
     }
 
-    public void AbrirQuadro()
+    void GerarMaterialDoFio()
     {
-        if (painelFundoPreto) painelFundoPreto.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // Usa um shader simples não afetado por luzes para a cor ficar sempre viva
+        Shader shaderAlvo = Shader.Find("Sprites/Default");
+        if (shaderAlvo == null) shaderAlvo = Shader.Find("Unlit/Color");
+        
+        materialFioNativo = new Material(shaderAlvo);
+        materialFioNativo.color = corDoFio;
     }
 
-    public void FecharQuadro()
-    {
-        if (painelFundoPreto) painelFundoPreto.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+    public void AbrirQuadro() { if (painelFundoPreto) painelFundoPreto.SetActive(true); Cursor.lockState = CursorLockMode.None; Cursor.visible = true; }
+    public void FecharQuadro() { if (painelFundoPreto) painelFundoPreto.SetActive(false); Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
 
     public void AdicionarPistaAoQuadro(Sprite foto, string nome, string descricao, int numero)
     {
         if (prefabCard == null || gridDoQuadro == null) return;
 
-        // Instancia o cartão no quadro
         GameObject novoCard = Instantiate(prefabCard, gridDoQuadro);
-        
         RectTransform rt = novoCard.GetComponent<RectTransform>();
         if (rt != null)
         {
             rt.localScale = Vector3.one;
-
-            // CAOS TOTAL: Cada cartão ganha uma posição absolutamente única e livre no quadro inteiro
-            // Retirámos as amarras do ID na posição para que eles possam nascer em QUALQUER lugar da cortiça!
             float aleatorioX = Random.Range(-limitesX, limitesX);
             float aleatorioY = Random.Range(-limitesY, limitesY);
-
             rt.localPosition = new Vector3(aleatorioX, aleatorioY, 0f);
 
-            // ROTAÇÃO REALISTA: Inclinação do cartão torto (efeito espetado com pionés)
-            float inclinacaoAleatoria = Random.Range(-15f, 15f); // Aumentado para até 15 graus de inclinação
+            float inclinacaoAleatoria = Random.Range(-12f, 12f);
             rt.localRotation = Quaternion.Euler(0f, 0f, inclinacaoAleatoria);
         }
         
@@ -79,67 +66,76 @@ public class BillboardManager : MonoBehaviour
         if (scriptCard != null)
         {
             scriptCard.Setup(foto, nome, descricao, numero, this);
+            cartoesInstanciados.Add(scriptCard);
         }
 
-        // Mantém a organização interna para o sistema de ligações funcionar perfeitamente
-        OrganizarHierarquiaInterna();
+        VerificarCombinacoesAutomaticas();
     }
 
-    void OrganizarHierarquiaInterna()
+    void VerificarCombinacoesAutomaticas()
     {
-        if (gridDoQuadro == null) return;
-
-        List<PistaCard> cartoesNoQuadro = new List<PistaCard>();
-        foreach (Transform filho in gridDoQuadro)
+        Dictionary<int, PistaCard> mapaPistas = new Dictionary<int, PistaCard>();
+        foreach (PistaCard card in cartoesInstanciados)
         {
-            PistaCard card = filho.GetComponent<PistaCard>();
-            if (card != null) cartoesNoQuadro.Add(card);
+            if (card != null && !mapaPistas.ContainsKey(card.meuNumero))
+            {
+                mapaPistas.Add(card.meuNumero, card);
+            }
         }
 
-        // Ordenação lógica interna por ID
-        cartoesNoQuadro.Sort((a, b) => a.meuNumero.CompareTo(b.meuNumero));
-
-        for (int i = 0; i < cartoesNoQuadro.Count; i++)
+        // Interligar 1 + 2 + 3
+        if (!ligou123 && mapaPistas.ContainsKey(1) && mapaPistas.ContainsKey(2) && mapaPistas.ContainsKey(3))
         {
-            cartoesNoQuadro[i].transform.SetSiblingIndex(i);
+            ligou123 = true;
+            CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[2].gameObject);
+            CriarLinhaFio3D(mapaPistas[2].gameObject, mapaPistas[3].gameObject);
+        }
+
+        // Interligar 5 + 6
+        if (!ligou56 && mapaPistas.ContainsKey(5) && mapaPistas.ContainsKey(6))
+        {
+            ligou56 = true;
+            CriarLinhaFio3D(mapaPistas[5].gameObject, mapaPistas[6].gameObject);
+        }
+
+        // Interligar 7 + 8
+        if (!ligou78 && mapaPistas.ContainsKey(7) && mapaPistas.ContainsKey(8))
+        {
+            ligou78 = true;
+            CriarLinhaFio3D(mapaPistas[7].gameObject, mapaPistas[8].gameObject);
         }
     }
 
-    public void SelecionarPista(PistaCard card)
+    void CriarLinhaFio3D(GameObject objA, GameObject objB)
     {
-        if (selecionados.Contains(card)) return;
-        selecionados.Add(card);
+        // Cria um objeto para o fio e junta-o diretamente como filho do gestor do quadro
+        GameObject goLinha = new GameObject("Fio3D_Conexao", typeof(LineRenderer));
+        goLinha.transform.SetParent(transform, true);
 
-        if (selecionados.Count == 2)
-        {
-            VerificarLigacao();
-        }
-    }
-
-    void VerificarLigacao()
-    {
-        int n1 = selecionados[0].meuNumero;
-        int n2 = selecionados[1].meuNumero;
-
-        // Mantém a tua mecânica de ligar o telemóvel (7) às pulseiras (8)
-        if ((n1 == 7 && n2 == 8) || (n1 == 8 && n2 == 7))
-        {
-            DesenharFio(selecionados[0], selecionados[1]);
-        }
+        LineRenderer lr = goLinha.GetComponent<LineRenderer>();
         
-        selecionados.Clear();
-    }
+        // Define o uso do espaço global do mundo para evitar desvios por causa de rotações locais
+        lr.useWorldSpace = true;
+        lr.positionCount = 2;
 
-    void DesenharFio(PistaCard c1, PistaCard c2)
-    {
-        if (!fioPrefab) return;
+        // Modifica a grossura nas duas pontas uniformemente
+        lr.startWidth = espessuraDoFio;
+        lr.endWidth = espessuraDoFio;
 
-        LineRenderer fio = Instantiate(fioPrefab, transform);
-        fio.useWorldSpace = true;
-        fio.positionCount = 2;
-        
-        Vector3 offset = transform.forward * -0.05f; 
-        fio.SetPosition(0, c1.transform.position + offset);
-        fio.SetPosition(1, c2.transform.position + offset);
+        lr.material = materialFioNativo;
+        lr.startColor = corDoFio;
+        lr.endColor = corDoFio;
+
+        // CORREÇÃO GEOMÉTRICA: Captura a posição exata no mundo 3D de cada cartão
+        Vector3 posA = objA.transform.position;
+        Vector3 posB = objB.transform.position;
+
+        // Cria um recuo muito ligeiro para a frente (usando o eixo Z global ou a frente do quadro)
+        // para garantir que o barbante não se esconde por trás da textura da cortiça
+        Vector3 avançoFrente = -transform.forward * 0.02f;
+
+        // Força as pontas a ligarem exatamente onde os cartões estão renderizados na tela
+        lr.SetPosition(0, posA + avançoFrente);
+        lr.SetPosition(1, posB + avançoFrente);
     }
 }

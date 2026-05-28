@@ -293,7 +293,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02, y: 0.019999998, z: 0.02}
+  m_Size: {x: 0.03, y: 0.03, z: 0.03}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &99641719
 MonoBehaviour:
@@ -1404,7 +1404,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2.78, y: 5.62, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &771208719
 PrefabInstance:
@@ -1726,7 +1726,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: -0.00025316793, y: -0.0000038142307, z: 1.8862759e-12}
 --- !u!1 &806992464
 GameObject:
@@ -2704,7 +2704,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2.38, y: 3.58, z: 2.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1396147808
 GameObject:
@@ -3514,7 +3514,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.76, y: 1.99, z: 2.57}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1807960205
 GameObject:
@@ -3696,10 +3696,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BillboardManager
   prefabCard: {fileID: 720990792755376067, guid: 353cd7de458775647af89aa0c3e95938, type: 3}
-  fioPrefab: {fileID: 448276688473028779, guid: 7dbae9d399fcd8d4ba6d107ecda1bf44, type: 3}
   painelFundoPreto: {fileID: 469505150}
   limitesX: 450
   limitesY: 250
+  espessuraDoFio: 6
+  corDoFio: {r: 0.65, g: 0, b: 0, a: 1}
 --- !u!1001 &1870346308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3827,8 +3828,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.021981273, y: 0.021430153, z: 0.010683784}
-  m_Center: {x: 0.0000000055879354, y: 0.0005582011, z: 0.0045769783}
+  m_Size: {x: 0.021981273, y: 0.05, z: 0.010683784}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1872907561
 GameObject:
   m_ObjectHideFlags: 0
