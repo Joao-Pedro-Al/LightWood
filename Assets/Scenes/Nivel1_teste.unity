@@ -176,7 +176,13 @@ PrefabInstance:
     - {fileID: -8700617353114198275, guid: 6696482489ebd3943aa99997ba9c3f25, type: 3}
     - {fileID: 65702495048144492, guid: 6696482489ebd3943aa99997ba9c3f25, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6696482489ebd3943aa99997ba9c3f25, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1298236978}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6696482489ebd3943aa99997ba9c3f25, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1298236977}
   m_SourcePrefab: {fileID: 100100000, guid: 6696482489ebd3943aa99997ba9c3f25, type: 3}
 --- !u!4 &3120073 stripped
 Transform:
@@ -305,6 +311,7 @@ MonoBehaviour:
   nomeDaPista: "Telem\xF3vel Sangrado"
   descricaoDaPista: "\"Para ter tanto sangue, devia estar nas m\xE3os da v\xEDtima.\""
   numeroFixoDaPista: 7
+  naoColetavel: 0
 --- !u!1001 &147917389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,7 +371,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5703e507b131cee42bbf88caceb04b11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 687193195}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5703e507b131cee42bbf88caceb04b11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 687193194}
   m_SourcePrefab: {fileID: 100100000, guid: 5703e507b131cee42bbf88caceb04b11, type: 3}
 --- !u!4 &147917390 stripped
 Transform:
@@ -802,6 +815,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0.68, y: 4.5}
   m_SizeDelta: {x: 2000, y: 1099.3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &290923055 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f37fb17ccdf986147a57a9b5ad6623b1, type: 3}
+  m_PrefabInstance: {fileID: 1908023750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &419089876 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
@@ -907,6 +925,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469505150}
   m_CullTransparentMesh: 1
+--- !u!1 &478256461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a17cd0bc0a2f71a49a8069ef15af0f77, type: 3}
+  m_PrefabInstance: {fileID: 655178698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &650116153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,13 +1137,57 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a17cd0bc0a2f71a49a8069ef15af0f77, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 655178703}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a17cd0bc0a2f71a49a8069ef15af0f77, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 655178702}
   m_SourcePrefab: {fileID: 100100000, guid: a17cd0bc0a2f71a49a8069ef15af0f77, type: 3}
 --- !u!4 &655178699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a17cd0bc0a2f71a49a8069ef15af0f77, type: 3}
   m_PrefabInstance: {fileID: 655178698}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &655178702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478256461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  imagemDoItem: {fileID: 21300000, guid: b09459f36e8180243ab96cb27648cdd6, type: 3}
+  nomeDaPista: Corpo Rasgado
+  descricaoDaPista: '"Yuck... o assassino estava com raiva."'
+  numeroFixoDaPista: 6
+  naoColetavel: 1
+--- !u!65 &655178703
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478256461}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.043734465, y: 0.0067648576, z: 0.021977836}
+  m_Center: {x: -0.00054642913, y: 0.00054766866, z: 0.03745722}
 --- !u!1 &655852118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1342,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &687193193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5703e507b131cee42bbf88caceb04b11, type: 3}
+  m_PrefabInstance: {fileID: 147917389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &687193194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687193193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  imagemDoItem: {fileID: 21300000, guid: bda29164516cb1146b1055183d42c0a3, type: 3}
+  nomeDaPista: Corpo no tronco
+  descricaoDaPista: "\"Porra... como \xE9 que foi empalado assim?!\""
+  numeroFixoDaPista: 4
+  naoColetavel: 1
+--- !u!65 &687193195
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687193193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &771208719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1516,6 +1626,7 @@ MonoBehaviour:
 
 '
   numeroFixoDaPista: 8
+  naoColetavel: 0
 --- !u!23 &771208732
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2527,6 +2638,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1196607183635266135, guid: aa9300c048314dcd92786b6ab7919da4, type: 3}
   m_PrefabInstance: {fileID: 1293714479}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1298236976 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6696482489ebd3943aa99997ba9c3f25, type: 3}
+  m_PrefabInstance: {fileID: 3120072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1298236977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298236976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  imagemDoItem: {fileID: 21300000, guid: 081922c012af1b5438d30482a167d4a1, type: 3}
+  nomeDaPista: Tenda Rasgada;
+  descricaoDaPista: "\"Isto n\xE3o foi ventania normal...\""
+  numeroFixoDaPista: 2
+  naoColetavel: 1
+--- !u!65 &1298236978
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298236976}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1396147808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,6 +3359,7 @@ MonoBehaviour:
   nomeDaPista: Mashmello
   descricaoDaPista: '"Devia ser um grupo grande."'
   numeroFixoDaPista: 3
+  naoColetavel: 0
 --- !u!65 &1740889025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3288,6 +3443,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f37fb17ccdf986147a57a9b5ad6623b1, type: 3}
   m_PrefabInstance: {fileID: 1908023750}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1748542372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290923055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  imagemDoItem: {fileID: 21300000, guid: e3f89cd710c49c948970ada8eb8afa3f, type: 3}
+  nomeDaPista: 'Fogueira com S''Mores; '
+  descricaoDaPista: '"Parece que estavam a fazer S''Mores antes do ataque."'
+  numeroFixoDaPista: 1
+  naoColetavel: 1
+--- !u!65 &1748542373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290923055}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1807960205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,6 +3768,7 @@ MonoBehaviour:
   nomeDaPista: Pedra sangrada
   descricaoDaPista: ' "Muito sangue, isto foi uma arma."'
   numeroFixoDaPista: 5
+  naoColetavel: 0
 --- !u!65 &1870346312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3748,7 +3942,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: f37fb17ccdf986147a57a9b5ad6623b1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1293714480}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f37fb17ccdf986147a57a9b5ad6623b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1748542373}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f37fb17ccdf986147a57a9b5ad6623b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1748542372}
   m_SourcePrefab: {fileID: 100100000, guid: f37fb17ccdf986147a57a9b5ad6623b1, type: 3}
 --- !u!1 &1983724778
 GameObject:

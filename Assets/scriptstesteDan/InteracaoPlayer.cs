@@ -10,7 +10,7 @@ public class PlayerInteracao : MonoBehaviour
     public GameObject miraUI; 
 
     [Header("Tecla do Quadro/Inventário")]
-    public KeyCode teclaVerQuadro = KeyCode.E; // Carrega em E para abrir ou fechar o quadro de pistas
+    public KeyCode teclaVerQuadro = KeyCode.E; 
 
     private Camera cam;
     private CliqueItem itemSendoOlhado;
@@ -24,20 +24,17 @@ public class PlayerInteracao : MonoBehaviour
         
         if (miraUI) miraUI.SetActive(false);
         
-        // Garante que o jogo começa com o rato escondido e focado
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        // Deteta se o jogador quer abrir ou fechar o quadro de pistas manuamente
         if (Input.GetKeyDown(teclaVerQuadro))
         {
             ToggleQuadro();
         }
 
-        // Se o quadro estiver aberto, o jogador está a mexer no inventário, logo não faz Raycast no chão
         if (quadroAberto)
         {
             if (miraUI && miraUI.activeSelf) miraUI.SetActive(false);
@@ -53,7 +50,8 @@ public class PlayerInteracao : MonoBehaviour
         {
             CliqueItem itemDetetado = hit.collider.GetComponent<CliqueItem>();
 
-            if (itemDetetado != null)
+            // Só interage se o script existir e estiver ATIVO (enabled)
+            if (itemDetetado != null && itemDetetado.enabled)
             {
                 if (itemSendoOlhado != null && itemSendoOlhado != itemDetetado)
                 {
@@ -68,11 +66,10 @@ public class PlayerInteracao : MonoBehaviour
                     miraUI.SetActive(true);
                 }
 
-                // CLIQUE INFALÍVEL
                 if (Input.GetMouseButtonDown(0))
                 {
                     CliqueItem itemParaColetar = itemSendoOlhado;
-                    LimparVisao(); // Esconde a mira no exato frame da recolha
+                    LimparVisao();
                     itemParaColetar.ColetarPista();
                     return; 
                 }

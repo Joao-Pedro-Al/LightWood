@@ -8,10 +8,15 @@ public class CliqueItem : MonoBehaviour
     [TextArea(2, 4)] public string descricaoDaPista = "Descrição no card.";
     public int numeroFixoDaPista = 1; 
 
+    [Header("Tipo de Pista")]
+    [Tooltip("Se ativares isto, o objeto NÃO desaparece do chão ao clicar, mas vai para o quadro na mesma!")]
+    public bool naoColetavel = false; 
+
     private BillboardManager billboard;
     private Renderer[] meusRenderers; 
     private Color[] coresOriginais;    
     private bool jaEstaBrilhando = false;
+    private bool jaFoiRegistado = false; 
 
     void Start()
     {
@@ -25,7 +30,15 @@ public class CliqueItem : MonoBehaviour
             {
                 if (meusRenderers[i] != null && meusRenderers[i].material != null)
                 {
-                    coresOriginais[i] = meusRenderers[i].material.color;
+                    // PROTEÇÃO: Guarda a cor apenas se o material suportar a propriedade padrão
+                    if (meusRenderers[i].material.HasProperty("_Color"))
+                    {
+                        coresOriginais[i] = meusRenderers[i].material.color;
+                    }
+                    else
+                    {
+                        coresOriginais[i] = Color.white; // Valor de segurança
+                    }
                 }
             }
         }
@@ -33,14 +46,15 @@ public class CliqueItem : MonoBehaviour
 
     public void AoOlharEntrar()
     {
-        if (jaEstaBrilhando) return;
+        if (jaFoiRegistado || jaEstaBrilhando) return;
         jaEstaBrilhando = true;
 
         if (meusRenderers != null)
         {
             foreach (Renderer r in meusRenderers)
             {
-                if (r != null && r.material != null)
+                // PROTEÇÃO: Só tenta dar brilho se o material contiver a propriedade '_Color'
+                if (r != null && r.material != null && r.material.HasProperty("_Color"))
                 {
                     r.material.color = Color.white * 1.5f;
                 }
@@ -50,14 +64,15 @@ public class CliqueItem : MonoBehaviour
 
     public void AoOlharSair()
     {
-        if (!jaEstaBrilhando) return;
+        if (jaFoiRegistado || !jaEstaBrilhando) return;
         jaEstaBrilhando = false;
 
         if (meusRenderers != null)
         {
             for (int i = 0; i < meusRenderers.Length; i++)
             {
-                if (meusRenderers[i] != null && meusRenderers[i].material != null)
+                // PROTEÇÃO: Só devolve a cor original se o material aceitar a propriedade
+                if (meusRenderers[i] != null && meusRenderers[i].material != null && meusRenderers[i].material.HasProperty("_Color"))
                 {
                     meusRenderers[i].material.color = coresOriginais[i];
                 }
@@ -67,12 +82,23 @@ public class CliqueItem : MonoBehaviour
 
     public void ColetarPista()
     {
+        if (jaFoiRegistado) return;
+
         if (billboard != null)
         {
-            // O item é adicionado ao quadro silenciosamente em segundo plano
             billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
         }
-        AoOlharSair();
-        Destroy(gameObject);
+
+        if (naoColetavel)
+        {
+            jaFoiRegistado = true;
+            AoOlharSair(); 
+            this.enabled = false; 
+        }
+        else
+        {
+            AoOlharSair();
+            Destroy(gameObject);
+        }
     }
 }
