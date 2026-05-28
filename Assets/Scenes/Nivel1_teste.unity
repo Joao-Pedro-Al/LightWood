@@ -3699,8 +3699,8 @@ MonoBehaviour:
   painelFundoPreto: {fileID: 469505150}
   limitesX: 450
   limitesY: 250
-  espessuraDoFio: 6
-  corDoFio: {r: 0.65, g: 0, b: 0, a: 1}
+  espessuraDoFio: 0.015
+  corDoFio: {r: 0.75, g: 0.05, b: 0.05, a: 1}
 --- !u!1001 &1870346308
 PrefabInstance:
   m_ObjectHideFlags: 0
