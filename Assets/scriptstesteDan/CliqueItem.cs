@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class CliqueItem : MonoBehaviour
 {
-    [Header("Configurações Únicas da Pista")]
+    [Header("Configurações da Pista")]
     public Sprite imagemDoItem; 
     public string nomeDaPista = "Nome do Item";
-    [TextArea(2, 4)] public string descricaoDaPista = "Descrição que aparece no card.";
-    public int numeroFixoDaPista = 1; // 3, 5, 7 ou 8
+    [TextArea(2, 4)] public string descricaoDaPista = "Descrição no card.";
+    public int numeroFixoDaPista = 1; 
 
     private BillboardManager billboard;
     private Renderer[] meusRenderers; 
     private Color[] coresOriginais;    
-    private bool jogadorOlhando = false;
+    private bool jaEstaBrilhando = false;
 
     void Start()
     {
         billboard = FindObjectOfType<BillboardManager>();
-        
         meusRenderers = GetComponentsInChildren<Renderer>();
+        
         if (meusRenderers != null && meusRenderers.Length > 0)
         {
             coresOriginais = new Color[meusRenderers.Length];
@@ -33,14 +33,16 @@ public class CliqueItem : MonoBehaviour
 
     public void AoOlharEntrar()
     {
-        jogadorOlhando = true;
+        if (jaEstaBrilhando) return;
+        jaEstaBrilhando = true;
+
         if (meusRenderers != null)
         {
-            for (int i = 0; i < meusRenderers.Length; i++)
+            foreach (Renderer r in meusRenderers)
             {
-                if (meusRenderers[i] != null && meusRenderers[i].material != null)
+                if (r != null && r.material != null)
                 {
-                    meusRenderers[i].material.color = coresOriginais[i] * 1.6f;
+                    r.material.color = Color.white * 1.5f;
                 }
             }
         }
@@ -48,7 +50,9 @@ public class CliqueItem : MonoBehaviour
 
     public void AoOlharSair()
     {
-        jogadorOlhando = false;
+        if (!jaEstaBrilhando) return;
+        jaEstaBrilhando = false;
+
         if (meusRenderers != null)
         {
             for (int i = 0; i < meusRenderers.Length; i++)
@@ -61,19 +65,14 @@ public class CliqueItem : MonoBehaviour
         }
     }
 
-    void Update()
+    public void ColetarPista()
     {
-        if (jogadorOlhando && Input.GetMouseButtonDown(0))
+        if (billboard != null)
         {
-            if (billboard != null)
-            {
-                billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
-            }
-            
-            PlayerInteracao player = FindObjectOfType<PlayerInteracao>();
-            if (player != null) player.ForcarResetMira();
-
-            Destroy(gameObject);
+            // O item é adicionado ao quadro silenciosamente em segundo plano
+            billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
         }
+        AoOlharSair();
+        Destroy(gameObject);
     }
 }

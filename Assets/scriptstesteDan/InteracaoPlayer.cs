@@ -1,78 +1,120 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInteracao : MonoBehaviour
 {
-    public float distanciaInteracao = 3.5f; 
-    public Image miraUI;                   
+    [Header("Configurações do Raio")]
+    public float distanciaDoRaio = 6f; 
+    public LayerMask layerDasPistas;  
 
-    private CliqueItem itemSendoFocado;
+    [Header("Interface UI")]
+    public GameObject miraUI; 
+
+    [Header("Tecla do Quadro/Inventário")]
+    public KeyCode teclaVerQuadro = KeyCode.E; // Carrega em E para abrir ou fechar o quadro de pistas
+
+    private Camera cam;
+    private CliqueItem itemSendoOlhado;
+    private BillboardManager billboard;
+    private bool quadroAberto = false;
 
     void Start()
     {
-        if (miraUI != null) miraUI.gameObject.SetActive(false);
+        cam = Camera.main;
+        billboard = FindObjectOfType<BillboardManager>();
+        
+        if (miraUI) miraUI.SetActive(false);
+        
+        // Garante que o jogo começa com o rato escondido e focado
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        if (Cursor.visible) return;
+        // Deteta se o jogador quer abrir ou fechar o quadro de pistas manuamente
+        if (Input.GetKeyDown(teclaVerQuadro))
+        {
+            ToggleQuadro();
+        }
 
-        Ray raio = new Ray(transform.position, transform.forward);
+        // Se o quadro estiver aberto, o jogador está a mexer no inventário, logo não faz Raycast no chão
+        if (quadroAberto)
+        {
+            if (miraUI && miraUI.activeSelf) miraUI.SetActive(false);
+            return;
+        }
+
+        if (cam == null) return;
+
+        Ray raio = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        if (Physics.Raycast(raio, out hit, distanciaInteracao))
+        if (Physics.Raycast(raio, out hit, distanciaDoRaio, layerDasPistas))
         {
-            // SOLUÇÃO AQUI: Procura o script no objeto onde o raio bateu OU em qualquer PAI acima dele!
-            CliqueItem itemDetectado = hit.collider.GetComponentInParent<CliqueItem>();
+            CliqueItem itemDetetado = hit.collider.GetComponent<CliqueItem>();
 
-            if (itemDetectado != null)
+            if (itemDetetado != null)
             {
-                if (itemSendoFocado != itemDetectado)
+                if (itemSendoOlhado != null && itemSendoOlhado != itemDetetado)
                 {
-                    if (itemSendoFocado != null) itemSendoFocado.AoOlharSair();
-                    
-                    itemSendoFocado = itemDetectado;
-                    itemSendoFocado.AoOlharEntrar(); 
-                    
-                    if (miraUI != null)
-                    {
-                        miraUI.gameObject.SetActive(true);
-                        miraUI.color = Color.green;
-                        miraUI.rectTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-                    }
+                    itemSendoOlhado.AoOlharSair();
+                }
+
+                itemSendoOlhado = itemDetetado;
+                itemSendoOlhado.AoOlharEntrar();
+
+                if (miraUI && !miraUI.activeSelf) 
+                {
+                    miraUI.SetActive(true);
+                }
+
+                // CLIQUE INFALÍVEL
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CliqueItem itemParaColetar = itemSendoOlhado;
+                    LimparVisao(); // Esconde a mira no exato frame da recolha
+                    itemParaColetar.ColetarPista();
+                    return; 
                 }
             }
             else
             {
-                LimparFoco();
+                LimparVisao();
             }
         }
         else
         {
-            LimparFoco();
+            LimparVisao();
         }
     }
 
-    void LimparFoco()
+    void LimparVisao()
     {
-        if (itemSendoFocado != null)
+        if (itemSendoOlhado != null)
         {
-            itemSendoFocado.AoOlharSair(); 
-            itemSendoFocado = null;
+            itemSendoOlhado.AoOlharSair();
+            itemSendoOlhado = null;
         }
-        
-        if (miraUI != null)
+        if (miraUI && miraUI.activeSelf) 
         {
-            miraUI.gameObject.SetActive(false);
+            miraUI.SetActive(false);
         }
     }
 
-    public void ForcarResetMira()
+    void ToggleQuadro()
     {
-        itemSendoFocado = null;
-        if (miraUI != null)
+        if (billboard == null) return;
+
+        quadroAberto = !quadroAberto;
+
+        if (quadroAberto)
         {
-            miraUI.gameObject.SetActive(false);
+            LimparVisao();
+            billboard.AbrirQuadro();
+        }
+        else
+        {
+            billboard.FecharQuadro();
         }
     }
 }

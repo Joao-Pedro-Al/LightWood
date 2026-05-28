@@ -30,7 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8380493890150663671}
   - {fileID: 776643018756773143}
@@ -93,10 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d373ed62021606d458302a7a43ae1a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PistaCard
-  displayFoto: {fileID: 1354607648161192809}
-  displayNome: {fileID: 8414327046051673042}
-  displayDesc: {fileID: 8360969351150094703}
-  displayNumero: {fileID: 2939820720631897917}
+  textoNumero: {fileID: 2939820720631897917}
+  textoNome: {fileID: 8414327046051673042}
+  textoDescricao: {fileID: 8360969351150094703}
+  imagemFotoItem: {fileID: 1354607648161192809}
   meuNumero: 0
 --- !u!114 &3432202313735303999
 MonoBehaviour:
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -577,8 +577,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4284835173
-  m_fontColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
