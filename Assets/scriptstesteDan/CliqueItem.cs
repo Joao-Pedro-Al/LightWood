@@ -3,53 +3,69 @@ using UnityEngine;
 public class CliqueItem : MonoBehaviour
 {
     [Header("Configurações da Pista")]
-    public Sprite imagemDoItem; 
+    public Sprite imagemDoItem;
     public string nomeDaPista = "Nome do Item";
     [TextArea(2, 4)] public string descricaoDaPista = "Descrição no card.";
     public int numeroFixoDaPista = 1;
 
     [Header("Diálogo")]
-    private Dialogo DM; // Para aceder ao Script de Diálogo
-    public int Id_Dialogo; // O Id do diálogo a ser chamado
+    private Dialogo DM;
+    public int Id_Dialogo;
 
     [Header("Tipo de Pista")]
     [Tooltip("Se ativares isto, o objeto NÃO desaparece do chão ao clicar, mas vai para o quadro na mesma!")]
-    public bool naoColetavel = false; 
+    public bool naoColetavel = false;
 
     [Header("Mecânica de Bateria")]
     [Tooltip("Ativa esta caixinha se este objeto for uma Bateria para recarregar a Lanterna!")]
     public bool eBateria = false;
-    [Tooltip("Quantidade de carga que esta bateria vai dar à lanterna (ex: 50, 100).")]
+
+    [Tooltip("Quantidade de carga que esta bateria vai dar à lanterna.")]
     public float quantidadeCarga = 50f;
 
     private BillboardManager billboard;
-    private Renderer[] meusRenderers; 
-    private Color[] coresOriginais;    
+    private Renderer[] meusRenderers;
+    private Color[] coresOriginais;
+
     private bool jaEstaBrilhando = false;
-    private bool jaFoiRegistado = false; 
+    private bool jaFoiRegistado = false;
 
     void Start()
     {
-        DM = Dialogo.Instance; // Aceder ao Diálogo
+        // Procura o sistema de diálogo
+        DM = Dialogo.Instance;
 
+        if (DM == null)
+        {
+            Debug.LogWarning("Dialogo.Instance não foi encontrado na cena!");
+        }
+
+        // Procura o billboard
         billboard = FindObjectOfType<BillboardManager>();
+
+        if (billboard == null)
+        {
+            Debug.LogWarning("BillboardManager não encontrado na cena!");
+        }
+
+        // Renderers
         meusRenderers = GetComponentsInChildren<Renderer>();
-        
+
         if (meusRenderers != null && meusRenderers.Length > 0)
         {
             coresOriginais = new Color[meusRenderers.Length];
+
             for (int i = 0; i < meusRenderers.Length; i++)
             {
-                if (meusRenderers[i] != null && meusRenderers[i].material != null)
+                if (meusRenderers[i] != null &&
+                    meusRenderers[i].material != null &&
+                    meusRenderers[i].material.HasProperty("_Color"))
                 {
-                    if (meusRenderers[i].material.HasProperty("_Color"))
-                    {
-                        coresOriginais[i] = meusRenderers[i].material.color;
-                    }
-                    else
-                    {
-                        coresOriginais[i] = Color.white; 
-                    }
+                    coresOriginais[i] = meusRenderers[i].material.color;
+                }
+                else
+                {
+                    coresOriginais[i] = Color.white;
                 }
             }
         }
@@ -58,13 +74,16 @@ public class CliqueItem : MonoBehaviour
     public void AoOlharEntrar()
     {
         if (jaFoiRegistado || jaEstaBrilhando) return;
+
         jaEstaBrilhando = true;
 
         if (meusRenderers != null)
         {
             foreach (Renderer r in meusRenderers)
             {
-                if (r != null && r.material != null && r.material.HasProperty("_Color"))
+                if (r != null &&
+                    r.material != null &&
+                    r.material.HasProperty("_Color"))
                 {
                     r.material.color = Color.white * 1.5f;
                 }
@@ -75,13 +94,16 @@ public class CliqueItem : MonoBehaviour
     public void AoOlharSair()
     {
         if (jaFoiRegistado || !jaEstaBrilhando) return;
+
         jaEstaBrilhando = false;
 
         if (meusRenderers != null)
         {
             for (int i = 0; i < meusRenderers.Length; i++)
             {
-                if (meusRenderers[i] != null && meusRenderers[i].material != null && meusRenderers[i].material.HasProperty("_Color"))
+                if (meusRenderers[i] != null &&
+                    meusRenderers[i].material != null &&
+                    meusRenderers[i].material.HasProperty("_Color"))
                 {
                     meusRenderers[i].material.color = coresOriginais[i];
                 }
@@ -93,37 +115,61 @@ public class CliqueItem : MonoBehaviour
     {
         if (jaFoiRegistado) return;
 
-        // SE FOR UMA BATERIA:
+        // =========================
+        // BATERIA
+        // =========================
         if (eBateria)
         {
-            // Encontra a lanterna no teu Player e dá-lhe a carga
             Flashlight lanterna = FindObjectOfType<Flashlight>();
+
             if (lanterna != null)
             {
                 lanterna.Recharge(quantidadeCarga);
             }
-            
-            // Remove o brilho da mira, pula a parte de enviar para o quadro, e some com ela do chão
+            else
+            {
+                Debug.LogWarning("Flashlight não encontrada!");
+            }
+
             AoOlharSair();
             Destroy(gameObject);
-            return; // Interrompe o código aqui para não fazer mais nada
+            return;
         }
 
-        // Diálogo
-        if(Id_Dialogo != null)
+        // =========================
+        // DIÁLOGO
+        // =========================
+        if (DM != null)
+        {
             DM.AtivarDialogo(Id_Dialogo);
+        }
+        else
+        {
+            Debug.LogWarning("Não foi possível iniciar diálogo porque DM está null.");
+        }
 
-        // SE FOR UMA PISTA NORMAL (Vai para o quadro):
+        // =========================
+        // BILLBOARD
+        // =========================
         if (billboard != null)
         {
-            billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
+            billboard.AdicionarPistaAoQuadro(
+                imagemDoItem,
+                nomeDaPista,
+                descricaoDaPista,
+                numeroFixoDaPista
+            );
         }
 
+        // =========================
+        // COLETA
+        // =========================
         if (naoColetavel)
         {
             jaFoiRegistado = true;
-            AoOlharSair(); 
-            this.enabled = false; 
+            AoOlharSair();
+
+            this.enabled = false;
         }
         else
         {
