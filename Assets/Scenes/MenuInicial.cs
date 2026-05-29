@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement; // Permite ao Unity controlar e transitar entre as cenas do jogo
 
-public class MenuInicial : MonoBehaviour
+public class Menu_Inicial : MonoBehaviour
 {
     public void JogarJogo()
     {
