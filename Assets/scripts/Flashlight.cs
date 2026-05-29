@@ -8,10 +8,10 @@ public class Flashlight : MonoBehaviour
 
     [Header("Bateria")]
     [SerializeField] float maxBattery = 100f;          // Carga máxima
-    
+
     [Tooltip("Consumo por segundo. 0.666f faz a bateria durar exatamente 2.5 minutos (150 segundos).")]
     [SerializeField] float drainRate = 0.666f;         // ALTERADO: Ajustado para durar entre 2 a 3 minutos
-    
+
     [SerializeField] float lowBatteryPercent = 0.2f;   // 20% = última parte da barra
     [SerializeField] float blinkInterval = 0.3f;       // Tempo entre piscadas
 
@@ -19,6 +19,10 @@ public class Flashlight : MonoBehaviour
     [SerializeField] Image batteryFillImage;           // ← Arraste aqui o objeto BatteryFill
 
     public bool FlashlightActive = false;
+
+    // Evento disparado no momento exato em que a lanterna é ligada
+    // O MonsterAI subscreve isto para deteção instantânea com um único flash
+    public System.Action OnFlashlightTurnedOn;
 
     private float currentBattery;
     private float blinkTimer;
@@ -52,6 +56,7 @@ public class Flashlight : MonoBehaviour
                 {
                     FlashlightActive = true;
                     ResetBlinkState();
+                    OnFlashlightTurnedOn?.Invoke(); // ← notifica o monstro instantaneamente
                 }
                 else
                 {
