@@ -2827,6 +2827,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.9245283
       objectReference: {fileID: 0}
+    - target: {fileID: 5186740675124581450, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+      propertyPath: m_Intensity
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5409107152555000657, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
