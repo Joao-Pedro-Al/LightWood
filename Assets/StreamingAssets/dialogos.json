@@ -27,123 +27,148 @@
         },
         {
             "id": 5,
-            "text": "Parece que estavam a fazer S'Mores antes do ataque."
+            "text": "Parece que estavam a fazer S'Mores antes do ataque.",
+            "file": "pista-fog.mp3"
         },
         {
             "id": 6,
-            "text": "Isto não foi ventania normal..."
+            "text": "Isto não foi ventania normal...",
+            "file": "pista-ten.mp3"
         },
         {
             "id": 7,
-            "text": "Devia ser um grupo grande."
+            "text": "Devia ser um grupo grande.",
+            "file": "pista-mar.mp3"
         },
         {
             "id": 8,
-            "text": "Porra... como é que foi empalado assim?!"
+            "text": "Porra... como é que foi empalado assim?!",
+            "file": "pista-emp.mp3"
         },
         {
             "id": 9,
-            "text": "Muito sangue, isto foi uma arma."
+            "text": "Muito sangue, isto foi uma arma.",
+            "file": "pista-ped.mp3"
         },
         {
             "id": 10,
-            "text": "Yuck... o assassino estava com raiva."
+            "text": "Yuck... o assassino estava com raiva.",
+            "file": "pista-ras.mp3"
         },
         {
             "id": 11,
-            "text": "Para ter tanto sangue, devia estar nas mãos da vítima."
+            "text": "Para ter tanto sangue, devia estar nas mãos da vítima.",
+            "file": "pista-tel.mp3"
         },
         {
             "id": 12,
-            "text": "Quatro. Era esse o tamanho do grupo?"
+            "text": "Quatro. Era esse o tamanho do grupo?",
+            "file": "pista-pul.mp3"
         },
         {
             "id": 13,
-            "text": "Pertencia a UMA vítima, mas onde estará o corpo?"
+            "text": "Pertencia a UMA vítima, mas onde estará o corpo?",
+            "file": "pista-tel-open.mp3"
         },
         {
             "id": 14,
-            "text": "Eles estavam a fazer S'Mores antes do ataque. Alguém deve ter ido para a tenda buscar mais um saco e foi aí que foi atacado."
+            "text": "Eles estavam a fazer S'Mores antes do ataque. Alguém deve ter ido para a tenda buscar mais um saco e foi aí que foi atacado.",
+            "file": "connect-ativ.mp3"
         },
         {
             "id": 15,
-            "text": "Uma pedra não causaria os cortes neste corpo. Deve ter sido a última tentativa da vítima se defender."
+            "text": "Uma pedra não causaria os cortes neste corpo. Deve ter sido a última tentativa da vítima se defender.",
+            "file": "connect-corp.mp3"
         },
         {
             "id": 16,
-            "text": "Estes estavam próximos, possivelmente pertenciam à mesma pessoa."
+            "text": "Estes estavam próximos, possivelmente pertenciam à mesma pessoa.",
+            "file": "connect-tel-pul.mp3"
         },
         {
             "id": 17,
-            "text": "Ela deve ter ido buscar estas pulseiras, mas aonde...?"
+            "text": "Ela deve ter ido buscar estas pulseiras, mas aonde...?",
+            "file": "connect-tel-open.mp3"
         },
         {
             "id": 18,
             "text": "Eram três.",
+            "file": "complet-1.mp3",
             "cont": true,
             "prox": 19
         },
         {
             "id": 19,
             "text": "Estavam a preparar-se para fazer S'Mores, quando a jovem foi comprar as pulseiras.",
+            "file": "complet-2.mp3",
             "cont": true,
             "prox": 20
         },
         {
             "id": 20,
             "text": "Foi nesse tempo que o assassino atacou,",
+            "file": "complet-3.mp3",
             "cont": true,
             "prox": 21
         },
         {
             "id": 21,
             "text": "apanhando um dos jovens de surpresa enquanto buscava mais marshmallows.",
+            "file": "complet-4.mp3",
             "cont": true,
             "prox": 22
         },
         {
             "id": 22,
             "text": "Só não entendo como conseguiu o empalar assim...",
+            "file": "complet-5.mp3",
             "cont": true,
             "prox": 23
         },
         {
             "id": 23,
             "text": "O segundo jovem tentou lutar, e conseguiu atingir o assassino com a pedra.",
+            "file": "complet-6.mp3",
             "cont": true,
             "prox": 24
         },
         {
             "id": 24,
             "text": "Mas não conseguiu se salvar.",
+            "file": "complet-7.mp3",
             "cont": true,
             "prox": 25
         },
         {
             "id": 25,
             "text": "A jovem deve ter chegado e reparou nos amigos dela.",
+            "file": "complet-8.mp3",
             "cont": true,
             "prox": 26
         },
         {
             "id": 26,
             "text": "Ela provavelmente foi uma das pessoas a ligar à polícia, antes de ser apanhada despercebida.",
+            "file": "complet-9.mp3",
             "cont": true,
             "prox": 27
         },
         {
             "id": 27,
             "text": "Não à sinal do corpo...",
+            "file": "complet-10.mp3",
             "cont": true,
             "prox": 28
         },
         {
             "id": 28,
-            "text": "Agora a questão é: onde ela foi buscar estas pulseiras?"
+            "text": "Agora a questão é: onde ela foi buscar estas pulseiras?",
+            "file": "complet-11.mp3"
         },
         {
             "id": 29,
-            "text": "A cabana de check-in. Possivelmente haverá lá alguém com uma ideia de quem poderá ter feito isto."
+            "text": "A cabana de check-in. Possivelmente haverá lá alguém com uma ideia de quem poderá ter feito isto.",
+            "file": "complet-12.mp3"
         }
     ]
 }
