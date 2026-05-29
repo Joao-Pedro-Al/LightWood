@@ -4347,7 +4347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: flashlightRange
-      value: 17
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: phase1AudioClip
