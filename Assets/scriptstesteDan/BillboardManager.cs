@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class BillboardManager : MonoBehaviour
 {
     [Header("Diálogo")]
-    private Dialogo DM; // Para aceder ao Script de Diálogo
+    private Dialogo DM; 
 
     [Header("Configurações do Quadro")]
     public GameObject prefabCard;     
@@ -14,13 +14,22 @@ public class BillboardManager : MonoBehaviour
     public float limitesX = 400f;
     public float limitesY = 200f;
 
-    [Header("Customização do Fio Vermelho (3D Real)")]
-    [Range(0.005f, 0.1f)] public float espessuraDoFio = 0.015f; // Grossura perfeita de um cordel fino
-    public Color corDoFio = new Color(0.75f, 0.05f, 0.05f);     // Vermelho vivo de investigação
+    [Header("Customização do Fio Vermelho")]
+    [Range(0.005f, 0.1f)] public float espessuraDoFio = 0.015f; 
+    public Color corDoFio = new Color(0.75f, 0.05f, 0.05f);     
 
     private Transform gridDoQuadro;   
     private List<PistaCard> cartoesInstanciados = new List<PistaCard>();
     private Material materialFioNativo;
+
+    // Estrutura para guardar e atualizar as conexões ativas
+    private struct ConexaoFio
+    {
+        public LineRenderer lineRenderer;
+        public GameObject objetoA;
+        public GameObject objetoB;
+    }
+    private List<ConexaoFio> conexoesAtivas = new List<ConexaoFio>();
 
     private bool ligou123 = false;
     private bool ligou56 = false;
@@ -35,15 +44,19 @@ public class BillboardManager : MonoBehaviour
         GerarMaterialDoFio();
     }
 
-    // Start para o Instance, pois se colocar no Wake poderá não associar no caso que Dialogo.cs ainda não iniciou
     void Start()
     {
         DM = Dialogo.Instance;
     }
 
+    void Update()
+    {
+        // ATUALIZAÇÃO EM TEMPO REAL: Se moveres os cards, os fios acompanham!
+        AtualizarPosicaoDosFios();
+    }
+
     void GerarMaterialDoFio()
     {
-        // Usa um shader simples não afetado por luzes para a cor ficar sempre viva
         Shader shaderAlvo = Shader.Find("Sprites/Default");
         if (shaderAlvo == null) shaderAlvo = Shader.Find("Unlit/Color");
         
@@ -98,7 +111,7 @@ public class BillboardManager : MonoBehaviour
             ligou123 = true;
             CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[2].gameObject);
             CriarLinhaFio3D(mapaPistas[2].gameObject, mapaPistas[3].gameObject);
-            DM.AtivarDialogo(14);
+            if(DM != null) DM.AtivarDialogo(14);
         }
 
         // Interligar 5 + 6
@@ -106,7 +119,7 @@ public class BillboardManager : MonoBehaviour
         {
             ligou56 = true;
             CriarLinhaFio3D(mapaPistas[5].gameObject, mapaPistas[6].gameObject);
-            DM.AtivarDialogo(15);
+            if(DM != null) DM.AtivarDialogo(15);
         }
 
         // Interligar 7 + 8
@@ -114,40 +127,56 @@ public class BillboardManager : MonoBehaviour
         {
             ligou78 = true;
             CriarLinhaFio3D(mapaPistas[7].gameObject, mapaPistas[8].gameObject);
-            DM.AtivarDialogo(16);
+            if(DM != null) DM.AtivarDialogo(16);
         }
     }
 
     void CriarLinhaFio3D(GameObject objA, GameObject objB)
     {
-        // Cria um objeto para o fio e junta-o diretamente como filho do gestor do quadro
-        GameObject goLinha = new GameObject("Fio3D_Conexao", typeof(LineRenderer));
-        goLinha.transform.SetParent(transform, true);
+        GameObject goLinha = new GameObject("FioVermelho_Link", typeof(LineRenderer));
+        goLinha.transform.SetParent(gridDoQuadro, false); 
 
         LineRenderer lr = goLinha.GetComponent<LineRenderer>();
         
-        // Define o uso do espaço global do mundo para evitar desvios por causa de rotações locais
         lr.useWorldSpace = true;
         lr.positionCount = 2;
-
-        // Modifica a grossura nas duas pontas uniformemente
         lr.startWidth = espessuraDoFio;
         lr.endWidth = espessuraDoFio;
-
         lr.material = materialFioNativo;
-        lr.startColor = corDoFio;
-        lr.endColor = corDoFio;
+        
+        lr.sortingOrder = 5; 
 
-        // CORREÇÃO GEOMÉTRICA: Captura a posição exata no mundo 3D de cada cartão
-        Vector3 posA = objA.transform.position;
-        Vector3 posB = objB.transform.position;
+        // CORRIGIDO: conexoesAtivas com "e"
+        ConexaoFio novaConexao = new ConexaoFio { lineRenderer = lr, objetoA = objA, objetoB = objB };
+        conexoesAtivas.Add(novaConexao);
 
-        // Cria um recuo muito ligeiro para a frente (usando o eixo Z global ou a frente do quadro)
-        // para garantir que o barbante não se esconde por trás da textura da cortiça
-        Vector3 avançoFrente = -transform.forward * 0.02f;
+        ConfigurarPosiçãoFio(novaConexao);
+    }
 
-        // Força as pontas a ligarem exatamente onde os cartões estão renderizados na tela
-        lr.SetPosition(0, posA + avançoFrente);
-        lr.SetPosition(1, posB + avançoFrente);
+    void AtualizarPosicaoDosFios()
+    {
+        // CORRIGIDO: conexoesAtivas com "e"
+        conexoesAtivas.RemoveAll(c => c.objetoA == null || c.objetoB == null);
+
+        // CORRIGIDO: conexoesAtivas com "e"
+        foreach (var conexao in conexoesAtivas)
+        {
+            ConfigurarPosiçãoFio(conexao);
+        }
+    }
+
+   
+    void ConfigurarPosiçãoFio(ConexaoFio conexao)
+    {
+        // Pega no centro exato do RectTransform no espaço do mundo
+        Vector3 posA = conexao.objetoA.transform.position;
+        Vector3 posB = conexao.objetoB.transform.position;
+
+        // Um ligeiro empurrão para a frente (Z negativo em direção à câmara) 
+        // para evitar "Z-Fighting" (fio a piscar dentro do painel)
+        Vector3 avancoFrente = -transform.forward * 0.05f; 
+
+        conexao.lineRenderer.SetPosition(0, posA + avancoFrente);
+        conexao.lineRenderer.SetPosition(1, posB + avancoFrente);
     }
 }
