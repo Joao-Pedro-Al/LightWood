@@ -8,7 +8,10 @@ public class Flashlight : MonoBehaviour
 
     [Header("Bateria")]
     [SerializeField] float maxBattery = 100f;          // Carga máxima
-    [SerializeField] float drainRate = 15f;            // Consumo por segundo
+    
+    [Tooltip("Consumo por segundo. 0.666f faz a bateria durar exatamente 2.5 minutos (150 segundos).")]
+    [SerializeField] float drainRate = 0.666f;         // ALTERADO: Ajustado para durar entre 2 a 3 minutos
+    
     [SerializeField] float lowBatteryPercent = 0.2f;   // 20% = última parte da barra
     [SerializeField] float blinkInterval = 0.3f;       // Tempo entre piscadas
 
