@@ -22,10 +22,7 @@ public class Dialogo : MonoBehaviour
 
     void Awake()
     {
-        string path = Application.streamingAssetsPath + "/dialogos.json";
-        string jsonText = File.ReadAllText(path, System.Text.Encoding.UTF8);
-
-        JSON = JsonUtility.FromJson<dialogos>(jsonText);
+        StartCoroutine(LerJSON());
 
         Obj_Legends = legendas.gameObject;
 
@@ -36,6 +33,30 @@ public class Dialogo : MonoBehaviour
         } else if(Instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private IEnumerator LerJSON()
+    {
+        string path = Application.streamingAssetsPath + "/dialogos.json";
+
+        // Aceder ao StreamingAssets na Web
+        using (UnityWebRequest request = UnityWebRequest.Get(path))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                // Obter o texto
+                string jsonText = request.downloadHandler.text;
+
+                // Armazenar Localmente
+                JSON = JsonUtility.FromJson<dialogos>(jsonText);
+            }
+            else
+            {
+                Debug.LogError("Errou: " + request.error);
+            }
         }
     }
 
@@ -72,7 +93,9 @@ public class Dialogo : MonoBehaviour
         {
             string path = System.IO.Path.Combine(Application.streamingAssetsPath, "dialogos", d.file);
 
-            using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.MPEG))
+            Debug.Log("Áudio Ativado: " + path);
+
+            using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
             {
                 yield return request.SendWebRequest();
 
@@ -109,5 +132,10 @@ public class Dialogo : MonoBehaviour
     private void Legendas_OnOff(bool atv)
     {
         Obj_Legends.SetActive(atv);
+    }
+
+    public void Destruir()
+    {
+        Destroy(gameObject);
     }
 }

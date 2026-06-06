@@ -4,12 +4,14 @@ using System.Collections;
 
 public class GestorFimDeNivel : MonoBehaviour
 {
-    [Header("Configurações do Nível")]
-    [Tooltip("O número total de pistas que o jogador precisa de encontrar neste nível.")]
+    private Dialogo DM;
+
+    [Header("Configuraï¿½ï¿½es do Nï¿½vel")]
+    [Tooltip("O nï¿½mero total de pistas que o jogador precisa de encontrar neste nï¿½vel.")]
     public int totalDePistasNoNivel = 8; // Altera para 7, 8 ou o teu total de pistas
 
     [Header("Cena de Destino")]
-    [Tooltip("O nome exato da tua cena de créditos (como está nas Build Settings).")]
+    [Tooltip("O nome exato da tua cena de crï¿½ditos (como estï¿½ nas Build Settings).")]
     public string nomeDaCenaCreditos = "Creditos";
 
     private BillboardManager billboard;
@@ -17,16 +19,19 @@ public class GestorFimDeNivel : MonoBehaviour
 
     void Start()
     {
+        // Acede ao Sistema de DiÃ¡logo
+        DM = Dialogo.Instance;
+
         // Encontra o BillboardManager automaticamente na cena
         billboard = FindFirstObjectByType<BillboardManager>();
 
         if (billboard == null)
         {
-            Debug.LogError("GestorFimDeNivel: Não foi encontrado o BillboardManager na cena!");
+            Debug.LogError("GestorFimDeNivel: Nï¿½o foi encontrado o BillboardManager na cena!");
             return;
         }
 
-        // Inicia a verificação em segundo plano para poupar processamento (roda a cada 1 segundo em vez de cada frame)
+        // Inicia a verificaï¿½ï¿½o em segundo plano para poupar processamento (roda a cada 1 segundo em vez de cada frame)
         StartCoroutine(RotinaVerificarPistas());
     }
 
@@ -36,14 +41,14 @@ public class GestorFimDeNivel : MonoBehaviour
         {
             if (billboard != null)
             {
-                // Usamos reflexão em C# para ler a lista privada 'cartoesInstanciados' do teu BillboardManager
-                // Assim não precisas de alterar absolutamente nada no teu código antigo!
+                // Usamos reflexï¿½o em C# para ler a lista privada 'cartoesInstanciados' do teu BillboardManager
+                // Assim nï¿½o precisas de alterar absolutamente nada no teu cï¿½digo antigo!
                 var campoLista = typeof(BillboardManager).GetField("cartoesInstanciados",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
                 if (campoLista != null)
                 {
-                    // Obtém a lista e extrai a contagem de itens dentro dela
+                    // Obtï¿½m a lista e extrai a contagem de itens dentro dela
                     var lista = campoLista.GetValue(billboard) as System.Collections.IList;
                     int pistasAtuais = (lista != null) ? lista.Count : 0;
 
@@ -52,26 +57,29 @@ public class GestorFimDeNivel : MonoBehaviour
                     {
                         nivelFinalizado = true;
                         StartCoroutine(TemporizadorMudarDeCena());
-                        yield break; // Para o Loop de verificação
+                        yield break; // Para o Loop de verificaï¿½ï¿½o
                     }
                 }
             }
 
-            // Espera 1 segundo antes de verificar novamente (ótimo para performance)
+            // Espera 1 segundo antes de verificar novamente (ï¿½timo para performance)
             yield return new WaitForSeconds(1f);
         }
     }
 
     IEnumerator TemporizadorMudarDeCena()
     {
-        Debug.Log("Todas as pistas encontradas! O nível vai terminar em 60 segundos...");
+        Debug.Log("Todas as pistas encontradas! O nï¿½vel vai terminar em 60 segundos...");
 
         // Espera exatamente 60 segundos (1 minuto)
         yield return new WaitForSeconds(15f);
 
-        Debug.Log("A carregar a cena de créditos: " + nomeDaCenaCreditos);
+        Debug.Log("A carregar a cena de crï¿½ditos: " + nomeDaCenaCreditos);
 
-        // Carrega a cena dos créditos
+        
+        DM.Destruir();
+
+        // Carrega a cena dos crï¿½ditos
         SceneManager.LoadScene(nomeDaCenaCreditos);
     }
 }
