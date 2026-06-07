@@ -3753,7 +3753,10 @@ PrefabInstance:
       addedObject: {fileID: 1866432579}
     - targetCorrespondingSourceObject: {fileID: 4612950802696301040, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1866432582}
+      addedObject: {fileID: 1866432586}
+    - targetCorrespondingSourceObject: {fileID: 4612950802696301040, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1866432585}
     - targetCorrespondingSourceObject: {fileID: 1233504636648498958, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1823198025}
@@ -6005,7 +6008,7 @@ MonoBehaviour:
   JumpForce: 0
   camera: {fileID: 1823198019}
   cameraTravada: 0
---- !u!114 &1866432582
+--- !u!114 &1866432585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6014,9 +6017,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1866432573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e4f8268a58e30d4db783828d4e01471, type: 3}
+  m_Script: {fileID: 11500000, guid: 041edefccbde7e24fbd8a0f7f1d46f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TAKING_DAMAGE
+  health: 3
+--- !u!114 &1866432586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866432573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ee8242371d2db4f9f415b704473937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 100
+  currentHealth: 0
+  gameOverSceneName: GameOver
+  useGameOverCanvas: 0
+  gameOverCanvas: {fileID: 0}
+  healthSlider: {fileID: 0}
+  damageOverlay: {fileID: 0}
+  overlayFadeSpeed: 2
 --- !u!1001 &1870346308
 PrefabInstance:
   m_ObjectHideFlags: 0

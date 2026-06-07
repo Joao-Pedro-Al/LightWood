@@ -493,8 +493,17 @@ public class MonsterAI : MonoBehaviour
     void AttackPlayer()
     {
         Debug.Log("[Monstro] 💀 ATACOU O PLAYER — GAME OVER");
-    }
 
+        TAKING_DAMAGE td = player.GetComponent<TAKING_DAMAGE>();
+        if (td != null)
+        {
+            td.TakeDamage(1);
+        }
+        else
+        {
+            Debug.LogWarning("[Monstro] ⚠️ Script TAKING_DAMAGE não encontrado no Player!");
+        }
+    }
     // ═══════════════════════════════════════════════════════
     // BOTÕES DE TESTE
     // ═══════════════════════════════════════════════════════
