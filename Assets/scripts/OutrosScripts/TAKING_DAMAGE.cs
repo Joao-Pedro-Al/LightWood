@@ -4,7 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class TAKING_DAMAGE : MonoBehaviour
 {
+    private Dialogo DM; // Instanciar o Diálogo
+
     public int health = 1;
+
+    void Start()
+    {
+        // Acede ao Sistema de Diálogo
+        DM = Dialogo.Instance;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,6 +34,7 @@ public class TAKING_DAMAGE : MonoBehaviour
 
     void Die()
     {
+        DM.Destruir(); // Destruir o GameObject com o Diálogo
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
