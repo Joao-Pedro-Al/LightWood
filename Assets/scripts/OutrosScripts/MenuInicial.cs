@@ -9,11 +9,7 @@ public class Menu_Inicial : MonoBehaviour
         SceneManager.LoadScene("Nivel1_teste");
     }
 
-    public void AbrirCreditos()
-    {
-        // Carrega a cena independente dos creditos 
-        SceneManager.LoadScene("Creditos");
-    }
+  
     
     public void SairDoJogo()
     {
