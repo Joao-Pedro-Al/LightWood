@@ -28,63 +28,79 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Slider que representa a barra de vida. Pode ficar vazio.")]
     public Slider healthSlider;
 
-    [Tooltip("Imagem de ecrã vermelho que pisca ao receber dano. Pode ficar vazia.")]
+    [Header("Efeito de Dano — Overlay Vermelho")]
+    [Tooltip("Imagem de ecrã vermelho que pisca ao receber dano.")]
     public Image damageOverlay;
 
-    [Tooltip("Quanto tempo o overlay demora a desaparecer.")]
+    [Tooltip("Alpha máximo do flash vermelho (0 = invisível, 1 = opaco).")]
+    [Range(0f, 1f)]
+    public float damageFlashAlpha = 0.45f;
+
+    [Tooltip("Velocidade de desvanecimento do flash vermelho.")]
     public float overlayFadeSpeed = 2f;
+
+    [Header("Efeito de Sangue nas Bordas")]
+    [Tooltip("Imagem de vinheta de sangue nas bordas do ecrã.")]
+    public Image bloodVignetteOverlay;
+
+    [Tooltip("Alpha máximo da vinheta de sangue.")]
+    [Range(0f, 1f)]
+    public float bloodVignetteMaxAlpha = 0.8f;
+
+    [Tooltip("Velocidade de desvanecimento da vinheta (mais lento que o flash).")]
+    public float bloodFadeSpeed = 0.8f;
 
     // ═══════════════════════════════════════════════════════
     // ESTADO INTERNO
     // ═══════════════════════════════════════════════════════
     private bool isDead = false;
     private Player_Teste_Alves playerController;
+    private float damageOverlayAlpha = 0f;
+    private float bloodVignetteAlpha = 0f;
 
     // ═══════════════════════════════════════════════════════
-    // INÍCIO
+    // AWAKE — corre antes de qualquer Start() ou colisão
     // ═══════════════════════════════════════════════════════
-    void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
         playerController = GetComponent<Player_Teste_Alves>();
 
-        // Configura o slider se existir
         if (healthSlider != null)
         {
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
         }
 
-        // Garante que o overlay começa transparente
-        if (damageOverlay != null)
-        {
-            Color c = damageOverlay.color;
-            c.a = 0f;
-            damageOverlay.color = c;
-        }
+        SetOverlayAlpha(damageOverlay, 0f);
+        SetOverlayAlpha(bloodVignetteOverlay, 0f);
 
-        // Esconde o canvas de Game Over se existir
         if (gameOverCanvas != null)
             gameOverCanvas.SetActive(false);
     }
 
     // ═══════════════════════════════════════════════════════
-    // UPDATE — fade do overlay de dano
+    // UPDATE — fade dos overlays
     // ═══════════════════════════════════════════════════════
     void Update()
     {
-        // Faz o overlay vermelho desaparecer gradualmente
-        if (damageOverlay != null && damageOverlay.color.a > 0f)
+        if (damageOverlay != null && damageOverlayAlpha > 0f)
         {
-            Color c = damageOverlay.color;
-            c.a -= Time.deltaTime * overlayFadeSpeed;
-            c.a = Mathf.Max(c.a, 0f);
-            damageOverlay.color = c;
+            damageOverlayAlpha -= Time.deltaTime * overlayFadeSpeed;
+            damageOverlayAlpha = Mathf.Max(damageOverlayAlpha, 0f);
+            SetOverlayAlpha(damageOverlay, damageOverlayAlpha);
+        }
+
+        if (bloodVignetteOverlay != null && bloodVignetteAlpha > 0f)
+        {
+            bloodVignetteAlpha -= Time.deltaTime * bloodFadeSpeed;
+            bloodVignetteAlpha = Mathf.Max(bloodVignetteAlpha, 0f);
+            SetOverlayAlpha(bloodVignetteOverlay, bloodVignetteAlpha);
         }
     }
 
     // ═══════════════════════════════════════════════════════
-    // RECEBER DANO — chamado pelo MonsterAI
+    // RECEBER DANO — chamado pelo MonsterAI e TAKING_DAMAGE
     // ═══════════════════════════════════════════════════════
     public void TakeDamage(float amount)
     {
@@ -95,24 +111,25 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log($"[Player] ❤️ Vida: {currentHealth}/{maxHealth}");
 
-        // Atualiza o slider
         if (healthSlider != null)
             healthSlider.value = currentHealth;
 
-        // Mostra o flash vermelho
-        if (damageOverlay != null)
-        {
-            Color c = damageOverlay.color;
-            c.a = 0.6f; // intensidade do flash
-            damageOverlay.color = c;
-        }
+        // Flash vermelho imediato
+        damageOverlayAlpha = damageFlashAlpha;
+        SetOverlayAlpha(damageOverlay, damageOverlayAlpha);
+
+        // Vinheta de sangue — mais intensa com menos vida
+        float healthRatio = currentHealth / maxHealth;
+        float vignetteIntensity = Mathf.Lerp(bloodVignetteMaxAlpha, bloodVignetteMaxAlpha * 0.5f, healthRatio);
+        bloodVignetteAlpha = Mathf.Max(bloodVignetteAlpha, vignetteIntensity);
+        SetOverlayAlpha(bloodVignetteOverlay, bloodVignetteAlpha);
 
         if (currentHealth <= 0f)
             Die();
     }
 
     // ═══════════════════════════════════════════════════════
-    // CURAR (opcional, para uso futuro)
+    // CURAR
     // ═══════════════════════════════════════════════════════
     public void Heal(float amount)
     {
@@ -137,15 +154,12 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("[Player] 💀 MORREU — GAME OVER");
 
-        // Para o movimento do player (usa o teu script existente)
         if (playerController != null)
             playerController.enabled = false;
 
-        // Liberta o rato
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // Game Over: Canvas ou cena
         if (useGameOverCanvas)
         {
             if (gameOverCanvas != null)
@@ -158,13 +172,21 @@ public class PlayerHealth : MonoBehaviour
             if (!string.IsNullOrEmpty(gameOverSceneName))
                 SceneManager.LoadScene(gameOverSceneName);
             else
-                Debug.LogWarning("[Player] ⚠️ gameOverSceneName está vazio! Define o nome da cena no Inspector.");
+                Debug.LogWarning("[Player] ⚠️ gameOverSceneName está vazio!");
         }
     }
 
     // ═══════════════════════════════════════════════════════
-    // GETTER PÚBLICO (para HUD ou outros scripts)
+    // UTILITÁRIO
     // ═══════════════════════════════════════════════════════
+    void SetOverlayAlpha(Image img, float alpha)
+    {
+        if (img == null) return;
+        Color c = img.color;
+        c.a = alpha;
+        img.color = c;
+    }
+
     public bool IsDead() => isDead;
     public float GetHealthPercent() => currentHealth / maxHealth;
 }

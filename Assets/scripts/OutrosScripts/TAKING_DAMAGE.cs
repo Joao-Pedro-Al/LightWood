@@ -1,16 +1,20 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TAKING_DAMAGE : MonoBehaviour
 {
-    private Dialogo DM; // Instanciar o Diálogo
+    private Dialogo DM;
+    private PlayerHealth playerHealth;
 
     public int health = 1;
 
+    void Awake()
+    {
+        playerHealth = GetComponent<PlayerHealth>();
+    }
+
     void Start()
     {
-        // Acede ao Sistema de Diálogo
         DM = Dialogo.Instance;
     }
 
@@ -24,6 +28,10 @@ public class TAKING_DAMAGE : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // Mostra efeito visual ANTES de morrer
+        if (playerHealth != null)
+            playerHealth.TakeDamage(damage * 25f);
+
         health -= damage;
 
         if (health <= 0)
@@ -34,7 +42,7 @@ public class TAKING_DAMAGE : MonoBehaviour
 
     void Die()
     {
-        DM.Destruir(); // Destruir o GameObject com o Diálogo
+        if (DM != null) DM.Destruir();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

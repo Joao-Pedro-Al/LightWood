@@ -492,18 +492,33 @@ public class MonsterAI : MonoBehaviour
 
     void AttackPlayer()
     {
-        Debug.Log("[Monstro] 💀 ATACOU O PLAYER — GAME OVER");
+        Debug.Log("[Monstro] 💀 ATACOU O PLAYER!");
 
-        TAKING_DAMAGE td = player.GetComponent<TAKING_DAMAGE>();
-        if (td != null)
+        // Chama o sistema de saúde principal
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+        if (ph != null)
         {
-            td.TakeDamage(1);
+            ph.TakeDamage(25f); // ajusta o dano no Inspector via PlayerHealth
         }
         else
         {
-            Debug.LogWarning("[Monstro] ⚠️ Script TAKING_DAMAGE não encontrado no Player!");
+            // fallback para o sistema antigo
+            TAKING_DAMAGE td = player.GetComponent<TAKING_DAMAGE>();
+            if (td != null) td.TakeDamage(1);
+            else Debug.LogWarning("[Monstro] ⚠️ Nenhum script de dano encontrado no Player!");
         }
+
+        // Volta à Fase 1 após o ataque
+        ResetToPhase1AfterAttack();
     }
+
+    void ResetToPhase1AfterAttack()
+    {
+        StopAllCoroutines();
+        isDisappearing = false;
+        StartCoroutine(DisappearAndReturn());
+        Debug.Log("[Monstro] 🔄 Recuou para Fase 1 após ataque.");
+    }   
     // ═══════════════════════════════════════════════════════
     // BOTÕES DE TESTE
     // ═══════════════════════════════════════════════════════
