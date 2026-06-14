@@ -55,9 +55,10 @@ public class CliqueItem : MonoBehaviour
         billboard = FindObjectOfType<BillboardManager>();
 
         // =========================================================================
-        // CORREÇÃO PARA O CASO DE TESTE (RESPAWN / MORTE)
+        // CORREÇÃO PARA O CASO DE TESTE DA BATERIA (RESPAWN / MORTE)
+        // Só faz sumir se NÃO for uma bateria, evitando que o GeradorBaterias quebre!
         // =========================================================================
-        if (GeradorSalvamento.Instance != null)
+        if (!eBateria && GeradorSalvamento.Instance != null)
         {
             bool jaEstaSalvaNoQuadro = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == numeroFixoDaPista);
 
@@ -80,7 +81,6 @@ public class CliqueItem : MonoBehaviour
         }
     }
 
-    // Adaptado para aceitar chamadas vazias do InteracaoPlayer
     public void AoOlharEntrar()
     {
         AoOlharEntrar(new Color(0.3f, 0.3f, 0.3f));
@@ -116,7 +116,6 @@ public class CliqueItem : MonoBehaviour
         }
     }
 
-    // ATALHO ESSENCIAL: Cura o erro do teu InteracaoPlayer chamando a lógica correta
     public void ColetarPista()
     {
         AoClicar();
