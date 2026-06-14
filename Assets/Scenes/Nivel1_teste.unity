@@ -4273,7 +4273,7 @@ GameObject:
   - component: {fileID: 655852121}
   - component: {fileID: 655852120}
   m_Layer: 5
-  m_Name: Mira
+  m_Name: Mira_Bola
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4286,17 +4286,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655852118}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.2723553, y: 3.2723553, z: 3.2723553}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 989382518}
+  m_Father: {fileID: 2093115913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 8, y: 8}
+  m_SizeDelta: {x: 15, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &655852120
 MonoBehaviour:
@@ -6286,7 +6286,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 245624325}
-  - {fileID: 655852119}
   - {fileID: 1229314928}
   - {fileID: 412071948}
   - {fileID: 402240814}
@@ -6796,7 +6795,10 @@ PrefabInstance:
       objectReference: {fileID: 512549614}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3703165878329904052, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 655852119}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
 --- !u!1 &1089239551
@@ -12324,6 +12326,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 53.388412, y: 33.82364, z: 1}
   m_Center: {x: -1.1227258, y: 6.302602, z: 0.0000004326125}
+--- !u!224 &2093115913 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3703165878329904052, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+  m_PrefabInstance: {fileID: 1083917390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2144604778
 GameObject:
   m_ObjectHideFlags: 0
