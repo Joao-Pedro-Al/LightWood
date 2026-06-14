@@ -48,9 +48,8 @@ public class PlayerInteracao : MonoBehaviour
 
         if (Physics.Raycast(raio, out hit, distanciaDoRaio, layerDasPistas))
         {
-            CliqueItem itemDetetado = hit.collider.GetComponent<CliqueItem>();
+            CliqueItem itemDetetado = hit.transform.GetComponent<CliqueItem>();
 
-            // Só interage se o script existir e estiver ATIVO (enabled)
             if (itemDetetado != null && itemDetetado.enabled)
             {
                 if (itemSendoOlhado != null && itemSendoOlhado != itemDetetado)
@@ -103,15 +102,17 @@ public class PlayerInteracao : MonoBehaviour
         if (billboard == null) return;
 
         quadroAberto = !quadroAberto;
+        billboard.painelFundoPreto.SetActive(quadroAberto);
 
         if (quadroAberto)
         {
-            LimparVisao();
-            billboard.AbrirQuadro();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
-            billboard.FecharQuadro();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

@@ -40,83 +40,92 @@ public class CliqueItem : MonoBehaviour
             Debug.LogWarning("Dialogo.Instance não foi encontrado na cena!");
         }
 
-        // Procura o billboard
-        billboard = FindObjectOfType<BillboardManager>();
-
-        if (billboard == null)
+        // Cache de renderers para o efeito de brilho
+        meusRenderers = GetComponentsInChildren<Renderer>();
+        coresOriginais = new Color[meusRenderers.Length];
+        for (int i = 0; i < meusRenderers.Length; i++)
         {
-            Debug.LogWarning("BillboardManager não encontrado na cena!");
+            if (meusRenderers[i].material.HasProperty("_Color"))
+            {
+                coresOriginais[i] = meusRenderers[i].material.color;
+            }
         }
 
-        // Renderers
-        meusRenderers = GetComponentsInChildren<Renderer>();
+        // Procura o BillboardManager na cena
+        billboard = FindObjectOfType<BillboardManager>();
 
-        if (meusRenderers != null && meusRenderers.Length > 0)
+        // =========================================================================
+        // CORREÇÃO PARA O CASO DE TESTE (RESPAWN / MORTE)
+        // =========================================================================
+        if (GeradorSalvamento.Instance != null)
         {
-            coresOriginais = new Color[meusRenderers.Length];
+            bool jaEstaSalvaNoQuadro = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == numeroFixoDaPista);
 
-            for (int i = 0; i < meusRenderers.Length; i++)
+            if (jaEstaSalvaNoQuadro)
             {
-                if (meusRenderers[i] != null &&
-                    meusRenderers[i].material != null &&
-                    meusRenderers[i].material.HasProperty("_Color"))
+                if (naoColetavel)
                 {
-                    coresOriginais[i] = meusRenderers[i].material.color;
+                    // Se for a tenda (não coletável), remove a interação para sempre
+                    jaFoiRegistado = true;
+                    this.enabled = false;
+                    return;
                 }
                 else
                 {
-                    coresOriginais[i] = Color.white;
+                    // Se for o marshmallow (coletável), desaparece do chão imediatamente
+                    Destroy(gameObject);
+                    return;
                 }
             }
         }
-        
     }
 
+    // Adaptado para aceitar chamadas vazias do InteracaoPlayer
     public void AoOlharEntrar()
+    {
+        AoOlharEntrar(new Color(0.3f, 0.3f, 0.3f));
+    }
+
+    public void AoOlharEntrar(Color corDoBrilho)
     {
         if (jaFoiRegistado || jaEstaBrilhando) return;
 
         jaEstaBrilhando = true;
 
-        if (meusRenderers != null)
+        for (int i = 0; i < meusRenderers.Length; i++)
         {
-            foreach (Renderer r in meusRenderers)
+            if (meusRenderers[i] != null && meusRenderers[i].material.HasProperty("_Color"))
             {
-                if (r != null &&
-                    r.material != null &&
-                    r.material.HasProperty("_Color"))
-                {
-                    r.material.color = Color.white * 1.5f;
-                }
+                meusRenderers[i].material.color = coresOriginais[i] + corDoBrilho;
             }
         }
     }
 
     public void AoOlharSair()
     {
-        if (jaFoiRegistado || !jaEstaBrilhando) return;
+        if (!jaEstaBrilhando) return;
 
         jaEstaBrilhando = false;
 
-        if (meusRenderers != null)
+        for (int i = 0; i < meusRenderers.Length; i++)
         {
-            for (int i = 0; i < meusRenderers.Length; i++)
+            if (meusRenderers[i] != null && meusRenderers[i].material.HasProperty("_Color"))
             {
-                if (meusRenderers[i] != null &&
-                    meusRenderers[i].material != null &&
-                    meusRenderers[i].material.HasProperty("_Color"))
-                {
-                    meusRenderers[i].material.color = coresOriginais[i];
-                }
+                meusRenderers[i].material.color = coresOriginais[i];
             }
         }
     }
 
+    // ATALHO ESSENCIAL: Cura o erro do teu InteracaoPlayer chamando a lógica correta
     public void ColetarPista()
+    {
+        AoClicar();
+    }
+
+    public void AoClicar()
     {
         if (jaFoiRegistado) return;
 
-        // =========================
         // BATERIA
         // =========================
         if (eBateria)
