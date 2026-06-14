@@ -76,7 +76,7 @@ public class ColetavelSimples : MonoBehaviour
         objetoRenderer.material.color = corOriginal + corDoBrilho;
     }
 
-    // Chamado automaticamente pelo Unity quando o "rato/mira" sai de cima do Collider
+    // chama automaticamente pelo Unity quando o rato/mira sai de cima do objeto
     void OnMouseExit()
     {
         if (objetoRenderer == null) return;

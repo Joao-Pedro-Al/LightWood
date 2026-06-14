@@ -69,6 +69,7 @@ public class CliqueItem : MonoBehaviour
                 }
             }
         }
+        
     }
 
     public void AoOlharEntrar()
