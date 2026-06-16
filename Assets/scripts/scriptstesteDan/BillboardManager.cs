@@ -171,7 +171,7 @@ public class BillboardManager : MonoBehaviour
                 CriarLinhaFio3D(mapaPistas[9].gameObject, mapaPistas[16].gameObject);
                 CriarLinhaFio3D(mapaPistas[16].gameObject, mapaPistas[11].gameObject);
                 CriarLinhaFio3D(mapaPistas[11].gameObject, mapaPistas[10].gameObject);
-                if(DM != null) DM.AtivarDialogo(23);
+                
             }
 
             // Interligar 13 + 14 + 15: "Alguém parece ter saltado da varanda..."
@@ -180,7 +180,7 @@ public class BillboardManager : MonoBehaviour
                 ligou131415_Nivel2 = true;
                 CriarLinhaFio3D(mapaPistas[13].gameObject, mapaPistas[14].gameObject);
                 CriarLinhaFio3D(mapaPistas[14].gameObject, mapaPistas[15].gameObject);
-                if(DM != null) DM.AtivarDialogo(24);
+                
             }
         }
     }
