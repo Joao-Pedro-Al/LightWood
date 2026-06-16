@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Reflection; // Permite limpar listas privadas do teu BillboardManager
+using System.Reflection; 
 
 public class CuboSalvarQuadro : MonoBehaviour
 {
@@ -27,7 +27,6 @@ public class CuboSalvarQuadro : MonoBehaviour
 
         cuboRenderer = GetComponent<Renderer>();
 
-        // Executa ligeiramente após o frame inicial para garantir que o GeradorSalvamento já acordou
         Invoke("RecarregarPistasSalvas", 0.05f);
     }
 
@@ -112,10 +111,12 @@ public class CuboSalvarQuadro : MonoBehaviour
         if (GeradorSalvamento.Instance == null) return;
 
         bool salvouAlgo = false;
+        int nivelAtual = billboardManager.idNivel;
 
         foreach (PistaCard pista in pistasAtuais)
         {
-            bool jaSalva = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == pista.meuNumero);
+            // Verificação baseada em Número E Nível para evitar colisão de IDs entre mapas
+            bool jaSalva = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == pista.meuNumero && p.idNivel == nivelAtual);
             
             if (!jaSalva)
             {
@@ -124,7 +125,8 @@ public class CuboSalvarQuadro : MonoBehaviour
                     foto = pista.imgFoto != null ? pista.imgFoto.sprite : null,
                     nome = pista.txtNome != null ? pista.txtNome.text : "",
                     descricao = pista.txtDescricao != null ? pista.txtDescricao.text : "",
-                    numero = pista.meuNumero
+                    numero = pista.meuNumero,
+                    idNivel = nivelAtual // Atribui o ID do nível correto no struct global
                 };
                 
                 GeradorSalvamento.Instance.pistasSalvasPermanentes.Add(novosDados);
@@ -134,7 +136,7 @@ public class CuboSalvarQuadro : MonoBehaviour
 
         if (salvouAlgo)
         {
-            Debug.Log("[SALVAMENTO] Pistas salvas com sucesso através do Cubo!");
+            Debug.Log("[SALVAMENTO] Pistas do Nível " + nivelAtual + " salvas com sucesso!");
             StartCoroutine(FeedbackVisualSalvar());
         }
     }
@@ -143,16 +145,12 @@ public class CuboSalvarQuadro : MonoBehaviour
     {
         if (GeradorSalvamento.Instance == null || billboardManager == null) return;
 
-        // CORREÇÃO DO CASO 1 (CLONES):
-        // 1. Destrói fisicamente todos os cartões antigos duplicados que nasceram com o respawn da cena
         PistaCard[] clonesIniciais = billboardManager.GetComponentsInChildren<PistaCard>();
         foreach (PistaCard clone in clonesIniciais)
         {
             Destroy(clone.gameObject);
         }
 
-        // 2. Limpa a lista interna privada 'cartoesInstanciados' que está no teu BillboardManager via Reflexão
-        // para impedir que o teu próprio código original pense que as pistas antigas ainda lá estão!
         FieldInfo campoLista = typeof(BillboardManager).GetField("cartoesInstanciados", BindingFlags.NonPublic | BindingFlags.Instance);
         if (campoLista != null)
         {
@@ -163,10 +161,13 @@ public class CuboSalvarQuadro : MonoBehaviour
             }
         }
 
-        // 3. Repovoa o quadro do zero, de forma totalmente limpa e segura
+        // Filtra para só carregar neste quadro as pistas que pertencem ao ID deste nível
         foreach (var dados in GeradorSalvamento.Instance.pistasSalvasPermanentes)
         {
-            billboardManager.AdicionarPistaAoQuadro(dados.foto, dados.nome, dados.descricao, dados.numero);
+            if (dados.idNivel == billboardManager.idNivel)
+            {
+                billboardManager.AdicionarPistaAoQuadro(dados.foto, dados.nome, dados.descricao, dados.numero);
+            }
         }
     }
 

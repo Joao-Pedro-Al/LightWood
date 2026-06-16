@@ -13,6 +13,7 @@ public class GeradorSalvamento : MonoBehaviour
         public string nome;
         public string descricao;
         public int numero;
+        public int idNivel; // Novo campo para separar o progresso do Nível 1 e Nível 2
     }
 
     public List<DadosPistaSalva> pistasSalvasPermanentes = new List<DadosPistaSalva>();
@@ -24,7 +25,6 @@ public class GeradorSalvamento : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             
-            // Subscreve ao evento de carregamento de cenas do Unity
             SceneManager.sceneLoaded += AoCarregarNovaCena;
         }
         else
@@ -40,7 +40,7 @@ public class GeradorSalvamento : MonoBehaviour
 
     private void AoCarregarNovaCena(Scene cena, LoadSceneMode modo)
     {
-        if (cena.name == "MenuInicial" || cena.name == "MenuInicial") 
+        if (cena.name == "MenuInicial") 
         {
             LimparDadosDeSalvamento();
         }
@@ -49,6 +49,6 @@ public class GeradorSalvamento : MonoBehaviour
     public void LimparDadosDeSalvamento()
     {
         pistasSalvasPermanentes.Clear();
-        Debug.Log("Salvo");
+        Debug.Log("Dados de salvamento limpos!");
     }
 }

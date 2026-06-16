@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 public class BillboardManager : MonoBehaviour
 {
+    [Header("Identificação do Nível")]
+    [Tooltip("Define se este quadro é do Nível 1, Nível 2, etc.")]
+    public int idNivel = 1;
+
     [Header("Diálogo")]
     private Dialogo DM; 
 
@@ -22,7 +26,6 @@ public class BillboardManager : MonoBehaviour
     private List<PistaCard> cartoesInstanciados = new List<PistaCard>();
     private Material materialFioNativo;
 
-    // Estrutura para guardar e atualizar as conexões ativas
     private struct ConexaoFio
     {
         public LineRenderer lineRenderer;
@@ -31,9 +34,17 @@ public class BillboardManager : MonoBehaviour
     }
     private List<ConexaoFio> conexoesAtivas = new List<ConexaoFio>();
 
+    // Trincas de controle do Nível 1
     private bool ligou123 = false;
     private bool ligou56 = false;
     private bool ligou78 = false;
+
+    // Trincas de controle do Nível 2
+    private bool ligou15_Nivel2 = false;
+    private bool ligou36_Nivel2 = false;
+   
+    private bool ligou9161110_Nivel2 = false;
+    private bool ligou131415_Nivel2 = false;
 
     void Awake()
     {
@@ -51,7 +62,6 @@ public class BillboardManager : MonoBehaviour
 
     void Update()
     {
-        // ATUALIZAÇÃO EM TEMPO REAL: Se moveres os cards, os fios acompanham!
         AtualizarPosicaoDosFios();
     }
 
@@ -105,29 +115,73 @@ public class BillboardManager : MonoBehaviour
             }
         }
 
-        // Interligar 1 + 2 + 3
-        if (!ligou123 && mapaPistas.ContainsKey(1) && mapaPistas.ContainsKey(2) && mapaPistas.ContainsKey(3))
+        if (idNivel == 1)
         {
-            ligou123 = true;
-            CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[2].gameObject);
-            CriarLinhaFio3D(mapaPistas[2].gameObject, mapaPistas[3].gameObject);
-            if(DM != null) DM.AtivarDialogo(14);
-        }
+            // Interligar 1 + 2 + 3 (Nível 1)
+            if (!ligou123 && mapaPistas.ContainsKey(1) && mapaPistas.ContainsKey(2) && mapaPistas.ContainsKey(3))
+            {
+                ligou123 = true;
+                CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[2].gameObject);
+                CriarLinhaFio3D(mapaPistas[2].gameObject, mapaPistas[3].gameObject);
+                if(DM != null) DM.AtivarDialogo(14);
+            }
 
-        // Interligar 5 + 6
-        if (!ligou56 && mapaPistas.ContainsKey(5) && mapaPistas.ContainsKey(6))
-        {
-            ligou56 = true;
-            CriarLinhaFio3D(mapaPistas[5].gameObject, mapaPistas[6].gameObject);
-            if(DM != null) DM.AtivarDialogo(15);
-        }
+            // Interligar 5 + 6 (Nível 1)
+            if (!ligou56 && mapaPistas.ContainsKey(5) && mapaPistas.ContainsKey(6))
+            {
+                ligou56 = true;
+                CriarLinhaFio3D(mapaPistas[5].gameObject, mapaPistas[6].gameObject);
+                if(DM != null) DM.AtivarDialogo(15);
+            }
 
-        // Interligar 7 + 8
-        if (!ligou78 && mapaPistas.ContainsKey(7) && mapaPistas.ContainsKey(8))
+            // Interligar 7 + 8 (Nível 1)
+            if (!ligou78 && mapaPistas.ContainsKey(7) && mapaPistas.ContainsKey(8))
+            {
+                ligou78 = true;
+                CriarLinhaFio3D(mapaPistas[7].gameObject, mapaPistas[8].gameObject);
+                if(DM != null) DM.AtivarDialogo(16);
+            }
+        }
+        else if (idNivel == 2)
         {
-            ligou78 = true;
-            CriarLinhaFio3D(mapaPistas[7].gameObject, mapaPistas[8].gameObject);
-            if(DM != null) DM.AtivarDialogo(16);
+            // Interligar 1 + 5: "Mesma vítima, locais diferentes..."
+            if (!ligou15_Nivel2 && mapaPistas.ContainsKey(1) && mapaPistas.ContainsKey(5))
+            {
+                ligou15_Nivel2 = true;
+                CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[5].gameObject);
+                // NOTA: Altera o ID do diálogo (ex: 20) conforme o teu sistema de IDs do Nível 2
+                
+            }
+
+            // Interligar 3 + 6: "O alicate; o livro; e caixa de luz..."
+            if (!ligou36_Nivel2 && mapaPistas.ContainsKey(3) && mapaPistas.ContainsKey(6))
+            {
+                ligou36_Nivel2 = true;
+                CriarLinhaFio3D(mapaPistas[3].gameObject, mapaPistas[6].gameObject);
+                
+            }
+
+           
+
+            // Interligar 9 + 16 + 11 + 10: "Trancaste-te dentro do escritório..."
+            // NOTA: Como a pista 16 vem de uma interação mecânica, ela precisa de ser adicionada ao quadro via script para ligar!
+            if (!ligou9161110_Nivel2 && mapaPistas.ContainsKey(9) && mapaPistas.ContainsKey(16) && mapaPistas.ContainsKey(11) && mapaPistas.ContainsKey(10))
+            {
+                ligou9161110_Nivel2 = true;
+                CriarLinhaFio3D(mapaPistas[9].gameObject, mapaPistas[16].gameObject);
+                CriarLinhaFio3D(mapaPistas[16].gameObject, mapaPistas[11].gameObject);
+                CriarLinhaFio3D(mapaPistas[11].gameObject, mapaPistas[10].gameObject);
+                if(DM != null) DM.AtivarDialogo(23);
+            }
+
+            // Interligar 13 + 14 + 15: "Alguém parece ter saltado da varanda..."
+            if (!ligou131415_Nivel2 && mapaPistas.ContainsKey(13) && mapaPistas.ContainsKey(14) && mapaPistas.ContainsKey(15))
+            {
+                ligou131415_Nivel2 = true;
+                CriarLinhaFio3D(mapaPistas[13].gameObject, mapaPistas[14].gameObject);
+                CriarLinhaFio3D(mapaPistas[14].gameObject, mapaPistas[15].gameObject);
+                if(DM != null) DM.AtivarDialogo(24);
+            }
         }
     }
 
@@ -143,10 +197,8 @@ public class BillboardManager : MonoBehaviour
         lr.startWidth = espessuraDoFio;
         lr.endWidth = espessuraDoFio;
         lr.material = materialFioNativo;
-        
         lr.sortingOrder = 5; 
 
-        // CORRIGIDO: conexoesAtivas com "e"
         ConexaoFio novaConexao = new ConexaoFio { lineRenderer = lr, objetoA = objA, objetoB = objB };
         conexoesAtivas.Add(novaConexao);
 
@@ -155,25 +207,19 @@ public class BillboardManager : MonoBehaviour
 
     void AtualizarPosicaoDosFios()
     {
-        // CORRIGIDO: conexoesAtivas com "e"
         conexoesAtivas.RemoveAll(c => c.objetoA == null || c.objetoB == null);
 
-        // CORRIGIDO: conexoesAtivas com "e"
         foreach (var conexao in conexoesAtivas)
         {
             ConfigurarPosiçãoFio(conexao);
         }
     }
-
    
     void ConfigurarPosiçãoFio(ConexaoFio conexao)
     {
-        // Pega no centro exato do RectTransform no espaço do mundo
         Vector3 posA = conexao.objetoA.transform.position;
         Vector3 posB = conexao.objetoB.transform.position;
 
-        // Um ligeiro empurrão para a frente (Z negativo em direção à câmara) 
-        // para evitar "Z-Fighting" (fio a piscar dentro do painel)
         Vector3 avancoFrente = -transform.forward * 0.05f; 
 
         conexao.lineRenderer.SetPosition(0, posA + avancoFrente);

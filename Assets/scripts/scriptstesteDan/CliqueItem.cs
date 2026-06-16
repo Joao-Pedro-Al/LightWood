@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class CliqueItem : MonoBehaviour
 {
+    [Header("Configurações de Nível")]
+    [Tooltip("A qual nível esta pista pertence? (Deve bater com o ID do BillboardManager do nível)")]
+    public int idNivel = 1;
+
     [Header("Configurações da Pista")]
     public Sprite imagemDoItem;
     public string nomeDaPista = "Nome do Item";
@@ -17,11 +21,18 @@ public class CliqueItem : MonoBehaviour
     public bool naoColetavel = false;
 
     [Header("Mecânica de Bateria")]
-    [Tooltip("Ativa esta caixinha se este objeto for uma Bateria para recarregar a Lanterna!")]
     public bool eBateria = false;
-
-    [Tooltip("Quantidade de carga que esta bateria vai dar à lanterna.")]
     public float quantidadeCarga = 50f;
+
+    [Header("Mecânicas Especiais (Nível 2)")]
+    public bool eLanternaNelson = false;
+    public bool eCorpoNelson = false;
+    public bool ePortaTrancadaNivel2 = false;
+    
+    [Space(5)]
+    public Sprite imagemChaveExterior; // Atribui no inspector do Corpo do Nelson
+    public Sprite imagemPilhasNelson;  // Atribui no inspector da Lanterna do Nelson
+    public GameObject portaObjetoFisico; // Se for a porta trancada, arrasta o modelo da porta aqui para abrir/rodar/destruir
 
     private BillboardManager billboard;
     private Renderer[] meusRenderers;
@@ -32,7 +43,6 @@ public class CliqueItem : MonoBehaviour
 
     void Start()
     {
-        // Procura o sistema de diálogo
         DM = Dialogo.Instance;
 
         if (DM == null)
@@ -40,7 +50,6 @@ public class CliqueItem : MonoBehaviour
             Debug.LogWarning("Dialogo.Instance não foi encontrado na cena!");
         }
 
-        // Cache de renderers para o efeito de brilho
         meusRenderers = GetComponentsInChildren<Renderer>();
         coresOriginais = new Color[meusRenderers.Length];
         for (int i = 0; i < meusRenderers.Length; i++)
@@ -51,29 +60,32 @@ public class CliqueItem : MonoBehaviour
             }
         }
 
-        // Procura o BillboardManager na cena
-        billboard = FindObjectOfType<BillboardManager>();
+        // Procura todos os billboards e escolhe o que tem o mesmo ID de Nível deste item
+        BillboardManager[] todosBillboards = FindObjectsOfType<BillboardManager>();
+        foreach (var b in todosBillboards)
+        {
+            if (b.idNivel == idNivel)
+            {
+                billboard = b;
+                break;
+            }
+        }
 
-        // =========================================================================
-        // CORREÇÃO PARA O CASO DE TESTE DA BATERIA (RESPAWN / MORTE)
-        // Só faz sumir se NÃO for uma bateria, evitando que o GeradorBaterias quebre!
-        // =========================================================================
+        // SISTEMA DE SALVAMENTO ATUALIZADO COM ID DO NÍVEL
         if (!eBateria && GeradorSalvamento.Instance != null)
         {
-            bool jaEstaSalvaNoQuadro = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == numeroFixoDaPista);
+            bool jaEstaSalvaNoQuadro = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == numeroFixoDaPista && p.idNivel == idNivel);
 
             if (jaEstaSalvaNoQuadro)
             {
                 if (naoColetavel)
                 {
-                    // Se for a tenda (não coletável), remove a interação para sempre
                     jaFoiRegistado = true;
                     this.enabled = false;
                     return;
                 }
                 else
                 {
-                    // Se for o marshmallow (coletável), desaparece do chão imediatamente
                     Destroy(gameObject);
                     return;
                 }
@@ -81,15 +93,11 @@ public class CliqueItem : MonoBehaviour
         }
     }
 
-    public void AoOlharEntrar()
-    {
-        AoOlharEntrar(new Color(0.3f, 0.3f, 0.3f));
-    }
+    public void AoOlharEntrar() => AoOlharEntrar(new Color(0.3f, 0.3f, 0.3f));
 
     public void AoOlharEntrar(Color corDoBrilho)
     {
         if (jaFoiRegistado || jaEstaBrilhando) return;
-
         jaEstaBrilhando = true;
 
         for (int i = 0; i < meusRenderers.Length; i++)
@@ -104,7 +112,6 @@ public class CliqueItem : MonoBehaviour
     public void AoOlharSair()
     {
         if (!jaEstaBrilhando) return;
-
         jaEstaBrilhando = false;
 
         for (int i = 0; i < meusRenderers.Length; i++)
@@ -116,68 +123,124 @@ public class CliqueItem : MonoBehaviour
         }
     }
 
-    public void ColetarPista()
-    {
-        AoClicar();
-    }
+    public void ColetarPista() => AoClicar();
 
     public void AoClicar()
     {
         if (jaFoiRegistado) return;
 
-        // BATERIA
-        // =========================
+        // ==========================================
+        // MECÂNICA 1: BATERIA COMUM
+        // ==========================================
         if (eBateria)
         {
             Flashlight lanterna = FindObjectOfType<Flashlight>();
-
-            if (lanterna != null)
-            {
-                lanterna.Recharge(quantidadeCarga);
-            }
-            else
-            {
-                Debug.LogWarning("Flashlight não encontrada!");
-            }
-
+            if (lanterna != null) lanterna.Recharge(quantidadeCarga);
             AoOlharSair();
             Destroy(gameObject);
             return;
         }
 
-        // =========================
-        // DIÁLOGO
-        // =========================
-        if (DM != null)
+        // ==========================================
+        // MECÂNICA 2: LANTERNA DO NELSON (DÁ PILHAS)
+        // ==========================================
+        if (eLanternaNelson)
         {
-            DM.AtivarDialogo(Id_Dialogo);
-        }
-        else
-        {
-            Debug.LogWarning("Não foi possível iniciar diálogo porque DM está null.");
+            Flashlight lanterna = FindObjectOfType<Flashlight>();
+            if (lanterna != null) lanterna.Recharge(quantidadeCarga); // Dá a carga das pilhas
+            
+            // Adiciona também a própria lanterna como pista ao quadro
+            if (billboard != null)
+            {
+                billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
+            }
+            
+            // Opcional: Adicionar feedback visual ou inventário se usares
+            Debug.Log("Obrigado... [Obteu pilhas]");
+            
+            if (DM != null) DM.AtivarDialogo(Id_Dialogo);
+            AoOlharSair();
+            Destroy(gameObject);
+            return;
         }
 
-        // =========================
-        // BILLBOARD
-        // =========================
+        // ==========================================
+        // MECÂNICA 3: CORPO DE NELSON (DÁ CHAVE - PISTA 16)
+        // ==========================================
+        if (eCorpoNelson)
+        {
+            if (DM != null) DM.AtivarDialogo(Id_Dialogo); // Texto base do corpo ("Yuck...")
+
+            if (billboard != null)
+            {
+                // Envia o Corpo (Pista 9)
+                billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
+                
+                // Envia AUTOMATICAMENTE a Chave para o Exterior (Pista 16) para o quadro!
+                billboard.AdicionarPistaAoQuadro(imagemChaveExterior, "Chave para o Exterior", "Mm... precisastes das chaves para quê?", 16);
+            }
+            
+            jaFoiRegistado = true;
+            AoOlharSair();
+            this.enabled = false; // Corpo não some por ser um corpo, mas desativa interação
+            return;
+        }
+
+        // ==========================================
+        // MECÂNICA 4: PORTA TRANCADA (REQUER PISTA 16 NO QUADRO)
+        // ==========================================
+        if (ePortaTrancadaNivel2)
+        {
+            // Vamos verificar se o jogador já obteu a chave (pista 16) analisando o quadro
+            bool temAChave = false;
+            if (GeradorSalvamento.Instance != null)
+            {
+                temAChave = GeradorSalvamento.Instance.pistasSalvasPermanentes.Exists(p => p.numero == 16 && p.idNivel == idNivel);
+            }
+
+            if (temAChave)
+            {
+                Debug.Log("Então estivestes aqui... [A Porta Abre]");
+                if (DM != null) DM.AtivarDialogo(Id_Dialogo); // Diálogo de abrir a porta
+                
+                if (portaObjetoFisico != null)
+                {
+                    // Abre a porta (podes destruir ou desativar o colisor/objeto)
+                    Destroy(portaObjetoFisico); 
+                }
+
+                // Adiciona a própria porta como Pista Concluída (Pista 7)
+                if (billboard != null)
+                {
+                    billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
+                }
+
+                jaFoiRegistado = true;
+                AoOlharSair();
+                Destroy(gameObject); // Some o trigger de interação da porta
+            }
+            else
+            {
+                // Diálogo de que a porta está trancada e precisa de chave
+                Debug.Log("A porta está trancada por dentro.");
+            }
+            return;
+        }
+
+        // ==========================================
+        // COLETA E TRATAMENTO DE PISTAS NORMAIS
+        // ==========================================
+        if (DM != null) DM.AtivarDialogo(Id_Dialogo);
+
         if (billboard != null)
         {
-            billboard.AdicionarPistaAoQuadro(
-                imagemDoItem,
-                nomeDaPista,
-                descricaoDaPista,
-                numeroFixoDaPista
-            );
+            billboard.AdicionarPistaAoQuadro(imagemDoItem, nomeDaPista, descricaoDaPista, numeroFixoDaPista);
         }
 
-        // =========================
-        // COLETA
-        // =========================
         if (naoColetavel)
         {
             jaFoiRegistado = true;
             AoOlharSair();
-
             this.enabled = false;
         }
         else
