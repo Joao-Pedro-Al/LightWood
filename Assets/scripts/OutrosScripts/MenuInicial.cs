@@ -6,7 +6,7 @@ public class Menu_Inicial : MonoBehaviour
     public void JogarJogo()
     {
         // Carrega a cena principal da tua floresta 3D
-        SceneManager.LoadScene("Nivel1_teste");
+        SceneManager.LoadScene("Nivel1");
     }
 
   

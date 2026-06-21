@@ -16,6 +16,8 @@ public class GestorFimDeNivel : MonoBehaviour
 
     [Header("Cena de Destino")]
     [Tooltip("O nome exato da tua cena de cr�ditos (como est� nas Build Settings).")]
+    private string CenaAtual; // A cena que está aberta no momento
+    public string nomeDoSegundoNivel = "Nivel2";
     public string nomeDaCenaCreditos = "Creditos";
 
     private BillboardManager billboard;
@@ -28,6 +30,10 @@ public class GestorFimDeNivel : MonoBehaviour
 
         // Acede ao Objetivo no Menu de Pausa
         PE = Pausa_Ecra.Instance;
+
+        // Buscar o Nome da Cena Atual
+        Scene Cena = SceneManager.GetActiveScene();
+        CenaAtual = Cena.name;
 
         // Encontra o BillboardManager automaticamente na cena
         billboard = FindFirstObjectByType<BillboardManager>();
@@ -77,18 +83,33 @@ public class GestorFimDeNivel : MonoBehaviour
 
     IEnumerator TemporizadorMudarDeCena()
     {
-        Debug.Log("Todas as pistas encontradas! O n�vel vai terminar em 60 segundos...");
+        Debug.Log("Todas as pistas encontradas! O nível vai terminar em 60 segundos...");
+
+        // Verificar qual é a cena atual e definir qual deve ser aberta
+        string ProxCena = null;
+        switch(CenaAtual)
+        {
+            case "Nivel1":
+                ProxCena = nomeDoSegundoNivel;
+                break;
+            case "Nivel2":
+                ProxCena = nomeDaCenaCreditos;
+                break;
+            default:
+                ProxCena = nomeDaCenaCreditos;
+                break;
+        }
+
+        Debug.Log("A carregar a próxima cena: " + ProxCena);
 
         // Espera exatamente 60 segundos (1 minuto)
-        yield return new WaitForSeconds(15f);
-
-        Debug.Log("A carregar a cena de cr�ditos: " + nomeDaCenaCreditos);
+        yield return new WaitForSeconds(5f);
 
         
         DM.Destruir();
         PE.Destruir_MenuPausa();
 
         // Carrega a cena dos cr�ditos
-        SceneManager.LoadScene(nomeDaCenaCreditos);
+        SceneManager.LoadScene(ProxCena);
     }
 }
