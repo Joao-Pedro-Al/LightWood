@@ -3,7 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class TAKING_DAMAGE : MonoBehaviour
 {
+    [Header("Dialogo")]
     private Dialogo DM;
+
+    [Header("Objetivos")]
+    private Pausa_Ecra PE;
+
     private PlayerHealth playerHealth;
 
     public int health = 1;
@@ -16,6 +21,7 @@ public class TAKING_DAMAGE : MonoBehaviour
     void Start()
     {
         DM = Dialogo.Instance;
+        PE = Pausa_Ecra.Instance;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -42,7 +48,10 @@ public class TAKING_DAMAGE : MonoBehaviour
 
     void Die()
     {
-        if (DM != null) DM.Destruir();
+        if (DM != null)
+        {DM.Destruir();}
+        if (playerHealth != null)
+        {PE.Destruir_MenuPausa();}
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

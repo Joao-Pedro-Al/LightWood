@@ -149,6 +149,7 @@ public class BillboardManager : MonoBehaviour
             {
                 ligou15_Nivel2 = true;
                 CriarLinhaFio3D(mapaPistas[1].gameObject, mapaPistas[5].gameObject);
+                if(DM != null) DM.AtivarDialogo(48);
                 // NOTA: Altera o ID do diálogo (ex: 20) conforme o teu sistema de IDs do Nível 2
                 
             }
@@ -158,7 +159,7 @@ public class BillboardManager : MonoBehaviour
             {
                 ligou36_Nivel2 = true;
                 CriarLinhaFio3D(mapaPistas[3].gameObject, mapaPistas[6].gameObject);
-                
+                if(DM != null) DM.AtivarDialogo(49);
             }
 
            
@@ -171,7 +172,7 @@ public class BillboardManager : MonoBehaviour
                 CriarLinhaFio3D(mapaPistas[9].gameObject, mapaPistas[16].gameObject);
                 CriarLinhaFio3D(mapaPistas[16].gameObject, mapaPistas[11].gameObject);
                 CriarLinhaFio3D(mapaPistas[11].gameObject, mapaPistas[10].gameObject);
-                
+                if(DM != null) DM.AtivarDialogo(51);
             }
 
             // Interligar 13 + 14 + 15: "Alguém parece ter saltado da varanda..."
@@ -180,7 +181,7 @@ public class BillboardManager : MonoBehaviour
                 ligou131415_Nivel2 = true;
                 CriarLinhaFio3D(mapaPistas[13].gameObject, mapaPistas[14].gameObject);
                 CriarLinhaFio3D(mapaPistas[14].gameObject, mapaPistas[15].gameObject);
-                
+                if(DM != null) DM.AtivarDialogo(52);
             }
         }
     }

@@ -4,7 +4,11 @@ using System.Collections;
 
 public class GestorFimDeNivel : MonoBehaviour
 {
+    [Header("Dialogo")]
     private Dialogo DM;
+
+    [Header("Objetivos")]
+    private Pausa_Ecra PE;
 
     [Header("Configura��es do N�vel")]
     [Tooltip("O n�mero total de pistas que o jogador precisa de encontrar neste n�vel.")]
@@ -21,6 +25,9 @@ public class GestorFimDeNivel : MonoBehaviour
     {
         // Acede ao Sistema de Diálogo
         DM = Dialogo.Instance;
+
+        // Acede ao Objetivo no Menu de Pausa
+        PE = Pausa_Ecra.Instance;
 
         // Encontra o BillboardManager automaticamente na cena
         billboard = FindFirstObjectByType<BillboardManager>();
@@ -56,6 +63,7 @@ public class GestorFimDeNivel : MonoBehaviour
                     if (pistasAtuais >= totalDePistasNoNivel)
                     {
                         nivelFinalizado = true;
+                        PE.AtualizarObjetivo("Analisa as pistas no Billboard.");
                         StartCoroutine(TemporizadorMudarDeCena());
                         yield break; // Para o Loop de verifica��o
                     }
@@ -78,6 +86,7 @@ public class GestorFimDeNivel : MonoBehaviour
 
         
         DM.Destruir();
+        PE.Destruir_MenuPausa();
 
         // Carrega a cena dos cr�ditos
         SceneManager.LoadScene(nomeDaCenaCreditos);
