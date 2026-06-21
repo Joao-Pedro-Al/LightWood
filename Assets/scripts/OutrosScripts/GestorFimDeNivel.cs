@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -19,6 +20,9 @@ public class GestorFimDeNivel : MonoBehaviour
     private string CenaAtual; // A cena que está aberta no momento
     public string nomeDoSegundoNivel = "Nivel2";
     public string nomeDaCenaCreditos = "Creditos";
+
+    [Header("Player")]
+    [SerializeField] private Image FadeIn_Out;
 
     private BillboardManager billboard;
     private bool nivelFinalizado = false;
@@ -46,6 +50,8 @@ public class GestorFimDeNivel : MonoBehaviour
 
         // Inicia a verifica��o em segundo plano para poupar processamento (roda a cada 1 segundo em vez de cada frame)
         StartCoroutine(RotinaVerificarPistas());
+
+        StartCoroutine(FadeIn(true));
     }
 
     IEnumerator RotinaVerificarPistas()
@@ -105,11 +111,41 @@ public class GestorFimDeNivel : MonoBehaviour
         // Espera exatamente 60 segundos (1 minuto)
         yield return new WaitForSeconds(5f);
 
+        yield return StartCoroutine(FadeIn(false));
         
         DM.Destruir();
         PE.Destruir_MenuPausa();
 
         // Carrega a cena dos cr�ditos
         SceneManager.LoadScene(ProxCena);
+    }
+
+    private IEnumerator FadeIn(bool s)
+    {
+        float timer = 0f;
+        float duracao = 1.2f;
+        float NovoAlpha = 255;
+        int Alpha = 255;
+        int Target = 0;
+
+        if(s)
+        {
+            Alpha = 255;
+            Target = 0;
+        }
+        else
+        {
+            Alpha = 0;
+            Target = 255;
+        }
+        while (timer < duracao) // Durante o tempo estimado em Duração
+        {
+            NovoAlpha = Mathf.Lerp(Alpha, Target, timer / duracao); // Gradualmente altera o Valor da Velocidade_Idle para o valor inserido durante o while inteiro
+            FadeIn_Out.color = new Color32(0, 0, 0, (byte)NovoAlpha);
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        
+        FadeIn_Out.color = new Color32(0, 0, 0, (byte)NovoAlpha);
     }
 }

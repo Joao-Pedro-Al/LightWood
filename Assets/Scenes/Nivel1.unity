@@ -2927,7 +2927,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorFimDeNivel
   totalDePistasNoNivel: 8
+  nomeDoSegundoNivel: Nivel2
   nomeDaCenaCreditos: Creditos
+  FadeIn_Out: {fileID: 2069246782}
 --- !u!4 &914027001
 Transform:
   m_ObjectHideFlags: 0
@@ -3238,10 +3240,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4612950802696301040, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5409107152555000657, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -45.48
@@ -3286,10 +3284,6 @@ PrefabInstance:
       propertyPath: ScriptDialogo
       value: 
       objectReference: {fileID: 512549614}
-    - target: {fileID: 7921552446803939023, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6283,6 +6277,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016400006, y: 0.004992579, z: 0.0049925908}
   m_Center: {x: 0.004333568, y: 0.000029756571, z: 0.0000002342531}
+--- !u!114 &2069246782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2578721083572007716, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+  m_PrefabInstance: {fileID: 1083917390}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &6402531368055314510
 PrefabInstance:
   m_ObjectHideFlags: 0

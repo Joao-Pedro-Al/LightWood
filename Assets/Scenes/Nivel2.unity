@@ -4756,6 +4756,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5409107152555000657, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
   m_PrefabInstance: {fileID: 695157498}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &695157503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2578721083572007716, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+  m_PrefabInstance: {fileID: 695157498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &722456624 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b02a566f930860b4eb4bca33d7db8ed8, type: 3}
@@ -6024,7 +6035,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorFimDeNivel
   totalDePistasNoNivel: 8
+  nomeDoSegundoNivel: Nivel2
   nomeDaCenaCreditos: Creditos
+  FadeIn_Out: {fileID: 695157503}
 --- !u!4 &914027001
 Transform:
   m_ObjectHideFlags: 0
