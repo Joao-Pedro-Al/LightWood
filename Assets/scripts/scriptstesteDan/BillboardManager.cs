@@ -42,7 +42,8 @@ public class BillboardManager : MonoBehaviour
     // Trincas de controle do Nível 2
     private bool ligou15_Nivel2 = false;
     private bool ligou36_Nivel2 = false;
-   
+    private bool ligou789_Nivel2 = false;
+
     private bool ligou9161110_Nivel2 = false;
     private bool ligou131415_Nivel2 = false;
 
@@ -163,7 +164,15 @@ public class BillboardManager : MonoBehaviour
             }
 
            
-
+           // Interligar 7 + 8+ 9: "O alicate; o livro; e caixa de luz..."
+            if (!ligou789_Nivel2 && mapaPistas.ContainsKey(7) && mapaPistas.ContainsKey(8) && mapaPistas.ContainsKey(9))
+            {
+                ligou789_Nivel2 = true;
+                CriarLinhaFio3D(mapaPistas[7].gameObject, mapaPistas[8].gameObject);
+                CriarLinhaFio3D(mapaPistas[8].gameObject, mapaPistas[9].gameObject);
+                if(DM != null) DM.AtivarDialogo(50);
+            }
+            
             // Interligar 9 + 16 + 11 + 10: "Trancaste-te dentro do escritório..."
             // NOTA: Como a pista 16 vem de uma interação mecânica, ela precisa de ser adicionada ao quadro via script para ligar!
             if (!ligou9161110_Nivel2 && mapaPistas.ContainsKey(9) && mapaPistas.ContainsKey(16) && mapaPistas.ContainsKey(11) && mapaPistas.ContainsKey(10))
