@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
   idNivel: 2
-  imagemDoItem: {fileID: 21300000, guid: 73a14457343df3c4f828e927de9e9408, type: 3}
-  nomeDaPista: 
-  descricaoDaPista: 
-  numeroFixoDaPista: 0
+  imagemDoItem: {fileID: 21300000, guid: f5bb1a58f7248354aaa47720c120ae27, type: 3}
+  nomeDaPista: Trilho de Sangue
+  descricaoDaPista: ' "Uma jornada longa. Este foi um lutador..."'
+  numeroFixoDaPista: 8
   Id_Dialogo: 37
   naoColetavel: 1
   eBateria: 0

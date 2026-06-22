@@ -2112,6 +2112,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 806a6ad6c017d76468bfa877d252132c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 346990872}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 806a6ad6c017d76468bfa877d252132c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 346990873}
   m_SourcePrefab: {fileID: 100100000, guid: 806a6ad6c017d76468bfa877d252132c, type: 3}
 --- !u!4 &346990870 stripped
 Transform:
@@ -2144,6 +2147,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.28439873, y: 3.0469882, z: 1.9477674}
   m_Center: {x: -0.0000000013465813, y: 1.4763045, z: 0.009663582}
+--- !u!114 &346990873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346990871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  idNivel: 2
+  imagemDoItem: {fileID: 21300000, guid: 43fb4caeececcee4ab9924a1f9ca9cdf, type: 3}
+  nomeDaPista: Porta Trancada
+  descricaoDaPista: '"Mm... duvido que esta porta esteve sempre trancada."'
+  numeroFixoDaPista: 7
+  Id_Dialogo: 0
+  naoColetavel: 1
+  eBateria: 0
+  quantidadeCarga: 50
+  eLanternaNelson: 0
+  eCorpoNelson: 0
+  ePortaTrancadaNivel2: 0
+  imagemChaveExterior: {fileID: 0}
+  imagemPilhasNelson: {fileID: 0}
+  portaObjetoFisico: {fileID: 0}
 --- !u!4 &349836779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3609354533673876490, guid: 51697e9986522bc4d8cc0dd6b56afdee, type: 3}
