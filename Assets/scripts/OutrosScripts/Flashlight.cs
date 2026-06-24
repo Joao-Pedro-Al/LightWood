@@ -20,9 +20,6 @@ public class Flashlight : MonoBehaviour
 
     public bool FlashlightActive = false;
 
-    // Bloqueio: o jogador não pode usar a lanterna antes de a coletar do chão
-    [HideInInspector] public bool lanternaColetada = false;
-
     // Evento disparado no momento exato em que a lanterna é ligada
     // O MonsterAI subscreve isto para deteção instantânea com um único flash
     public System.Action OnFlashlightTurnedOn;
@@ -49,13 +46,7 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        // 1. Entrada do jogador (ligar/desligar) — só funciona após coletar a lanterna
-        if (Input.GetKeyDown(KeyCode.F) && !lanternaColetada)
-        {
-            Debug.Log("Ainda não tens a lanterna.");
-            return;
-        }
-
+        // 1. Entrada do jogador (ligar/desligar)
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (!FlashlightActive)
@@ -178,17 +169,6 @@ public class Flashlight : MonoBehaviour
     public Transform GetLightTransform()
     {
         return FlashlightLight.transform;
-    }
-
-    // Chamado pelo CliqueItem da lanterna quando o jogador a coleta
-    // Ativa a permissão de uso e liga imediatamente
-    public void ColetarLanterna()
-    {
-        lanternaColetada = true;
-        FlashlightActive = true;
-        ResetBlinkState();
-        OnFlashlightTurnedOn?.Invoke();
-        Debug.Log("Lanterna coletada! Podes agora usar o F.");
     }
 
     // Método público para recarregar a bateria (opcional)

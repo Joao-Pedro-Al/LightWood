@@ -8,7 +8,6 @@ TagManager:
   - treeLayer
   - Dialogo
   - DAMAGE
-  - Lanterna
   layers:
   - Default
   - TransparentFX

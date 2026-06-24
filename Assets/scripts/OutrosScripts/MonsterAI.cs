@@ -90,29 +90,25 @@ public class MonsterAI : MonoBehaviour
 
     private Vector3 lastHidingPosition;
 
-    void Awake()
-    {
-        monsterRenderers = GetComponentsInChildren<Renderer>();
-    }
-
     void Start()
     {
         if (mainCamera == null) mainCamera = Camera.main;
+
+        monsterRenderers = GetComponentsInChildren<Renderer>();
 
         if (monsterSilhouette == null)
             monsterSilhouette = GameObject.Find("MonsterSilhouette");
 
         agent = GetComponent<NavMeshAgent>();
 
-        // Verifica NavMesh com raio generoso — o monstro pode ter sido ativado dinamicamente
-        // e não estar exatamente sobre o NavMesh ainda
         hasValidNavMesh = NavMesh.SamplePosition(transform.position, out _, 50f, NavMesh.AllAreas) ||
                           (player != null && NavMesh.SamplePosition(player.position, out _, 50f, NavMesh.AllAreas));
 
         if (!hasValidNavMesh)
         {
-            // Avisa mas não desativa — o NavMesh pode estar disponível quando o Activate() for chamado
-            Debug.LogWarning("[Monstro] ⚠️ NavMesh não encontrado no Start. Será verificado no Activate().");
+            Debug.LogError("[Monstro] ❌ Nenhum NavMesh encontrado!");
+            enabled = false;
+            return;
         }
 
         if (agent != null)
@@ -220,18 +216,9 @@ public class MonsterAI : MonoBehaviour
 
     void TeleportToTree()
     {
-        Debug.Log($"[Monstro] TeleportToTree chamado. hasValidNavMesh={hasValidNavMesh}");
-
-        if (!hasValidNavMesh)
-        {
-            Debug.LogError("[Monstro] ❌ Saiu em hasValidNavMesh=false!");
-            return;
-        }
-
-        Debug.Log($"[Monstro] Agent={agent != null}, enabled={agent?.enabled}, isOnNavMesh={agent?.isOnNavMesh}");
+        if (!hasValidNavMesh) return;
 
         bool foundTree = FindPositionNearTree(out Vector3 pos);
-        Debug.Log($"[Monstro] FindPositionNearTree: foundTree={foundTree}, pos={pos}");
 
         if (agent != null && agent.isOnNavMesh)
         {
@@ -254,11 +241,8 @@ public class MonsterAI : MonoBehaviour
             if (lookDir != Vector3.zero)
                 transform.rotation = Quaternion.LookRotation(lookDir);
 
+            // Inicia o som 3D da Fase 1 na posição do esconderijo
             StartPhase1Audio();
-        }
-        else
-        {
-            Debug.LogError($"[Monstro] ❌ Agent nulo ou fora do NavMesh! agent={agent != null}, isOnNavMesh={agent?.isOnNavMesh}");
         }
     }
 
@@ -534,30 +518,13 @@ public class MonsterAI : MonoBehaviour
         isDisappearing = false;
         StartCoroutine(DisappearAndReturn());
         Debug.Log("[Monstro] 🔄 Recuou para Fase 1 após ataque.");
-    }
+    }   
     // ═══════════════════════════════════════════════════════
     // BOTÕES DE TESTE
     // ═══════════════════════════════════════════════════════
     [ContextMenu("▶ TESTE — Ativar Fase 1")]
     public void Activate()
     {
-        // Re-verifica o NavMesh aqui, caso o Start() tenha falhado (objeto estava desativado)
-        if (!hasValidNavMesh)
-        {
-            hasValidNavMesh = NavMesh.SamplePosition(transform.position, out _, 50f, NavMesh.AllAreas) ||
-                              (player != null && NavMesh.SamplePosition(player.position, out _, 50f, NavMesh.AllAreas));
-
-            if (!hasValidNavMesh)
-            {
-                Debug.LogError("[Monstro] ❌ NavMesh ainda não disponível no Activate(). Faz Bake do NavMesh!");
-                return;
-            }
-
-            // Reactiva o agent se estava desativado
-            if (agent != null && !agent.enabled)
-                agent.enabled = true;
-        }
-
         StopAllCoroutines();
         isDisappearing = false;
         phase1Timer = 0f;

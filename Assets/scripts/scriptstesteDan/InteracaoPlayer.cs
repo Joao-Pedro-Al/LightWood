@@ -1,26 +1,16 @@
 using UnityEngine;
-using System.Collections;
 
 public class PlayerInteracao : MonoBehaviour
 {
     [Header("Configurações do Raio")]
-    public float distanciaDoRaio = 6f;
-    public LayerMask layerDasPistas;
+    public float distanciaDoRaio = 6f; 
+    public LayerMask layerDasPistas;  
 
     [Header("Interface UI (A Bola da Mira)")]
-    [Tooltip("Coloca aqui o objeto UI da tua mira (a bola) do Canvas.")]
-    public GameObject miraUI;
+    public GameObject miraUI; 
 
     [Header("Tecla do Quadro/Inventário")]
-    public KeyCode teclaVerQuadro = KeyCode.E;
-
-    [Header("Lanterna e Monstro")]
-    [Tooltip("Arrasta aqui o script Flashlight do jogador.")]
-    public Flashlight flashlightScript;
-    [Tooltip("Tag do CliqueItem que representa a lanterna no chão.")]
-    public string tagLanterna = "Lanterna";
-    [Tooltip("Arrasta aqui o GameObject do monstro (deve estar desativado no início).")]
-    public GameObject monstro;
+    public KeyCode teclaVerQuadro = KeyCode.E; 
 
     private Camera cam;
     private CliqueItem itemSendoOlhado;
@@ -30,12 +20,8 @@ public class PlayerInteracao : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        //billboard = FindObjectOfType<BillboardManager>();
-
-        // Mantém a mira base visível para o jogador saber para onde aponta,
-        // mas garante que ela começa no estado normal/desativada do brilho.
         if (miraUI) miraUI.SetActive(false);
-
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -72,10 +58,7 @@ public class PlayerInteracao : MonoBehaviour
                 itemSendoOlhado = itemDetetado;
                 itemSendoOlhado.AoOlharEntrar();
 
-                // ==========================================================
-                // PRIMEIRA ALTERAÇÃO: Ativa a bola da mira ao olhar para o item
-                // ==========================================================
-                if (miraUI && !miraUI.activeSelf)
+                if (miraUI && !miraUI.activeSelf) 
                 {
                     miraUI.SetActive(true);
                 }
@@ -84,22 +67,8 @@ public class PlayerInteracao : MonoBehaviour
                 {
                     CliqueItem itemParaColetar = itemSendoOlhado;
                     LimparVisao();
-
-                    // Verifica se o item coletado é a lanterna
-                    if (itemParaColetar.CompareTag(tagLanterna) && flashlightScript != null)
-                    {
-                        flashlightScript.ColetarLanterna();
-
-                        // Spana o monstro e inicia a Fase 1 (adiado um frame para o Start() terminar)
-                        if (monstro != null)
-                        {
-                            monstro.SetActive(true);
-                            StartCoroutine(AtivarMonstro());
-                        }
-                    }
-
                     itemParaColetar.ColetarPista();
-                    return;
+                    return; 
                 }
             }
             else
@@ -120,20 +89,11 @@ public class PlayerInteracao : MonoBehaviour
             itemSendoOlhado.AoOlharSair();
             itemSendoOlhado = null;
         }
-
-        // Quando não olhas para nada interativo, a bola da mira desativa-se
-        if (miraUI && miraUI.activeSelf)
+        
+        if (miraUI && miraUI.activeSelf) 
         {
             miraUI.SetActive(false);
         }
-    }
-
-    IEnumerator AtivarMonstro()
-    {
-        yield return null; // espera um frame para o Start() do MonsterAI terminar
-        MonsterAI ai = monstro.GetComponent<MonsterAI>();
-        if (ai != null) ai.Activate();
-        else Debug.LogWarning("[Player] MonsterAI não encontrado no monstro!");
     }
 
     void ToggleQuadro()

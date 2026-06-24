@@ -515,7 +515,6 @@ MonoBehaviour:
   blinkInterval: 0.3
   batteryFillImage: {fileID: 2822396087093505741}
   FlashlightActive: 0
-  lanternaColetada: 0
 --- !u!114 &4378951725479117543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,9 +547,6 @@ MonoBehaviour:
     m_Bits: 1
   miraUI: {fileID: 4607171456278197434}
   teclaVerQuadro: 101
-  flashlightScript: {fileID: 0}
-  tagLanterna: Lanterna
-  monstro: {fileID: 0}
 --- !u!1 &1394390196669118973
 GameObject:
   m_ObjectHideFlags: 0
