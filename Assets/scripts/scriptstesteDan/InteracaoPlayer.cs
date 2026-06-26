@@ -3,14 +3,14 @@ using UnityEngine;
 public class PlayerInteracao : MonoBehaviour
 {
     [Header("Configurações do Raio")]
-    public float distanciaDoRaio = 6f; 
-    public LayerMask layerDasPistas;  
+    public float distanciaDoRaio = 6f;
+    public LayerMask layerDasPistas;
 
     [Header("Interface UI (A Bola da Mira)")]
-    public GameObject miraUI; 
+    public GameObject miraUI;
 
     [Header("Tecla do Quadro/Inventário")]
-    public KeyCode teclaVerQuadro = KeyCode.E; 
+    public KeyCode teclaVerQuadro = KeyCode.E;
 
     private Camera cam;
     private CliqueItem itemSendoOlhado;
@@ -21,7 +21,7 @@ public class PlayerInteracao : MonoBehaviour
     {
         cam = Camera.main;
         if (miraUI) miraUI.SetActive(false);
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -58,7 +58,7 @@ public class PlayerInteracao : MonoBehaviour
                 itemSendoOlhado = itemDetetado;
                 itemSendoOlhado.AoOlharEntrar();
 
-                if (miraUI && !miraUI.activeSelf) 
+                if (miraUI && !miraUI.activeSelf)
                 {
                     miraUI.SetActive(true);
                 }
@@ -68,7 +68,7 @@ public class PlayerInteracao : MonoBehaviour
                     CliqueItem itemParaColetar = itemSendoOlhado;
                     LimparVisao();
                     itemParaColetar.ColetarPista();
-                    return; 
+                    return;
                 }
             }
             else
@@ -89,8 +89,8 @@ public class PlayerInteracao : MonoBehaviour
             itemSendoOlhado.AoOlharSair();
             itemSendoOlhado = null;
         }
-        
-        if (miraUI && miraUI.activeSelf) 
+
+        if (miraUI && miraUI.activeSelf)
         {
             miraUI.SetActive(false);
         }
@@ -105,16 +105,16 @@ public class PlayerInteracao : MonoBehaviour
         // Se houver mais de um quadro, pega o mais perto do jogador
         BillboardManager quadroMaisProximo = quadros[0];
         float menorDistancia = Mathf.Infinity;
-        foreach(var q in quadros)
+        foreach (var q in quadros)
         {
             float dist = Vector3.Distance(transform.position, q.transform.position);
-            if(dist < menorDistancia)
+            if (dist < menorDistancia)
             {
                 menorDistancia = dist;
                 quadroMaisProximo = q;
             }
         }
-        
+
         billboardAtivo = quadroMaisProximo;
         if (billboardAtivo == null || billboardAtivo.painelFundoPreto == null) return;
 

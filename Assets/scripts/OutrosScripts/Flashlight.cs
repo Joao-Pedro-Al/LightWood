@@ -3,6 +3,14 @@ using UnityEngine.UI; // Necessário para a Image
 
 public class Flashlight : MonoBehaviour
 {
+    // Singleton — garante que CliqueItem e MonsterAI apontam sempre para a MESMA lanterna,
+    // mesmo que existam acidentalmente outras instâncias na cena.
+    public static Flashlight Instance;
+
+    [Header("Posse do Item")]
+    [Tooltip("Fica TRUE assim que o jogador apanhar o item da lanterna no mundo. Enquanto for FALSE, a lanterna não pode ser ligada.")]
+    public bool hasFlashlight = false;
+
     [Header("Luz")]
     [SerializeField] GameObject FlashlightLight;
 
@@ -29,6 +37,16 @@ public class Flashlight : MonoBehaviour
     private bool isBlinking = false;
     private bool lightCurrentlyOn = true;
 
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("[Lanterna] ⚠️ Existe mais do que UM componente Flashlight na cena! " +
+                "Isto causa bugs (ex: monstro nunca ativa). Apaga o duplicado: " + gameObject.name);
+        }
+        Instance = this;
+    }
+
     void Start()
     {
         currentBattery = maxBattery;
@@ -46,8 +64,8 @@ public class Flashlight : MonoBehaviour
 
     void Update()
     {
-        // 1. Entrada do jogador (ligar/desligar)
-        if (Input.GetKeyDown(KeyCode.F))
+        // 1. Entrada do jogador (ligar/desligar) — só funciona depois de apanhar a lanterna
+        if (hasFlashlight && Input.GetKeyDown(KeyCode.F))
         {
             if (!FlashlightActive)
             {
@@ -176,5 +194,15 @@ public class Flashlight : MonoBehaviour
     {
         currentBattery = Mathf.Clamp(currentBattery + amount, 0, maxBattery);
         UpdateBatteryUI();
+    }
+
+    // Chamado pelo CliqueItem quando o jogador apanha o ITEM da lanterna pela primeira vez.
+    // A partir deste momento a tecla F passa a funcionar e o monstro pode começar a atuar.
+    public void CollectFlashlight()
+    {
+        if (hasFlashlight) return; // já tinha sido apanhada, evita repetir o log
+
+        hasFlashlight = true;
+        Debug.Log("[Lanterna] 🔦 Lanterna apanhada! Já podes ligá-la com F.");
     }
 }

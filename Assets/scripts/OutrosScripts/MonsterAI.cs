@@ -41,11 +41,8 @@ public class MonsterAI : MonoBehaviour
     public float reappearDelayMin = 3f;
     public float reappearDelayMax = 6f;
 
-    [Header("Spawn Automático")]
-    [Tooltip("O monstro aparece sozinho ao início do jogo?")]
-    public bool autoSpawnOnStart = false;
-
-    [Tooltip("Tempo de espera antes do primeiro spawn (segundos)")]
+    [Header("Spawn Automático (ativa-se sozinho ao apanhar a lanterna)")]
+    [Tooltip("Tempo de espera DEPOIS de apanhares a lanterna até o monstro aparecer pela primeira vez (segundos)")]
     public float firstSpawnDelay = 10f;
 
     [Tooltip("Depois de se esconder, quanto tempo até reaparecer (mínimo)")]
@@ -86,12 +83,22 @@ public class MonsterAI : MonoBehaviour
     private float phase1Timer;
     private bool isDisappearing = false;
     private bool hasValidNavMesh = false;
-    private bool wasFlashlightActive = false; // rastreia estado anterior da lanterna
+    private bool wasFlashlightActive = false;
+
+    // Referência à coroutine do AutoSpawnLoop para não a matar acidentalmente
+    private Coroutine autoSpawnCoroutine;
 
     private Vector3 lastHidingPosition;
 
     void Start()
     {
+        MonsterAI[] todosMonstros = FindObjectsOfType<MonsterAI>();
+        if (todosMonstros.Length > 1)
+        {
+            Debug.LogWarning($"[Monstro] ⚠️ Existem {todosMonstros.Length} objetos com MonsterAI ativos na cena ao mesmo tempo! " +
+                "Verifica se há duplicados (pesquisa 't:MonsterAI' na Hierarchy) — só deve existir 1.");
+        }
+
         if (mainCamera == null) mainCamera = Camera.main;
 
         monsterRenderers = GetComponentsInChildren<Renderer>();
@@ -131,7 +138,7 @@ public class MonsterAI : MonoBehaviour
         phase1AudioSource.clip = phase1AudioClip;
         phase1AudioSource.loop = false;
         phase1AudioSource.playOnAwake = false;
-        phase1AudioSource.spatialBlend = 1f;        // 1 = 100% 3D espacial
+        phase1AudioSource.spatialBlend = 1f;
         phase1AudioSource.rolloffMode = AudioRolloffMode.Linear;
         phase1AudioSource.minDistance = audioMinDistance;
         phase1AudioSource.maxDistance = audioMaxDistance;
@@ -141,18 +148,25 @@ public class MonsterAI : MonoBehaviour
         SetVisible(false);
         SetSilhouetteVisible(false);
 
-        if (autoSpawnOnStart)
-            StartCoroutine(AutoSpawnLoop());
+        Debug.Log("[Monstro] 🟢 A aguardar que a lanterna seja apanhada para começar...");
+        autoSpawnCoroutine = StartCoroutine(AutoSpawnLoop());
     }
 
     IEnumerator AutoSpawnLoop()
     {
+        Debug.Log("[Monstro] 🟡 AutoSpawnLoop a correr — a aguardar que a lanterna seja apanhada...");
+
+        yield return new WaitUntil(() => flashlight != null && flashlight.hasFlashlight);
+
+        Debug.Log("[Monstro] 🟡 Lanterna detetada! A aguardar " + firstSpawnDelay + "s antes do primeiro spawn...");
         yield return new WaitForSeconds(firstSpawnDelay);
+        Debug.Log("[Monstro] 🟡 Espera concluída — a tentar o primeiro spawn.");
+
         while (true)
         {
             if (currentState == MonsterState.Hidden && !isDisappearing)
             {
-                Activate();
+                ActivateInternal();
                 Debug.Log("[Monstro] 🔁 Spawn automático!");
             }
             yield return new WaitUntil(() => currentState == MonsterState.Hidden && !isDisappearing);
@@ -164,6 +178,13 @@ public class MonsterAI : MonoBehaviour
 
     void Update()
     {
+        if (flashlight == null || !flashlight.hasFlashlight)
+        {
+            if (Time.frameCount % 120 == 0)
+                Debug.Log($"[Monstro] ⏸️ Update bloqueado — flashlight null? {flashlight == null} | hasFlashlight: {(flashlight != null ? flashlight.hasFlashlight.ToString() : "N/A")}");
+            return;
+        }
+
         // Billboard — silhueta olha sempre para a câmera
         if (monsterSilhouette != null && monsterSilhouette.activeSelf && mainCamera != null)
         {
@@ -178,7 +199,6 @@ public class MonsterAI : MonoBehaviour
 
         if (isDisappearing) return;
 
-        // Verifica deteção por lanterna todos os frames enquanto ela está ligada
         if (currentState != MonsterState.Hidden && IsIlluminatedByFlashlight())
         {
             Debug.Log("[Monstro] 🔦 Apanhado! A desaparecer...");
@@ -240,9 +260,6 @@ public class MonsterAI : MonoBehaviour
             lookDir.y = 0;
             if (lookDir != Vector3.zero)
                 transform.rotation = Quaternion.LookRotation(lookDir);
-
-            // Inicia o som 3D da Fase 1 na posição do esconderijo
-            StartPhase1Audio();
         }
     }
 
@@ -324,7 +341,7 @@ public class MonsterAI : MonoBehaviour
 
         SetSilhouetteVisible(false);
         SetVisible(true);
-        StopPhase1Audio(); // Para o som da Fase 1 ao entrar na perseguição
+        StopPhase1Audio();
 
         if (agent != null && agent.isOnNavMesh)
         {
@@ -349,21 +366,19 @@ public class MonsterAI : MonoBehaviour
     }
 
     // ═══════════════════════════════════════════════════════
-    // DETECÇÃO DE FLASHLIGHT — CORRIGIDA
+    // DETECÇÃO DE FLASHLIGHT
     // ═══════════════════════════════════════════════════════
     bool IsIlluminatedByFlashlight()
     {
-        // 1. Verifica se a lanterna existe e está ligada
         if (flashlight == null)
         {
             Debug.LogWarning("[Monstro] ⚠️ Flashlight não atribuída no Inspector!");
             return false;
         }
 
-        if (!flashlight.FlashlightActive)
-            return false;
+        // Verifica FlashlightActive E que a luz está mesmo acesa (pode estar a piscar)
+        if (!flashlight.FlashlightActive) return false;
 
-        // 2. Obtém o Transform da luz
         Transform lightT = flashlight.GetLightTransform();
         if (lightT == null)
         {
@@ -371,40 +386,49 @@ public class MonsterAI : MonoBehaviour
             return false;
         }
 
-        // 3. Vetor da luz até ao monstro (centro do collider)
-        // Usa o centro do monstro em vez da base para maior precisão
-        Vector3 monsterCenter = transform.position + Vector3.up * 1f;
-        Vector3 toMonster = monsterCenter - lightT.position;
-        float dist = toMonster.magnitude;
+        // Verifica se a luz está fisicamente ativa (pode estar a piscar por bateria fraca)
+        if (!lightT.gameObject.activeInHierarchy) return false;
 
-        // 4. Verifica distância
-        if (dist > flashlightRange)
-            return false;
-
-        // 5. Verifica ângulo do cone
-        float angle = Vector3.Angle(lightT.forward, toMonster);
-        if (angle > flashlightAngle)
-            return false;
-
-        // 6. Raycast para verificar obstáculos
-        // CORRIGIDO: usa flashlightBlockingLayers definido no Inspector
-        // em vez de ~treeLayer que bloqueava o próprio player e outros objetos
-        if (flashlightBlockingLayers.value != 0)
+        // Múltiplos pontos do corpo do monstro — pés, centro, peito, cabeça
+        Vector3[] checkPoints = new Vector3[]
         {
-            if (Physics.Raycast(lightT.position, toMonster.normalized, out RaycastHit hit, dist, flashlightBlockingLayers))
+            transform.position + Vector3.up * 0.2f,   // pés
+            transform.position + Vector3.up * 0.9f,   // centro
+            transform.position + Vector3.up * 1.5f,   // peito
+            transform.position + Vector3.up * 1.9f,   // cabeça
+        };
+
+        foreach (Vector3 point in checkPoints)
+        {
+            Vector3 toPoint = point - lightT.position;
+            float dist = toPoint.magnitude;
+
+            // Fora do alcance -> skip
+            if (dist > flashlightRange) continue;
+
+            // Fora do cone -> skip
+            float angle = Vector3.Angle(lightT.forward, toPoint);
+            if (angle > flashlightAngle) continue;
+
+            // Raycast para ver se há obstáculo entre a luz e este ponto
+            bool blocked = false;
+            if (flashlightBlockingLayers.value != 0)
             {
-                // Se acertou em algo que não é o monstro → está bloqueado
-                if (hit.transform.root != transform)
+                if (Physics.Raycast(lightT.position, toPoint.normalized, out RaycastHit hit, dist, flashlightBlockingLayers))
                 {
-                    Debug.Log($"[Monstro] 🚧 Lanterna bloqueada por: {hit.transform.name}");
-                    return false;
+                    if (hit.transform.root != transform)
+                        blocked = true;
                 }
+            }
+
+            if (!blocked)
+            {
+                Debug.Log($"[Monstro] ✅ Iluminado pela lanterna!");
+                return true;
             }
         }
 
-        // 7. Iluminado!
-        Debug.Log("[Monstro] ✅ Iluminado pela lanterna!");
-        return true;
+        return false;
     }
 
     // ═══════════════════════════════════════════════════════
@@ -433,7 +457,7 @@ public class MonsterAI : MonoBehaviour
         isDisappearing = true;
         SetVisible(false);
         SetSilhouetteVisible(false);
-        StopPhase1Audio(); // Para o som ao desaparecer
+        StopPhase1Audio();
 
         if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
@@ -455,6 +479,10 @@ public class MonsterAI : MonoBehaviour
         SetVisible(false);
         isDisappearing = false;
         Debug.Log("[Monstro] 👁️ Voltou — Fase 1 (escondido na árvore).");
+
+        // Garante que o AudioSource já está na posição correta antes de tocar
+        yield return null;
+        StartPhase1Audio();
     }
 
     // ═══════════════════════════════════════════════════════
@@ -481,6 +509,10 @@ public class MonsterAI : MonoBehaviour
     {
         foreach (var r in monsterRenderers)
             r.enabled = visible;
+
+        // FIX dano fantasma: collider só ativo quando visível (Fase 2)
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = visible;
     }
 
     bool IsVisible()
@@ -494,63 +526,104 @@ public class MonsterAI : MonoBehaviour
     {
         Debug.Log("[Monstro] 💀 ATACOU O PLAYER!");
 
-        // Chama o sistema de saúde principal
         PlayerHealth ph = player.GetComponent<PlayerHealth>();
         if (ph != null)
         {
-            ph.TakeDamage(25f); // ajusta o dano no Inspector via PlayerHealth
+            ph.TakeDamage(25f);
         }
         else
         {
-            // fallback para o sistema antigo
             TAKING_DAMAGE td = player.GetComponent<TAKING_DAMAGE>();
             if (td != null) td.TakeDamage(1);
             else Debug.LogWarning("[Monstro] ⚠️ Nenhum script de dano encontrado no Player!");
         }
 
-        // Volta à Fase 1 após o ataque
         ResetToPhase1AfterAttack();
     }
 
     void ResetToPhase1AfterAttack()
     {
-        StopAllCoroutines();
+        // FIX 2: Parar APENAS a coroutine de desaparecimento — o AutoSpawnLoop mantém-se vivo
+        if (autoSpawnCoroutine != null) StopCoroutine(autoSpawnCoroutine);
+        StopCoroutine("DisappearAndReturn");
+
         isDisappearing = false;
         StartCoroutine(DisappearAndReturn());
+
+        // Reinicia o AutoSpawnLoop para o ciclo continuar após o ataque
+        autoSpawnCoroutine = StartCoroutine(AutoSpawnLoop());
+
         Debug.Log("[Monstro] 🔄 Recuou para Fase 1 após ataque.");
-    }   
+    }
+
     // ═══════════════════════════════════════════════════════
     // BOTÕES DE TESTE
     // ═══════════════════════════════════════════════════════
-    [ContextMenu("▶ TESTE — Ativar Fase 1")]
-    public void Activate()
+
+    // Versão interna usada pelo AutoSpawnLoop (não para o loop)
+    void ActivateInternal()
     {
-        StopAllCoroutines();
+        if (flashlight == null || !flashlight.hasFlashlight)
+        {
+            Debug.Log("[Monstro] 🚫 Ainda não pode ativar — o jogador ainda não apanhou a lanterna.");
+            return;
+        }
+
         isDisappearing = false;
         phase1Timer = 0f;
         currentState = MonsterState.Phase1;
         TeleportToTree();
         SetVisible(false);
+        StartPhase1Audio();
         Debug.Log("[Monstro] FASE 1 ativada!");
+    }
+
+    [ContextMenu("▶ TESTE — Ativar Fase 1")]
+    public void Activate()
+    {
+        if (flashlight == null || !flashlight.hasFlashlight)
+        {
+            Debug.Log("[Monstro] 🚫 Ainda não pode ativar — o jogador ainda não apanhou a lanterna.");
+            return;
+        }
+
+        // Para o AutoSpawnLoop e reinicia-o depois para não criar duplicados
+        if (autoSpawnCoroutine != null) StopCoroutine(autoSpawnCoroutine);
+        StopCoroutine("DisappearAndReturn");
+
+        isDisappearing = false;
+        phase1Timer = 0f;
+        currentState = MonsterState.Phase1;
+        TeleportToTree();
+        SetVisible(false);
+        StartPhase1Audio();
+        Debug.Log("[Monstro] FASE 1 ativada!");
+
+        autoSpawnCoroutine = StartCoroutine(AutoSpawnLoop());
     }
 
     [ContextMenu("⚡ TESTE — Forçar Fase 2")]
     public void ForcePhase2()
     {
-        StopAllCoroutines();
+        if (autoSpawnCoroutine != null) StopCoroutine(autoSpawnCoroutine);
+        StopCoroutine("DisappearAndReturn");
         isDisappearing = false;
         EnterPhase2();
+        autoSpawnCoroutine = StartCoroutine(AutoSpawnLoop());
     }
 
     [ContextMenu("✕ TESTE — Esconder")]
     public void ForceHide()
     {
-        StopAllCoroutines();
+        if (autoSpawnCoroutine != null) StopCoroutine(autoSpawnCoroutine);
+        StopCoroutine("DisappearAndReturn");
         isDisappearing = false;
         SetVisible(false);
         SetSilhouetteVisible(false);
+        StopPhase1Audio();
         if (agent != null && agent.isOnNavMesh) agent.ResetPath();
         currentState = MonsterState.Hidden;
         Debug.Log("[Monstro] Escondido!");
+        autoSpawnCoroutine = StartCoroutine(AutoSpawnLoop());
     }
 }

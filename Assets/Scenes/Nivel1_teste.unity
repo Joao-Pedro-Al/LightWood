@@ -923,6 +923,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -3053,7 +3054,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 2.712251e-20, y: 1.83776e-40, z: 4.84e-42, w: -2.347125e-23}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -3772,6 +3773,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -5111,6 +5113,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -5354,6 +5357,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -5501,6 +5505,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -6015,6 +6020,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -6892,6 +6898,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -7114,7 +7121,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorFimDeNivel
   totalDePistasNoNivel: 8
+  nomeDoSegundoNivel: Nivel2
   nomeDaCenaCreditos: Creditos
+  FadeIn_Out: {fileID: 0}
 --- !u!4 &914027001
 Transform:
   m_ObjectHideFlags: 0
@@ -7252,6 +7261,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -7856,6 +7866,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -8423,6 +8434,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -8797,7 +8809,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 2.906e-42, y: 6.9701022e+22, z: 1.4328565e-19, w: 4.004639e-11}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -10363,6 +10375,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -10629,6 +10642,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -10832,6 +10846,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -11115,6 +11130,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -12184,6 +12200,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -12955,6 +12972,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -13126,6 +13144,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -13449,6 +13468,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -13914,6 +13934,7 @@ MonoBehaviour:
   naoColetavel: 0
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -14299,6 +14320,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2065370746}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff288528dd0e87e478b17d256942774f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065370748}
   m_SourcePrefab: {fileID: 100100000, guid: ff288528dd0e87e478b17d256942774f, type: 3}
 --- !u!1 &1941515271
 GameObject:
@@ -14617,6 +14641,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
@@ -14957,6 +14982,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016400006, y: 0.004992579, z: 0.0049925908}
   m_Center: {x: 0.004333568, y: 0.000029756571, z: 0.0000002342531}
+--- !u!114 &2065370748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065370742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3759669f1a69429f5a6bfa4dc398c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CliqueItem
+  idNivel: 1
+  imagemDoItem: {fileID: 0}
+  nomeDaPista: Nome do Item
+  descricaoDaPista: "Descri\xE7\xE3o no card."
+  numeroFixoDaPista: 1
+  Id_Dialogo: 0
+  naoColetavel: 0
+  eBateria: 0
+  quantidadeCarga: 50
+  eItemLanterna: 1
+  eLanternaNelson: 0
+  eCorpoNelson: 0
+  ePortaTrancadaNivel2: 0
+  imagemChaveExterior: {fileID: 0}
+  imagemPilhasNelson: {fileID: 0}
+  portaObjetoFisico: {fileID: 0}
 --- !u!1 &2065482948
 GameObject:
   m_ObjectHideFlags: 0
@@ -15213,6 +15266,7 @@ MonoBehaviour:
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
+  eItemLanterna: 0
   eLanternaNelson: 0
   eCorpoNelson: 0
   ePortaTrancadaNivel2: 0
