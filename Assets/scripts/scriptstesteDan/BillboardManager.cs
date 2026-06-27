@@ -97,8 +97,8 @@ public class BillboardManager : MonoBehaviour
         }
 
         // Guarda no GeradorSalvamento para persistir entre mortes
-        if (GeradorSalvamento.Instance != null)
-            GeradorSalvamento.Instance.GuardarPista(foto, nome, descricao, numero, idNivel);
+        // if (GeradorSalvamento.Instance != null)
+        //     GeradorSalvamento.Instance.GuardarPista(foto, nome, descricao, numero, idNivel);
 
         VerificarCombinacoesAutomaticas();
     }

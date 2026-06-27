@@ -39,6 +39,9 @@ public class GestorFimDeNivel : MonoBehaviour
         Scene Cena = SceneManager.GetActiveScene();
         CenaAtual = Cena.name;
 
+        // Definir número de pistas
+        NumeroPistas();
+
         // Encontra o BillboardManager automaticamente na cena
         billboard = FindFirstObjectByType<BillboardManager>();
 
@@ -52,6 +55,19 @@ public class GestorFimDeNivel : MonoBehaviour
         StartCoroutine(RotinaVerificarPistas());
 
         StartCoroutine(FadeIn(true));
+    }
+
+    private void NumeroPistas()
+    {
+        switch(CenaAtual)
+        {
+            case "Nivel1":
+                totalDePistasNoNivel = 8;
+                break;
+            case "Nivel2":
+                totalDePistasNoNivel = 15;
+                break;
+        }
     }
 
     IEnumerator RotinaVerificarPistas()

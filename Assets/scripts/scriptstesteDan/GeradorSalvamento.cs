@@ -66,25 +66,25 @@ public class GeradorSalvamento : MonoBehaviour
             Debug.Log("[Salvamento] 🔦 Lanterna restaurada.");
         }
 
-        // 2. Restaurar pistas no quadro
-        if (pistasSalvasPermanentes.Count > 0)
-        {
-            BillboardManager[] billboards = FindObjectsOfType<BillboardManager>();
+        // // 2. Restaurar pistas no quadro
+        // if (pistasSalvasPermanentes.Count > 0)
+        // {
+        //     BillboardManager[] billboards = FindObjectsOfType<BillboardManager>();
 
-            foreach (var pista in pistasSalvasPermanentes)
-            {
-                foreach (var board in billboards)
-                {
-                    if (board.idNivel == pista.idNivel)
-                    {
-                        board.AdicionarPistaAoQuadro(pista.foto, pista.nome, pista.descricao, pista.numero);
-                        break;
-                    }
-                }
-            }
+        //     foreach (var pista in pistasSalvasPermanentes)
+        //     {
+        //         foreach (var board in billboards)
+        //         {
+        //             if (board.idNivel == pista.idNivel)
+        //             {
+        //                 board.AdicionarPistaAoQuadro(pista.foto, pista.nome, pista.descricao, pista.numero);
+        //                 break;
+        //             }
+        //         }
+        //     }
 
-            Debug.Log($"[Salvamento] 📋 {pistasSalvasPermanentes.Count} pistas restauradas no quadro.");
-        }
+        //     Debug.Log($"[Salvamento] 📋 {pistasSalvasPermanentes.Count} pistas restauradas no quadro.");
+        // }
     }
 
     // Chamado pelo BillboardManager quando adiciona uma pista
