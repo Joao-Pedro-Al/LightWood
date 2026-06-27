@@ -345,6 +345,52 @@
             "id": 64,
             "text": "Só posso esperar que não estava consciente durante o fim...",
             "file": "nv2_Conc-12.mp3"
+        },
+        {
+            "id": 65,
+            "text": "Ethan: Cambio, já me encontro na floresta… onde o assassinato aconteceu mesmo?",
+            "cont": true,
+            "prox": 66
+        },
+        {
+            "id": 66,
+            "text": "Luke: Cambio, os relatos de gritos foram documentados no centro da floresta, siga a norte até ao campo... lá tem mapas para o centro da floresta.",
+            "cont": true,
+            "prox": 67
+        },
+        {
+            "id": 67,
+            "text": "...",
+            "cont": true,
+            "prox": 68
+        },
+        {
+            "id": 68,
+            "text": "Luke: ...eu acho-te doido Ethan, ir investigar esse caso a noite sozinho? Tens a noção que isso é contra as regras da esquadra?",
+            "cont": true,
+            "prox": 69
+        },
+        {
+            "id": 69,
+            "text": "Ethan: Câmbio, ouve, eu estou só a investigar um pouco mais e se não tiverem levado tudo? Tenho de ter certeza…",
+            "cont": true,
+            "prox": 70
+        },
+        {
+            "id": 70,
+            "text": "Ethan: Câmbio, ouve, eu estou só a investigar um pouco mais e se não tiverem levado tudo? Tenho de ter certeza…",
+            "cont": true,
+            "prox": 71
+        },
+        {
+            "id": 71,
+            "text": "...",
+            "cont": true,
+            "prox": 72
+        },
+        {
+            "id": 72,
+            "text": "Luke: Cambio, Ok, mas volta numa hora. ...se não voltares, eu digo ao chefe a situação e mandou reforços… não te faças de herói, câmbio desligo."
         }
     ]
 }

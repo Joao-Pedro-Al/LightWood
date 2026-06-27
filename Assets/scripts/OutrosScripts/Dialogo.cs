@@ -25,7 +25,6 @@ public class Dialogo : MonoBehaviour
     [Header("Cutscene")]
     [SerializeField] private bool Cutscene = false;
     [SerializeField] private int Dialogo_Inicio = -1;
-    [SerializeField] private int Ultimo_Dialogo = -1;
     [SerializeField] private string Prox_Cena;
 
     void Awake()
@@ -163,17 +162,6 @@ public class Dialogo : MonoBehaviour
     {
         Obj_Legends.SetActive(atv);
     }
-
-    // private void SairCutscene(int id)
-    // {
-    //     Debug.Log("Dialogo Atual -> " + id);
-    //     Debug.Log("Número de Diálogos -> " + Ultimo_Dialogo);
-    //     Debug.Log(id == Ultimo_Dialogo);
-    //     if (id == Ultimo_Dialogo);
-    //     {
-    //         SceneManager.LoadScene(Prox_Cena);
-    //     }
-    // }
 
     public void Destruir()
     {
