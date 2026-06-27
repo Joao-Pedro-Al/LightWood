@@ -3606,6 +3606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dialogo
   legendas: {fileID: 695157500}
   Audio: {fileID: 512549613}
+  Dialogo_Inicio: -1
 --- !u!4 &512549615
 Transform:
   m_ObjectHideFlags: 0
@@ -3758,7 +3759,7 @@ Transform:
   m_GameObject: {fileID: 548301487}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 32.12, y: -7.74, z: 19.02}
+  m_LocalPosition: {x: 32.12, y: -7.83, z: 19.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3783,8 +3784,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.347541, y: 1, z: 27.639862}
-  m_Center: {x: -0.11546721, y: -0.000000010895365, z: -0.000000008771909}
+  m_Size: {x: 6.1353226, y: 6.748138, z: 25.60723}
+  m_Center: {x: -0.091199614, y: -2.8740869, z: -1.0163157}
 --- !u!1 &553745550
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,6 +4931,10 @@ PrefabInstance:
       propertyPath: miraUI
       value: 
       objectReference: {fileID: 1654775212}
+    - target: {fileID: 5236385505995349860, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: e48b946ad5b56254e9d7c6153da263f4, type: 2}
     - target: {fileID: 5409107152555000657, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 247.4
