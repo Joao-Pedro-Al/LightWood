@@ -163,7 +163,9 @@
         {
             "id": 28,
             "text": "Agora a questão é: onde ela foi buscar estas pulseiras?",
-            "file": "complet-11.mp3"
+            "file": "complet-11.mp3",
+            "cont": true,
+            "prox": 29
         },
         {
             "id": 29,

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +22,11 @@ public class Dialogo : MonoBehaviour
 
     private bool DialogoAtivo = false;
 
-    [Header("DEBUG")]
+    [Header("Cutscene")]
+    [SerializeField] private bool Cutscene = false;
     [SerializeField] private int Dialogo_Inicio = -1;
+    [SerializeField] private int Ultimo_Dialogo = -1;
+    [SerializeField] private string Prox_Cena;
 
     void Awake()
     {
@@ -44,7 +48,7 @@ public class Dialogo : MonoBehaviour
     {
         if(Dialogo_Inicio > 0)
         {
-            AtivarDialogo(Dialogo_Inicio);
+            StartCoroutine(AtivarDialogoNoInicio(Dialogo_Inicio));
         }
     }
 
@@ -145,9 +149,11 @@ public class Dialogo : MonoBehaviour
 
         // Próximo diálogo
         if(d.cont)
-            AtivarDialogo(d.prox);
+        {AtivarDialogo(d.prox);}
+        else if(d.cont != true && Cutscene == true)
+        {SceneManager.LoadScene(Prox_Cena);}
         else
-            Legendas_OnOff(false);
+        {Legendas_OnOff(false);}
 
         // Confirmar que o Queu está livre
         DialogoAtivo = false;
@@ -157,6 +163,17 @@ public class Dialogo : MonoBehaviour
     {
         Obj_Legends.SetActive(atv);
     }
+
+    // private void SairCutscene(int id)
+    // {
+    //     Debug.Log("Dialogo Atual -> " + id);
+    //     Debug.Log("Número de Diálogos -> " + Ultimo_Dialogo);
+    //     Debug.Log(id == Ultimo_Dialogo);
+    //     if (id == Ultimo_Dialogo);
+    //     {
+    //         SceneManager.LoadScene(Prox_Cena);
+    //     }
+    // }
 
     public void Destruir()
     {
