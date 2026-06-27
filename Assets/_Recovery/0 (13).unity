@@ -4914,10 +4914,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CorridaTexto2
       objectReference: {fileID: 0}
-    - target: {fileID: 2578721083572007716, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4612950802696301040, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
       propertyPath: m_Name
       value: Player

@@ -9,6 +9,7 @@ public class Dialogo : MonoBehaviour
 {
     public static Dialogo Instance;
     private dialogos JSON;
+    private bool JSONLido = false;
 
     [Header("Legendas")]
     [SerializeField]
@@ -19,6 +20,9 @@ public class Dialogo : MonoBehaviour
     private GameObject Obj_Legends;
 
     private bool DialogoAtivo = false;
+
+    [Header("DEBUG")]
+    [SerializeField] private int Dialogo_Inicio = -1;
 
     void Awake()
     {
@@ -33,6 +37,14 @@ public class Dialogo : MonoBehaviour
         } else if(Instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void Start()
+    {
+        if(Dialogo_Inicio > 0)
+        {
+            AtivarDialogo(Dialogo_Inicio);
         }
     }
 
@@ -52,12 +64,24 @@ public class Dialogo : MonoBehaviour
 
                 // Armazenar Localmente
                 JSON = JsonUtility.FromJson<dialogos>(jsonText);
+
+                JSONLido = true;
             }
             else
             {
                 Debug.LogError("Errou: " + request.error);
             }
         }
+    }
+
+    private IEnumerator AtivarDialogoNoInicio(int id)
+    {
+        while(JSONLido == false)
+        {
+            yield return null;
+        }
+
+        AtivarDialogo(id);
     }
 
     public void AtivarDialogo(int id)

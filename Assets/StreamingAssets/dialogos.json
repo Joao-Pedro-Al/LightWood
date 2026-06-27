@@ -265,72 +265,84 @@
         {
             "id": 53,
             "text": "Tudo indica ter havido pelo menos quatro vítimas, com o corpo do quarto ainda para encontrar...",
+            "file": "nv2_Conc-1.mp3",
             "cont": true,
             "prox": 54
         },
         {
             "id": 54,
             "text": "O senhor Kevin parece ter sido apanhado na saída do Nordeste do edifício e levado para o exterior.",
+            "file": "nv2_Conc-2.mp3",
             "cont": true,
             "prox": 55
         },
         {
             "id": 55,
             "text": "Possivelmente, a quarta vítima tentou bloquear a saída, mas não pode mover os móveis mais pesados.",
+            "file": "nv2_Conc-3.mp3",
             "cont": true,
             "prox": 56
         },
         {
             "id": 56,
             "text": "Mark e Nelson deviam estar a arranjar a caixa de eletricidade, quando 'aquilo' os atacou disfarçado como Kevin.",
+            "file": "nv2_Conc-4.mp3",
             "cont": true,
             "prox": 57
         },
         {
             "id": 57,
             "text": "Parecem ter conseguido fugir para dentro, mas o monstro atacou o Mark com a própria ferramenta.",
+            "file": "nv2_Conc-5.mp3",
             "cont": true,
             "prox": 58
         },
         {
             "id": 58,
             "text": "Neste ponto acredito que a quarta vítima reagrupou com Nelson e juntos conseguiram trancar a 'criatura' lá fora antes de dirigirem-se ao segundo andar.",
+            "file": "nv2_Conc-6.mp3",
             "cont": true,
             "prox": 59
         },
         {
             "id": 59,
             "text": "Acho demasiado difícil acreditar que Nelson teria força para fazer isto tudo sozinho.",
+            "file": "nv2_Conc-7.mp3",
             "cont": true,
             "prox": 60
         },
         {
             "id": 60,
             "text": "Devido às feridas, devem ter concordado no Nelson se trancar no escritório para se proteger.",
+            "file": "nv2_Conc-8.mp3",
             "cont": true,
             "prox": 61
         },
         {
             "id": 61,
             "text": "A quarta vítima deve ter ido buscar o primeiro socorros, mas a 'coisa' conseguiu entrar no escritório pela janela, e assassinou o Nelson.",
+            "file": "nv2_Conc-9.mp3",
             "cont": true,
             "prox": 62
         },
         {
             "id": 62,
             "text": "Julgando pela posição dos primeiros socorros, a quarta vítima estava preste a chegar ao escritório, quando as portas foram derrubadas.",
+            "file": "nv2_Conc-10.mp3",
             "cont": true,
             "prox": 63
         },
         {
             "id": 63,
             "text": "Sem outra saída, tentou se salvar ao saltar pela varanda. Mas o corrimão não aguentou o peço...",
+            "file": "nv2_Conc-11.mp3",
             "cont": true,
             "prox": 64
         },
         {
             "id": 64,
-            "text": "Só posso esperar que não estava consciente durante o fim..."
+            "text": "Só posso esperar que não estava consciente durante o fim...",
+            "file": "nv2_Conc-12.mp3"
         }
     ]
 }
