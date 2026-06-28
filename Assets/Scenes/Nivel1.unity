@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeradorSalvamento
   pistasSalvasPermanentes: []
+  flashlightApanhada: 0
 --- !u!4 &29275020
 Transform:
   m_ObjectHideFlags: 0
@@ -4415,6 +4416,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
+      propertyPath: flashlightAngle
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: flashlightRange
       value: 17
       objectReference: {fileID: 0}
@@ -4424,7 +4429,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 13124176907874f409d930789c5d0909, type: 3}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: audioMaxDistance
-      value: 25
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: audioMinDistance

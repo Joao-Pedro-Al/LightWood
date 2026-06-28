@@ -112,10 +112,10 @@ public class GestorFimDeNivel : MonoBehaviour
         switch(CenaAtual)
         {
             case "Nivel1":
-                ProxCena = nomeDoSegundoNivel;
+                ProxCena = "Cutscene_Nivel1";
                 break;
             case "Nivel2":
-                ProxCena = nomeDaCenaCreditos;
+                ProxCena = "Cutscene_Nivel2";
                 break;
             default:
                 ProxCena = nomeDaCenaCreditos;
