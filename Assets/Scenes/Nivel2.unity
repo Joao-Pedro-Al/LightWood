@@ -2295,7 +2295,7 @@ MonoBehaviour:
   nomeDaPista: Porta Trancada
   descricaoDaPista: '"Mm... duvido que esta porta esteve sempre trancada."'
   numeroFixoDaPista: 7
-  Id_Dialogo: 0
+  Id_Dialogo: 36
   naoColetavel: 1
   eBateria: 0
   quantidadeCarga: 50
@@ -3622,7 +3622,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dialogo
   legendas: {fileID: 695157500}
   Audio: {fileID: 512549613}
+  Cutscene: 0
   Dialogo_Inicio: -1
+  Prox_Cena: 
 --- !u!4 &512549615
 Transform:
   m_ObjectHideFlags: 0
