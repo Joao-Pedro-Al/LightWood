@@ -147,12 +147,16 @@ public class Dialogo : MonoBehaviour
         }
 
         // Próximo diálogo
-        if(d.cont)
-        {AtivarDialogo(d.prox);}
-        else if(d.cont != true && Cutscene == true)
-        {SceneManager.LoadScene(Prox_Cena);}
+        // Próximo diálogo
+        if (d.cont)
+        { AtivarDialogo(d.prox); }
+        else if (d.cont != true && Cutscene == true)
+        {
+            Destruir();
+            SceneManager.LoadScene(Prox_Cena);
+        }
         else
-        {Legendas_OnOff(false);}
+        { Legendas_OnOff(false); }
 
         // Confirmar que o Queu está livre
         DialogoAtivo = false;
