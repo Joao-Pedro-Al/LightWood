@@ -1861,6 +1861,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dialogo
   legendas: {fileID: 1083917391}
   Audio: {fileID: 512549613}
+  Cutscene: 0
+  Dialogo_Inicio: -1
+  Prox_Cena: 
 --- !u!4 &512549615
 Transform:
   m_ObjectHideFlags: 0
@@ -5616,15 +5619,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.5
+      value: 17.21
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: 0.43
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 106.7
+      value: 123.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e68bebc417b3e4447ba1a1f3b039ad94, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6140,7 +6143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.05
+      value: 1.933
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalPosition.z
