@@ -174,63 +174,78 @@
         },
         {
             "id": 30,
-            "text": "Um lugar demasiado aleatório para deitar isto fora..."
+            "text": "Um lugar demasiado aleatório para deitar isto fora...",
+            "file": "NAMETAG.mp3"
         },
         {
             "id": 31,
-            "text": "Outra entrada barricada, mas certos móveis estão derrubados..."
+            "text": "Outra entrada barricada, mas certos móveis estão derrubados...",
+            "file": "Barricada.mp3"
         },
         {
             "id": 32,
-            "text": "'How to Fix an Electric Box, for Dummies'. Há livro para tudo..."
+            "text": "'How to Fix an Electric Box, for Dummies'. Há livro para tudo...",
+            "file": "DUMMIES.mp3"
         },
         {
             "id": 33,
-            "text": "Alguém foi atacado enquanto segurou isto..."
+            "text": "Alguém foi atacado enquanto segurou isto...",
+            "file": "LANTERNA.mp3"
         },
         {
             "id": 34,
-            "text": "Ergh.. só pele... nunca senti tão enjoado na minha carreira inteira."
+            "text": "Ergh.. só pele... nunca senti tão enjoado na minha carreira inteira.",
+            "file": "CORPO KEVIN.mp3"
         },
         {
             "id": 35,
-            "text": "Isto foi pessoal... seja lá o que 'aquilo' é."
+            "text": "Isto foi pessoal... seja lá o que 'aquilo' é.",
+            "file": "CORPO MARK.mp3"
         },
         {
             "id": 36,
-            "text": "Mm... duvido que esta porta esteve sempre trancada."
+            "text": "Mm... duvido que esta porta esteve sempre trancada.",
+            "file": "PORTA TRANCADA.mp3"
         },
         {
             "id": 37,
-            "text": "Uma jornada longa. Este foi um lutador..."
+            "text": "Uma jornada longa. Este foi um lutador...",
+            "file": "TRILHO.mp3"
         },
         {
             "id": 38,
-            "text": "Yuck, esta 'coisa' têm que ser parada."
+            "text": "Yuck, esta 'coisa' têm que ser parada.",
+            "file": "CORPO NELSON.mp3"
         },
         {
             "id": 39,
-            "text": "Para uma Janela tão grande estar em pedaços... não foi uma coisa pequena."
+            "text": "Para uma Janela tão grande estar em pedaços... não foi uma coisa pequena.",
+            "file": "JANELA.mp3"
         },
         {
             "id": 40,
-            "text": "A fechadura está claramente trancada. Isto foi com força bruta."
+            "text": "A fechadura está claramente trancada. Isto foi com força bruta.",
+            "file": "PORTA DERRUBADA.mp3"
         },
         {
             "id": 41,
-            "text": "Agradeço, mas algo me diz que ninguém deixaria uns primeiros socorros aqui à toa."
+            "text": "Agradeço, mas algo me diz que ninguém deixaria uns primeiros socorros aqui à toa.",
+            "file": "FIRST AID.mp3"
         },
         {
             "id": 42,
-            "text": "Para a parte partida ainda estar aqui em cima... isto não foi uma força contra a descida."
+            "text": "Para a parte partida ainda estar aqui em cima... isto não foi uma força contra a descida.",
+            "file": "CORRIMAO.mp3"
         },
         {
             "id": 43,
-            "text": "Parece que isto foi arrancado com força..."
+            "text": "Parece que isto foi arrancado com força...",
+            "file": "BANCO.mp3"
         },
         {
             "id": 44,
-            "text": "Alguém não teve sorte aqui... maldita criatura."
+            "text": "Alguém não teve sorte aqui... maldita criatura.",
+            "file": "POÇA SANGUE.mp3"
         },
         {
             "id": 45,
@@ -349,6 +364,7 @@
         {
             "id": 65,
             "text": "Ethan: Cambio, já me encontro na floresta… onde o assassinato aconteceu mesmo?",
+            "file": "ETHAN1.mp3",
             "cont": true,
             "prox": 66
         },
