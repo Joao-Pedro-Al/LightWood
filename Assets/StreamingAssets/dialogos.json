@@ -371,6 +371,7 @@
         {
             "id": 66,
             "text": "Luke: Cambio, os relatos de gritos foram documentados no centro da floresta, siga a norte até ao campo... lá tem mapas para o centro da floresta.",
+            "file": "NPC1.mp3",
             "cont": true,
             "prox": 67
         },
@@ -383,6 +384,7 @@
         {
             "id": 68,
             "text": "Luke: ...eu acho-te doido Ethan, ir investigar esse caso a noite sozinho? Tens a noção que isso é contra as regras da esquadra?",
+            "file": "NPC2.mp3",
             "cont": true,
             "prox": 69
         },
@@ -401,7 +403,8 @@
         },
         {
             "id": 71,
-            "text": "Luke: Cambio, Ok, mas volta numa hora. ...se não voltares, eu digo ao chefe a situação e mandou reforços… não te faças de herói, câmbio desligo."
+            "text": "Luke: Cambio, Ok, mas volta numa hora. ...se não voltares, eu digo ao chefe a situação e mandou reforços… não te faças de herói, câmbio desligo.",
+            "file": "NPC3.mp3"
         }
     ]
 }
