@@ -20,6 +20,7 @@ public class Pausa_Ecra : MonoBehaviour
     [Header("Valores Locais")]
     private bool Pausado = false;
     private Coroutine ANotificar;
+    private OlharRato olharRatoCache; // NOVO: cache do OlharRato da câmara
 
     void Awake()
     {
@@ -40,6 +41,12 @@ public class Pausa_Ecra : MonoBehaviour
         if (TextoSalvarFixo != null)
         {
             TextoSalvarFixo.text = "Para salvar va ao butao do buildboard apos apanhar um pista";
+        }
+
+        // NOVO: vai buscar o OlharRato uma vez, à câmara referenciada pelo Player
+        if (ScriptPlayer != null && ScriptPlayer.camera != null)
+        {
+            olharRatoCache = ScriptPlayer.camera.GetComponent<OlharRato>();
         }
     }
 
@@ -62,6 +69,9 @@ public class Pausa_Ecra : MonoBehaviour
                     // Limpa os eixos do rato mesmo antes de travar para evitar o "salto" da visão
                     Input.ResetInputAxes(); 
                     ScriptPlayer.cameraTravada = true;
+
+                    // NOVO: trava também o OlharRato (rotação vertical da câmara)
+                    if (olharRatoCache != null) olharRatoCache.SetTravarCamera(true);
                     
                     Time.timeScale = 0f; // Congela o tempo do mundo
 
@@ -95,6 +105,10 @@ public class Pausa_Ecra : MonoBehaviour
         Pausado = false;
 
         ScriptPlayer.cameraTravada = false;
+
+        // NOVO: destrava também o OlharRato (já tem o cooldown anti-salto incluído)
+        if (olharRatoCache != null) olharRatoCache.SetTravarCamera(false);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         

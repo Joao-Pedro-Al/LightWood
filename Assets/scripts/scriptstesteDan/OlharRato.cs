@@ -7,6 +7,7 @@ public class OlharRato : MonoBehaviour
 
     private float rotacaoX = 0f;
     private bool cameraTravada = false; 
+    private int framesParaIgnorar = 0; // NOVO: ignora input logo após destravar
 
     void Start()
     {
@@ -21,6 +22,14 @@ public class OlharRato : MonoBehaviour
         {
             transform.localRotation = Quaternion.Euler(rotacaoX, 0f, 0f);
             return; 
+        }
+
+        // NOVO: ignora o input de rato durante alguns frames após destravar
+        // (evita o "salto" causado pelo Pointer Lock API do browser no WebGL)
+        if (framesParaIgnorar > 0)
+        {
+            framesParaIgnorar--;
+            return;
         }
 
         // Movimento normal quando o inventário está fechado
@@ -40,9 +49,16 @@ public class OlharRato : MonoBehaviour
         }
     }
 
-    // Função que o inventário chama para travar
+    // Função que o inventário/pausa chama para travar
     public void SetTravarCamera(bool travar)
     {
         cameraTravada = travar;
+
+        if (!travar)
+        {
+            // Ao destravar, ignora 2 frames de input de rato para evitar saltos do WebGL Pointer Lock
+            framesParaIgnorar = 2;
+            Input.ResetInputAxes();
+        }
     }
 }

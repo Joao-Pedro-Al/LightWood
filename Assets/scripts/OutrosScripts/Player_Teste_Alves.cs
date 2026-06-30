@@ -6,14 +6,13 @@ public class Player_Teste_Alves : MonoBehaviour
     #region "Variables"
     public Rigidbody Rigid;
     public float MouseSensitivity_Horizontal;
-    public float MouseSensitivity_Vertical;
+    public float MouseSensitivity_Vertical; // mantido para não partir referências no Inspector, mas já não é usado
     public float MoveSpeed;
     public float RunSpeed;
     public float JumpForce;
     public Transform camera;
     #endregion
 
-    private float verticalRotation = 0f;
     //dan inventario
     public bool cameraTravada = false;
 //dan inventario start
@@ -52,11 +51,16 @@ void Start()
         // Camera-Horizontal
         Rigid.MoveRotation(Rigid.rotation * Quaternion.Euler(new Vector3(0, Input.GetAxis("Mouse X") * MouseSensitivity_Horizontal, 0)));
 
-        // Camera-Vertical
-        float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity_Vertical;
-        verticalRotation -= mouseY;
-        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
-        camera.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        // ==========================================
+        // REMOVIDO: rotação vertical da câmara (Camera-Vertical).
+        // Isto agora é feito exclusivamente pelo OlharRato.cs, que está na própria Camera.
+        // Ter os dois scripts a escrever na mesma Transform causava dessincronização
+        // e o salto da câmara ao pausar/despausar no WebGL, que desalinhava as hitboxes dos items.
+        // ==========================================
+        // float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity_Vertical;
+        // verticalRotation -= mouseY;
+        // verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
+        // camera.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
         // Movimento
         float VelocidadeAtual = MoveSpeed;
