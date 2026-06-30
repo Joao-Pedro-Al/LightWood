@@ -9623,6 +9623,14 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
+      propertyPath: reappearDelayMax
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
+      propertyPath: reappearDelayMin
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: phase1AudioVolume
       value: 0.732
       objectReference: {fileID: 0}

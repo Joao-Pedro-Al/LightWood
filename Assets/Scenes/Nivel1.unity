@@ -4446,6 +4446,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
+      propertyPath: reappearDelayMax
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
+      propertyPath: reappearDelayMin
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215190831846010503, guid: 13551c02e0a58964bbe1446569638bb6, type: 3}
       propertyPath: phase1AudioVolume
       value: 0.732
       objectReference: {fileID: 0}
@@ -6305,27 +6313,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 33.5
+      value: 46.055798
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 33.5
+      value: 46.055798
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 33.5
+      value: 46.055798
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -45.98
+      value: -43.095
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.933
+      value: 1.8096
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 53.96
+      value: 58.64
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6380,6 +6388,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff288528dd0e87e478b17d256942774f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2065370750}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff288528dd0e87e478b17d256942774f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065370753}
   m_SourcePrefab: {fileID: 100100000, guid: ff288528dd0e87e478b17d256942774f, type: 3}
 --- !u!1 &1923728199
 GameObject:
@@ -6580,6 +6591,21 @@ MonoBehaviour:
   imagemChaveExterior: {fileID: 0}
   imagemPilhasNelson: {fileID: 0}
   portaObjetoFisico: {fileID: 0}
+--- !u!114 &2065370753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065370742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e927e9306b64eb46918c3e5be40231e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrilhoBateria
+  corDoBrilho: {r: 1, g: 0.92, b: 0.016, a: 1}
+  intensidadeLuz: 5
+  raioDoBrilho: 8
 --- !u!114 &2069246782 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2578721083572007716, guid: e8a2f6c8c29c8b840ab4c065820241fa, type: 3}
