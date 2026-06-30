@@ -11,6 +11,7 @@ public class Pausa_Ecra : MonoBehaviour
     [SerializeField] private GameObject Overlay;
     [SerializeField] private TextMeshProUGUI Objetivo;
     [SerializeField] private GameObject Notificacao;
+[SerializeField] private TextMeshProUGUI TextoSalvarFixo; // NOVO:texto fixo
 
     [Header("Valores Externos")]
     public Player_Teste_Alves ScriptPlayer;
@@ -35,6 +36,11 @@ public class Pausa_Ecra : MonoBehaviour
     void Start()
     {
         AtualizarObjetivo("Investiga a cena de crime.");
+        // NOVO: Define a frase fixa para salvar o jogo no início
+        if (TextoSalvarFixo != null)
+        {
+            TextoSalvarFixo.text = "Para salvar va ao butao do buildboard apos apanhar um pista";
+        }
     }
 
     void Update()
