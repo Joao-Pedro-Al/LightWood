@@ -4460,6 +4460,7 @@ GameObject:
   - component: {fileID: 1331625630}
   - component: {fileID: 1331625629}
   - component: {fileID: 1331625628}
+  - component: {fileID: 1331625632}
   m_Layer: 0
   m_Name: BotaoCubo_Salvar
   m_TagString: Untagged
@@ -4467,21 +4468,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1331625627
-Transform:
+--- !u!224 &1331625627
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331625626}
-  serializedVersion: 2
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
-  m_LocalPosition: {x: 0.473, y: 4.609, z: 2.578}
+  m_LocalPosition: {x: 0, y: 0, z: 2.58}
   m_LocalScale: {x: 0.31, y: 0.49, z: 0.28}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1853775787}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.47, y: 3.72}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1331625628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4576,6 +4581,14 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331625626}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!222 &1331625632
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331625626}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1447693682
 PrefabInstance:
   m_ObjectHideFlags: 0
